@@ -1,0 +1,33 @@
+{
+	"name": "gajn-framework",
+	"version": "0.1.0",
+	"description": "My common Node framework",
+	"homepage": "https://gordonansell.com/gajn-framework",
+	"license": "MIT",
+	"minimum-stability": "dev",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gordon-ansell/gajn-framework"
+	},
+	"authors": [
+		{
+			"name": "Gordon Ansell",
+			"email": "contact@gordonansell.com",
+			"url": "https://gordonansell.com"
+		}
+	],
+	"files": [
+		"src/"
+	],
+    "dependencies": {
+        "dateformat": "*",
+		"deepmerge": "*",
+		"is-plain-object": "*",
+        "rimraf": "*"
+    },
+	"devDependencies": {},
+	"engines": {
+		"node": ">=10"
+	}
+}
