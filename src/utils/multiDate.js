@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const dateformat = require('dateformat');
+const dateformat = require('node-dateformat');
 
 /**
  * Multi date object.
