@@ -21,7 +21,7 @@
 		"src/"
 	],
     "dependencies": {
-        "node-dateformat": "*",
+        "dateformat": "^2.0.0",
 		"deepmerge": "*",
 		"is-plain-object": "*",
         "rimraf": "*"
