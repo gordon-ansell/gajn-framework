@@ -13,7 +13,7 @@ function printProgress(progress, desc)
 {
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
-    let msg = Math.round(progress) + '%';
+    let msg = Math.round(progress) + '% ';
     if (desc) {
         msg = desc + ': ' + msg; 
     }
