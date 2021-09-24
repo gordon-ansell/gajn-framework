@@ -15,6 +15,59 @@ const Writer = require('./writer');
 class ConsoleWriter extends Writer
 {
     /**
+     * Is progress active?
+     * @member {boolean}
+     */
+    progressIsActive = false;
+
+    /**
+     * Last progress.
+     * @member {number}
+     */
+    lastProgress = 0;
+
+    /**
+     * Last progress description.
+     * @member {string}
+     */
+    lastProgessDesc = '';
+
+    /**
+     * Print a progress message.
+     * 
+     * @param   {number}    progress    Progress percent.
+     * @param   {string}    desc        Descriptive message.
+     * 
+     * @return  {void} 
+     */
+    printProgress(progress, desc)
+    {
+        this.progressIsActive = true;
+        process.stdout.clearLine();
+        process.stdout.cursorTo(0);
+        this.lastProgress = Math.round(progress);
+        let msg = this.lastProgress + '%';
+        if (desc && desc != '') {
+            this.lastProgressDesc = desc;
+            msg += ' ' + desc; 
+        }
+        process.stdout.write(msg);
+    }
+
+    /**
+     * End progress display.
+     * 
+     * @return  {void}
+     */
+    endProgress()
+    {
+        process.stdout.clearLine();
+        process.stdout.cursorTo(0);
+        this.progressIsActive = false;
+        this.lastProgressDesc = '';
+    }
+
+    /**
     * Output the message.    
     *  
     * @param   {string}        msg         Message to write.
@@ -26,6 +79,11 @@ class ConsoleWriter extends Writer
     */
     _output(msg, level, context, extra)
     {
+        if (this.progressIsActive) {
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+        }
+
         switch (level) {
             case Level.TRACE:
             case Level.DEBUG:
@@ -41,6 +99,10 @@ class ConsoleWriter extends Writer
             default:
                 console.error(msg);
                 break;
+        }
+
+        if (this.progressIsActive) {
+            this.prontProgress(this.lastProgress, this.lastProgressDesc);
         }
     }
 }

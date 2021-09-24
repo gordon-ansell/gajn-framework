@@ -50,6 +50,35 @@ class Logger
     }
 
     /**
+     * Print a progress message.
+     * 
+     * @param   {number}    progress    Progress percent.
+     * @param   {string}    desc        Descriptive message.
+     * @param   {string}    writerName  Writer name.
+     * 
+     * @return  {void} 
+     */
+    printProgress(progress, desc, writerName = 'console')
+    {
+        if (writerName in this.#writers) {
+            this.#writers[name].printProgress(progress, desc);
+        }
+    }
+ 
+    /**
+     * End progress display.
+     * 
+     * @param   {string}    writerName  Writer name.
+     * @return  {void}
+     */
+    endProgress(writerName = 'console')
+    {
+        if (writerName in this.#writers) {
+            this.#writers[name].endProgress();
+        }
+    }
+ 
+    /**
      * Static creation of a default setup.
      * 
      * @param   {string|int|null}   level       Level to set.
