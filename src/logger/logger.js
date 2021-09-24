@@ -61,7 +61,7 @@ class Logger
     printProgress(progress, desc, writerName = 'console')
     {
         if (writerName in this.#writers) {
-            this.#writers[name].printProgress(progress, desc);
+            this.#writers[writerName].printProgress(progress, desc);
         }
     }
  
@@ -74,7 +74,7 @@ class Logger
     endProgress(writerName = 'console')
     {
         if (writerName in this.#writers) {
-            this.#writers[name].endProgress();
+            this.#writers[writerName].endProgress();
         }
     }
  
