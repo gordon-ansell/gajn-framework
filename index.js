@@ -33,7 +33,6 @@ exports.GAError = require('./src/utils/gaError');
 exports.MultiDate = require('./src/utils/multiDate');
 exports.ImageHtml = require('./src/utils/imageHtml');
 exports.duration = require('./src/utils/duration');
-exports.progress = require('./src/utils/progress');
 
 // EventManager.
 exports.EventManager = require('./src/eventManager');
