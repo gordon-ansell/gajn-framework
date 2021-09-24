@@ -102,7 +102,7 @@ class ConsoleWriter extends Writer
         }
 
         if (this.progressIsActive) {
-            this.prontProgress(this.lastProgress, this.lastProgressDesc);
+            this.printProgress(this.lastProgress, this.lastProgressDesc);
         }
     }
 }
