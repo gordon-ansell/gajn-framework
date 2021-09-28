@@ -42,10 +42,8 @@ class ConsoleWriter extends Writer
      */
     printProgress(progress, desc)
     {
-        if (this.progressIsActive) {
-            process.stdout.clearLine();
-        }
         this.progressIsActive = true;
+        process.stdout.clearLine();
         process.stdout.cursorTo(0);
         this.lastProgress = Math.round(progress);
         let msg = this.lastProgress + '%';
