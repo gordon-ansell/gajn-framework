@@ -255,7 +255,7 @@ async function copyDirAsyncProgress(from, to, opts = {fileNotBeginsWith: ['.']})
             } else if (stats.isDirectory()) {
                 count++;
                 await syslog.printProgress((count / totalItems) * 100);
-                copyDirAsync(fromPath, toPath, opts);
+                await copyDirAsync(fromPath, toPath, opts);
             }
         
         }
