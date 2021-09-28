@@ -190,6 +190,81 @@ async function copyDirAsync(from, to, opts = {fileNotBeginsWith: ['.']})
 }
 
 /**
+ * Copy a directory (async + progress).
+ * 
+ * @param   {string}    from    Directory to copy from.
+ * @param   {string}    to      Directory to copy to.
+ * @param   {object}    opts    Options.   
+ */
+async function copyDirAsyncProgress(from, to, opts = {fileNotBeginsWith: ['.']})
+{
+    if (!fs.existsSync(from)) {
+        syslog.warning("Directory does not exist for copy (although this might be ignorable).", from);
+        return;
+    }
+
+    let fnbwRegex = null;
+
+    if (opts.fileNotBeginsWith) {
+        let ap = sanitizeFileRegex(opts.fileNotBeginsWith);
+        if (ap != '') {
+            fnbwRegex = new RegExp("^(" + ap + ")", 'i');
+        }
+    }
+    
+    let fneRegex = null;
+
+    if (opts.fileNotExt) {
+        let ap = sanitizeExtRegex(opts.fileNotExt);
+        if (ap != '') {
+            fneRegex = new RegExp("^(" + ap + ")", 'i');
+        }
+    }
+
+    let entries = fs.readdirSync(from);
+
+    let totalItems = entries.length;
+    let count = 0;
+    await syslog.printProgress(0);
+
+    await Promise.all(entries.map(async entry => {
+
+        let fromPath = path.join(from, entry);
+        let toPath = path.join(to, entry);
+        let stats = fs.statSync(fromPath);
+        
+        let go = true;
+        if (stats.isFile() && fnbwRegex != null) {
+            if (null !== fnbwRegex.exec(path.basename(fromPath))) {
+                go = false;
+            }
+        }
+
+        if (stats.isFile() && path.extname(fromPath) && fneRegex != null) {
+            if (null !== fneRegex.exec(path.extname(fromPath))) {
+                go = false;
+            }
+        }
+
+        if (go) {
+        
+            if (stats.isFile()) {
+                copyFileAsync(fromPath, toPath);
+            } else if (stats.isDirectory()) {
+                copyDirAsync(fromPath, toPath, opts);
+            }
+        
+        }
+
+        await syslog.printProgress((count / totalItems) * 100);
+
+    }));
+
+    syslog.endProgress;
+}
+ 
+
+/**
  * Copy a file.
  * 
  * @param   {string}    from        From file.
@@ -289,6 +364,7 @@ exports.copyDir = copyDir;
 exports.copyFile = copyFile;
 exports.copyDirAsync = copyDirAsync;
 exports.copyFileAsync = copyFileAsync;
+exports.copyDirAsyncProgress = copyDirAsyncProgress;
 exports.mkdirRecurse = mkdirRecurse;
 
 
