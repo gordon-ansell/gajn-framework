@@ -221,47 +221,49 @@ async function copyDirAsyncProgress(from, to, opts = {fileNotBeginsWith: ['.']})
         }
     }
 
-    let entries = fs.readdirSync(from);
+    fs.readdir(from => async (err, entries) => {
 
-    let totalItems = entries.length;
-    let count = 0;
-    await syslog.printProgress(0, from);
+        let totalItems = entries.length;
+        let count = 0;
+        await syslog.printProgress(0, from);
 
-    await Promise.all(entries.map(async entry => {
+        await Promise.all(entries.map(async (entry) =>
+        {
 
-        let fromPath = path.join(from, entry);
-        let toPath = path.join(to, entry);
-        let stats = fs.statSync(fromPath);
-        
-        let go = true;
-        if (stats.isFile() && fnbwRegex != null) {
-            if (null !== fnbwRegex.exec(path.basename(fromPath))) {
-                go = false;
+            let fromPath = path.join(from, entry);
+            let toPath = path.join(to, entry);
+            let stats = fs.statSync(fromPath);
+
+            let go = true;
+            if (stats.isFile() && fnbwRegex != null) {
+                if (null !== fnbwRegex.exec(path.basename(fromPath))) {
+                    go = false;
+                }
             }
-        }
 
-        if (stats.isFile() && path.extname(fromPath) && fneRegex != null) {
-            if (null !== fneRegex.exec(path.extname(fromPath))) {
-                go = false;
+            if (stats.isFile() && path.extname(fromPath) && fneRegex != null) {
+                if (null !== fneRegex.exec(path.extname(fromPath))) {
+                    go = false;
+                }
             }
-        }
 
-        if (go) {
-        
-            if (stats.isFile()) {
-                count++;
-                await syslog.printProgress((count / totalItems) * 100, from);
-                copyFileAsync(fromPath, toPath);
-            } else if (stats.isDirectory()) {
-                count++;
-                await syslog.printProgress((count / totalItems) * 100, from);
-                await copyDirAsyncProgress(fromPath, toPath, opts);
+            if (go) {
+
+                if (stats.isFile()) {
+                    count++;
+                    await syslog.printProgress((count / totalItems) * 100, fromPath);
+                    copyFileAsync(fromPath, toPath);
+                } else if (stats.isDirectory()) {
+                    count++;
+                    await syslog.printProgress((count / totalItems) * 100, fromPath);
+                    await copyDirAsyncProgress(fromPath, toPath, opts);
+                }
+
             }
-        
-        }
 
 
-    }));
+        }));
+    });
 
     syslog.endProgress();
 }
