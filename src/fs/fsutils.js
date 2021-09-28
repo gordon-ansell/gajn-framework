@@ -256,6 +256,7 @@ async function copyDirAsyncProgress(from, to, opts = {fileNotBeginsWith: ['.']})
         
         }
 
+        count++;
         await syslog.printProgress((count / totalItems) * 100);
 
     }));
