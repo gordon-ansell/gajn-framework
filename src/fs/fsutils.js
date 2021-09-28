@@ -221,7 +221,7 @@ async function copyDirAsyncProgress(from, to, opts = {fileNotBeginsWith: ['.']})
         }
     }
 
-    fs.readdir(from => async (err, entries) => {
+    fs.readdir(from, async (err, entries) => {
 
         let totalItems = entries.length;
         let count = 0;
