@@ -124,6 +124,72 @@ function copyDir(from, to, opts = {fileNotBeginsWith: ['.']})
 }
 
 /**
+ * Copy a directory (async).
+ * 
+ * @param   {string}    from    Directory to copy from.
+ * @param   {string}    to      Directory to copy to.
+ * @param   {object}    opts    Options.   
+ */
+async function copyDirAsync(from, to, opts = {fileNotBeginsWith: ['.']})
+{
+    if (!fs.existsSync(from)) {
+        syslog.warning("Directory does not exist for copy (although this might be ignorable).", from);
+        return;
+    }
+
+    let fnbwRegex = null;
+
+    if (opts.fileNotBeginsWith) {
+        let ap = sanitizeFileRegex(opts.fileNotBeginsWith);
+        if (ap != '') {
+            fnbwRegex = new RegExp("^(" + ap + ")", 'i');
+        }
+    }
+    
+    let fneRegex = null;
+
+    if (opts.fileNotExt) {
+        let ap = sanitizeExtRegex(opts.fileNotExt);
+        if (ap != '') {
+            fneRegex = new RegExp("^(" + ap + ")", 'i');
+        }
+    }
+
+    let entries = fs.readdirSync(from);
+
+    await Promise.all(entries.map(async entry => {
+
+        let fromPath = path.join(from, entry);
+        let toPath = path.join(to, entry);
+        let stats = fs.statSync(fromPath);
+        
+        let go = true;
+        if (stats.isFile() && fnbwRegex != null) {
+            if (null !== fnbwRegex.exec(path.basename(fromPath))) {
+                go = false;
+            }
+        }
+
+        if (stats.isFile() && path.extname(fromPath) && fneRegex != null) {
+            if (null !== fneRegex.exec(path.extname(fromPath))) {
+                go = false;
+            }
+        }
+
+        if (go) {
+        
+            if (stats.isFile()) {
+                copyFileAsync(fromPath, toPath);
+            } else if (stats.isDirectory()) {
+                copyDirAsync(fromPath, toPath, opts);
+            }
+        
+        }
+
+    }));
+}
+
+/**
  * Copy a file.
  * 
  * @param   {string}    from        From file.
@@ -144,6 +210,27 @@ function copyFile(from, to, mode = 0o777)
     }
 }
 
+/**
+ * Copy a file (async).
+ * 
+ * @param   {string}    from        From file.
+ * @param   {string}    to          To file.
+ * @param   {number}    mode        Mode for creating directories along the way.
+ */
+async function copyFileAsync(from, to, mode = 0o777) 
+{
+    mkdirRecurse(path.dirname(to), mode);
+    if (fs.existsSync(path.dirname(to))) {
+        try {
+            fs.copyFileSync(from, to);
+        } catch (err) {
+            throw new GAError(`Could not copy to ${to}\\n${err}`, '', err);
+        }
+    } else {
+        throw new GAError(`Cannot copy file to ${to} because directory does not exist.`);
+    }
+}
+ 
 /**
  * Make a directory (rescursively).
  * 
@@ -200,6 +287,8 @@ exports.deleteFolderRecursive = deleteFolderRecursive;
 exports.cleanDir = cleanDir;
 exports.copyDir = copyDir;
 exports.copyFile = copyFile;
+exports.copyDirAsync = copyDirAsync;
+exports.copyFileAsync = copyFileAsync;
 exports.mkdirRecurse = mkdirRecurse;
 
 
