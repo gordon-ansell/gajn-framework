@@ -90,6 +90,8 @@ class FsParser
             }
         }
 
+        syslog.inspect(this.#regex, "warning");
+
     }
 
     /**
