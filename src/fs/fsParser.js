@@ -41,6 +41,7 @@ class FsParser
         this.#regex = {
             allowPaths: undefined,
             ignorePaths: undefined,
+            ignoreDirs: undefined,
             allowFiles: undefined,
             ignoreFiles: undefined,
             ignoreFilesFirst: undefined,
@@ -61,7 +62,7 @@ class FsParser
     {
         let opts = this.#opts;
 
-        for (let item of ['allowPaths', 'ignorePaths']) {
+        for (let item of ['allowPaths', 'ignorePaths', 'ignoreDirs']) {
             if (opts[item]) {
                 opts[item] = arr.makeArray(opts[item]);
                 let ap = sanitizePathRegex(opts[item]);
@@ -118,7 +119,7 @@ class FsParser
 
             if (stats.isFile() && this._doWeProcessFile(filePath)) {
                 this.#results.push(filePath);
-            } else if (stats.isDirectory() && this._doWeProcessDir(filePath)) {
+            } else if (stats.isDirectory() && this._doWeProcessDir(filePath, entry)) {
                 this._parseDir(filePath);
             }
     
@@ -192,9 +193,10 @@ class FsParser
      * Do we process a directory?
      * 
      * @param   {string}    filePath    File to check.
+     * @param   {string}    entry       The actual entry, not prefixed with full root.
      * @return  {boolean}               True if we do, else false.
      */
-    _doWeProcessDir(filePath)
+    _doWeProcessDir(filePath, entry)
     {
         let rel = filePath.replace(this.#absPath, '');
         if (path.sep != rel[0]) {
@@ -206,7 +208,7 @@ class FsParser
         if (this.#regex.allowPaths) {
             let result = this.#regex.allowPaths.exec(rel);            
             if (null !== result) {
-                this._logMsg('FsParser:_doWeProcessDir', `   => allow dir via: ${result[0]}`);
+                this._logMsg('FsParser:_doWeProcessDir', `   => allow path via: ${result[0]}`);
                 return true;
             }
         }
@@ -215,11 +217,20 @@ class FsParser
         if (this.#regex.ignorePaths) {
             let result = this.#regex.ignorePaths.exec(rel);            
             if (null !== result) {
-                this._logMsg('FsParser:_doWeProcessDir', `   => ignore dir via: ${result[0]}`);
+                this._logMsg('FsParser:_doWeProcessDir', `   => ignore path via: ${result[0]}`);
                 return false;
             }
         }
         
+        // Ignore dirs.
+        if (this.#regex.ignoreDirs) {
+            let result = this.#regex.ignoreDirs.exec(entry);            
+            if (null !== result) {
+                this._logMsg('FsParser:_doWeProcessDir', `   => ignore dir via: ${result[0]}`);
+                return false;
+            }
+        }
+
         if (this.#opts.ignorePathsByDefault && this.#opts.ignorePathsByDefault === true) {
             this._logMsg('FsParser:_doWeProcessDir', `   => ignore dir by default`);
             return false;
