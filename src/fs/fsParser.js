@@ -62,7 +62,7 @@ class FsParser
     {
         let opts = this.#opts;
 
-        for (let item of ['allowPaths', 'ignorePaths', 'ignoreDirs']) {
+        for (let item of ['allowPaths', 'ignorePaths']) {
             if (opts[item]) {
                 opts[item] = arr.makeArray(opts[item]);
                 let ap = sanitizePathRegex(opts[item]);
@@ -72,7 +72,7 @@ class FsParser
             }
         }
 
-        for (let item of ['allowFiles', 'ignoreFiles', 'ignoreFilesFirst']) {
+        for (let item of ['allowFiles', 'ignoreFiles', 'ignoreFilesFirst', 'ignoreDirs']) {
             if (opts[item]) {
                 opts[item] = arr.makeArray(opts[item]);
                 let ap = sanitizeFileRegex(opts[item]);
