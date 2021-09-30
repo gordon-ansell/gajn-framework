@@ -224,6 +224,7 @@ class FsParser
         
         // Ignore dirs.
         if (this.#regex.ignoreDirs) {
+            syslog.warning(`Testing ${entry}`);
             let result = this.#regex.ignoreDirs.exec(entry);            
             if (null !== result) {
                 this._logMsg('FsParser:_doWeProcessDir', `   => ignore dir via: ${result[0]}`);
