@@ -148,19 +148,20 @@ class ImageHtml
                 }
             }
         } else {
-            let qsrcs = [];
-            for (let u of src) {
-                qsrcs.push(this.config.qualify(u));
-            }
             let stag;
             if (this.opts.lazyload) {
                 stag = 'data-srcset';
             } else {
                 stag = 'srcset';
             }
-            ret += ` ${stag}="` + qsrcs.join(', ') + `"`;
-            for (let href of src) {
+            let qsrc = [];
+            for (let u of src) {
                 let sp = href.split(' ');
+                let saved = sp.pop;
+                qsrc.push(this.config.qualify(sp[0]) + ' ' + saved);
+            }
+            ret += ` ${stag}="` + qsrc.join(', ') + `"`;
+            for (let href of src) {
                 sp.pop();
                 metaSrcs.push(sp.join(' '));
             }
