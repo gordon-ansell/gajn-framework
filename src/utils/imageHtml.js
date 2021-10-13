@@ -195,7 +195,7 @@ class ImageHtml
                 ret += ` ${stag}="` + src.join(', ') + `"`;
             }
             for (let href of src) {
-                sp = href.split(' ');
+                let sp = href.split(' ');
                 sp.pop();
                 metaSrcs.push(sp.join(' '));
             }
