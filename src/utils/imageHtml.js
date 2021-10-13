@@ -169,8 +169,8 @@ class ImageHtml
             if (this.hostname) {
                 let qsrc = [];
                 for (let u of src) {
-                    let sp = href.split(' ');
-                    let saved = sp.pop;
+                    let sp = u.split(' ');
+                    let saved = sp.pop();
                     qsrc.push(this.config.qualify(sp[0]) + ' ' + saved);
                 }
                 ret += ` ${stag}="` + qsrc.join(', ') + `"`;
@@ -178,6 +178,7 @@ class ImageHtml
                 ret += ` ${stag}="` + src.join(', ') + `"`;
             }
             for (let href of src) {
+                sp = href.split(' ');
                 sp.pop();
                 metaSrcs.push(sp.join(' '));
             }
