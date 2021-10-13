@@ -7,6 +7,7 @@
 'use strict';
 
 const syslog = require('../logger/syslog');
+const { URL } = require('url');
 
 /**
  * Image html renderer.
@@ -55,6 +56,22 @@ class ImageHtml
     }
 
     /**
+     * Qualify a URL.
+     * 
+     * @param   {string}    path    Path to qualify.
+     * 
+     * @return  {string}
+     */
+    qualify(path)
+    {
+        if (path.startsWith('http://') || path.startsWith('https://')) {
+            return path;
+        }
+
+        return new URL(path, this.hostname).href;
+    }
+
+     /**
      * Wrap something in a figure.
      * 
      * @param   {string}    body        Body to wrap.
@@ -139,7 +156,7 @@ class ImageHtml
 
         if ("string" == typeof src) {
             if (this.hostname) {
-                imgSpec[srcName] = this.config.qualify(src);
+                imgSpec[srcName] = this.qualify(src);
             } else {
                 imgSpec[srcName] = src;
             }
@@ -171,7 +188,7 @@ class ImageHtml
                 for (let u of src) {
                     let sp = u.split(' ');
                     let saved = sp.pop();
-                    qsrc.push(this.config.qualify(sp[0]) + ' ' + saved);
+                    qsrc.push(this.qualify(sp[0]) + ' ' + saved);
                 }
                 ret += ` ${stag}="` + qsrc.join(', ') + `"`;
             } else {
