@@ -156,7 +156,7 @@ class ImageHtml
             }
             let qsrc = [];
             for (let u of src) {
-                let sp = href.split(' ');
+                let sp = u.split(' ');
                 let saved = sp.pop;
                 qsrc.push(this.config.qualify(sp[0]) + ' ' + saved);
             }
