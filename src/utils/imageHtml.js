@@ -32,18 +32,26 @@ class ImageHtml
     schema = '';
 
     /**
+     * Hostname.
+     * @member {string}
+     */
+    hostname = null;
+
+    /**
      * Metadata.
      */
 
     /**
      * Constructor.
      * 
-     * @param   {object}    opts    Options.
+     * @param   {object}    opts        Options.
+     * @param   {string}    hostname    Hostname.
      * @return  {ImageHtml} 
      */
-    constructor(opts)
+    constructor(opts, hostname = null)
     {
         this.opts = opts;
+        this.hostname = hostname;
     }
 
     /**
@@ -130,7 +138,11 @@ class ImageHtml
         }
 
         if ("string" == typeof src) {
-            imgSpec[srcName] = this.config.qualify(src);
+            if (this.hostname) {
+                imgSpec[srcName] = this.config.qualify(src);
+            } else {
+                imgSpec[srcName] = src;
+            }
             delete imgSpec[sizesName];
             metaSrcs.push(src);
             for (let name in imgSpec) {
@@ -154,13 +166,17 @@ class ImageHtml
             } else {
                 stag = 'srcset';
             }
-            let qsrc = [];
-            for (let u of src) {
-                let sp = u.split(' ');
-                let saved = sp.pop;
-                qsrc.push(this.config.qualify(sp[0]) + ' ' + saved);
+            if (this.hostname) {
+                let qsrc = [];
+                for (let u of src) {
+                    let sp = href.split(' ');
+                    let saved = sp.pop;
+                    qsrc.push(this.config.qualify(sp[0]) + ' ' + saved);
+                }
+                ret += ` ${stag}="` + qsrc.join(', ') + `"`;
+            } else {
+                ret += ` ${stag}="` + src.join(', ') + `"`;
             }
-            ret += ` ${stag}="` + qsrc.join(', ') + `"`;
             for (let href of src) {
                 sp.pop();
                 metaSrcs.push(sp.join(' '));
