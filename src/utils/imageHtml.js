@@ -248,9 +248,9 @@ class ImageHtml
             let count = 1;
             for (let mime in src) {
                 if (count == Object.keys(src).length) {
-                    ret += this.createConstruct(src[mime], imgSpec, 'img')
+                    ret += this.createConstruct(this.config.qualify(src[mime]), imgSpec, 'img')
                 } else {
-                    ret += this.createConstruct(src[mime], imgSpec, 'source', mime)
+                    ret += this.createConstruct(this.config.qualify(src[mime]), imgSpec, 'source', mime)
                 }
                 count++;
             }
@@ -260,7 +260,7 @@ class ImageHtml
             }
 
         } else {
-            ret = this.createConstruct(src, imgSpec, 'img');
+            ret = this.createConstruct(this.config.qualify(src), imgSpec, 'img');
         }
 
         if (caption) {
