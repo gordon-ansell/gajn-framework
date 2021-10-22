@@ -205,7 +205,7 @@ class ImageHtml
                     if ('' != rawSizes) {
                         rawSizes += ' ';
                     }
-                    rawSizes += saved;
+                    rawSizes += saved.replace('w', 'px');
                 }
                 ret += ` ${stag}="` + qsrc.join(', ') + `"`;
                 retns += ` srcset="` + qsrc.join(', ') + `"`;
