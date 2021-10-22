@@ -178,9 +178,9 @@ class ImageHtml
                         if (name == srcName) {
                             retns += ` src="${imgSpec[name]}"`;
                         } else if ('class' == name) {
-                            let cl = imgSpec[name].replace('lazysizes', '');
+                            let cl = imgSpec[name].replace('lazyload', '');
                             if (cl.trim() != "") {
-                                retns += ` class="${cl}`;
+                                retns += ` class="${cl}"`;
                             }
                         } else {
                             retns += ` ${name}="${imgSpec[name]}"`;
@@ -226,9 +226,9 @@ class ImageHtml
                     } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if ('class' == name) {
-                            let cl = imgSpec[name].replace('lazysizes', '');
+                            let cl = imgSpec[name].replace('lazyload', '');
                             if (cl.trim() != "") {
-                                retns += ` class="${cl}`;
+                                retns += ` class="${cl}"`;
                             }
                         } else {
                             retns += ` ${name}="${imgSpec[name]}"`;
