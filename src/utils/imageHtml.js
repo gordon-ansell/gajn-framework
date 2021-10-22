@@ -177,6 +177,11 @@ class ImageHtml
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if (name == srcName) {
                             retns += ` src="${imgSpec[name]}"`;
+                        } else if ('class' == name) {
+                            let cl = imgSpec[name].replace('lazysizes', '');
+                            if (cl.trim() != "") {
+                                retns += ` class="${cl}`;
+                            }
                         } else {
                             retns += ` ${name}="${imgSpec[name]}"`;
                         }
@@ -220,7 +225,14 @@ class ImageHtml
                         retns += ` ${name}="${imgSpec[name].replace('px', '')}"`;
                     } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
-                        retns += ` ${name}="${imgSpec[name]}"`;
+                        if ('class' == name) {
+                            let cl = imgSpec[name].replace('lazysizes', '');
+                            if (cl.trim() != "") {
+                                retns += ` class="${cl}`;
+                            }
+                        } else {
+                            retns += ` ${name}="${imgSpec[name]}"`;
+                        }
                     }
                 }
             }
