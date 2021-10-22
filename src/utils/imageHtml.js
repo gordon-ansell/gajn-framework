@@ -173,7 +173,7 @@ class ImageHtml
                     } else if ('width' == name) {
                         ret += ` ${name}="${imgSpec[name].replace('px', '')}"`;
                         retns += ` ${name}="${imgSpec[name].replace('px', '')}"`;
-                    } else {
+                   } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if (name == srcName) {
                             retns += ` src="${imgSpec[name]}"`;
@@ -228,6 +228,14 @@ class ImageHtml
                     } else if ('width' == name) {
                         ret += ` ${name}="${imgSpec[name].replace('px', '')}"`;
                         retns += ` ${name}="${imgSpec[name].replace('px', '')}"`;
+                    } else if ('data-src' == name || 'src' == name) {
+                        if (this.hostname) {
+                            ret += ` ${name}="${this.qualify(imgSpec[name])}"`;
+                            retns += ` src="${this.qualify(imgSpec[name])}"`;
+                        } else {
+                            ret += ` ${name}="${imgSpec[name]}"`;
+                            retns += ` src="${imgSpec[name]}"`;
+                        }
                     } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if ('class' == name) {
@@ -237,8 +245,6 @@ class ImageHtml
                             }
                         } else if (sizesName == name) {
                             retns += ` sizes="${rawSizes}"`;
-                        } else if ('data-src' == name) {
-                            retns += ` src="${imgSpec[name]}"`;
                         } else {
                             retns += ` ${name}="${imgSpec[name]}"`;
                         }
