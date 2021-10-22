@@ -195,12 +195,17 @@ class ImageHtml
             } else {
                 stag = 'srcset';
             }
+            let rawSizes = '';
             if (this.hostname) {
                 let qsrc = [];
                 for (let u of src) {
                     let sp = u.split(' ');
                     let saved = sp.pop();
                     qsrc.push(this.qualify(sp[0]) + ' ' + saved);
+                    if ('' != rawSizes) {
+                        rawSizes += ' ';
+                    }
+                    rawSizes += saved;
                 }
                 ret += ` ${stag}="` + qsrc.join(', ') + `"`;
                 retns += ` srcset="` + qsrc.join(', ') + `"`;
@@ -230,6 +235,8 @@ class ImageHtml
                             if (cl.trim() != "") {
                                 retns += ` class="${cl}"`;
                             }
+                        } else if (sizesName == name) {
+                            retns += ` sizes="${rawSizes}"`;
                         } else {
                             retns += ` ${name}="${imgSpec[name]}"`;
                         }
