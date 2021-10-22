@@ -117,6 +117,7 @@ class ImageHtml
     createConstruct(src, imgSpec, tag = 'img', mime = null)
     {
         let ret = `<${tag}`;
+        let retns = `<${tag}`;      // No script.
 
         let wantMeta = false;
         let metaSrcs = [];
@@ -171,8 +172,14 @@ class ImageHtml
                         meta[name.substring(1)] = imgSpec[name];
                     } else if ('width' == name) {
                         ret += ` ${name}="${imgSpec[name].replace('px', '')}"`;
+                        retns += ` ${name}="${imgSpec[name].replace('px', '')}"`;
                     } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
+                        if (name == srcName) {
+                            retns += ` src="${imgSpec[name]}"`;
+                        } else {
+                            retns += ` ${name}="${imgSpec[name]}"`;
+                        }
                     }
                 }
             }
@@ -191,8 +198,10 @@ class ImageHtml
                     qsrc.push(this.qualify(sp[0]) + ' ' + saved);
                 }
                 ret += ` ${stag}="` + qsrc.join(', ') + `"`;
+                retns += ` srcset="` + qsrc.join(', ') + `"`;
             } else {
                 ret += ` ${stag}="` + src.join(', ') + `"`;
+                retns += ` srcset="` + src.join(', ') + `"`;
             }
             for (let href of src) {
                 let sp = href.split(' ');
@@ -208,14 +217,17 @@ class ImageHtml
                         meta[name.substring(1)] = imgSpec[name];
                     } else if ('width' == name) {
                         ret += ` ${name}="${imgSpec[name].replace('px', '')}"`;
+                        retns += ` ${name}="${imgSpec[name].replace('px', '')}"`;
                     } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
+                        retns += ` ${name}="${imgSpec[name]}"`;
                     }
                 }
             }
         }
 
         ret += ` />`;
+        retns += ` />`;
 
         if (wantMeta) {
             //let schema = '';
@@ -231,7 +243,7 @@ class ImageHtml
             //ret += schema;
         }
 
-        return ret;
+        return ret + '<noscript>' + retns + '</noscript>';
     }
 
     /**
