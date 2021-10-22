@@ -237,6 +237,8 @@ class ImageHtml
                             }
                         } else if (sizesName == name) {
                             retns += ` sizes="${rawSizes}"`;
+                        } else if ('data-src' == name || 'src' == name) {
+                            retns += ` src="${imgSpec[name]}"`;
                         } else {
                             retns += ` ${name}="${imgSpec[name]}"`;
                         }
