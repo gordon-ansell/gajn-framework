@@ -265,6 +265,8 @@ class ImageHtml
                                     }
                                 }
                             }
+                        } else {
+                            syslog.warning(`No generated entry for ${src}.`);
                         }
                     } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
