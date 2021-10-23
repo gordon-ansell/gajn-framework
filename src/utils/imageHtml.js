@@ -111,10 +111,11 @@ class ImageHtml
      * @param   {object}            imgSpec     Image spec.
      * @param   {string}            tag         HTML tag to use.
      * @param   {string}            mime        Mime type.
+     * @param   {object}            generated   Generated image info.
      * 
      * @return  {string}
      */
-    createConstruct(src, imgSpec, tag = 'img', mime = null)
+    createConstruct(src, imgSpec, tag = 'img', mime = null, generated = null)
     {
         let ret = `<${tag}`;
         let retns = `<${tag}`;      // No script.
@@ -178,6 +179,20 @@ class ImageHtml
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if (name == srcName) {
                             retns += ` src="${imgSpec[name]}"`;
+                            if (generated) {
+                                for (let im of generated) {
+                                    if (im.file == imgSpec[name]) {
+                                        if (im.width) {
+                                            ret += ` width=${im.width}`;
+                                            retns += ` width=${im.width}`;
+                                        }
+                                        if (im.height) {
+                                            ret += ` height=${im.height}`;
+                                            retns += ` height=${im.height}`;
+                                        }
+                                    }
+                                }
+                            }
                         } else if ('class' == name) {
                             let cl = imgSpec[name].replace('lazyload', '');
                             if (cl.trim() != "") {
@@ -237,6 +252,20 @@ class ImageHtml
                             ret += ` ${name}="${imgSpec[name]}"`;
                             retns += ` src="${imgSpec[name]}"`;
                         }
+                        if (generated) {
+                            for (let im of generated) {
+                                if (im.file == imgSpec[name]) {
+                                    if (im.width) {
+                                        ret += ` width=${im.width}`;
+                                        retns += ` width=${im.width}`;
+                                    }
+                                    if (im.height) {
+                                        ret += ` height=${im.height}`;
+                                        retns += ` height=${im.height}`;
+                                    }
+                                }
+                            }
+                        }
                     } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if ('class' == name) {
@@ -280,10 +309,11 @@ class ImageHtml
      * @param   {string|object}     src         Source.
      * @param   {object}            imgSpec     Image spec.
      * @param   {boolean}           complex     Is this a complex construct?
+     * @param   {object}            generated   Generated image info.
      * 
      * @return  {string}
      */
-    render(src, imgSpec, complex = false)
+    render(src, imgSpec, complex = false, generated = null)
     {
 
         // -----------------------------
@@ -327,7 +357,7 @@ class ImageHtml
             let count = 1;
             for (let mime in src) {
                 if (count == Object.keys(src).length) {
-                    ret += this.createConstruct(src[mime], imgSpec, 'img')
+                    ret += this.createConstruct(src[mime], imgSpec, 'img', null, generated)
                 } else {
                     ret += this.createConstruct(src[mime], imgSpec, 'source', mime)
                 }
