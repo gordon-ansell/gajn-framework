@@ -122,6 +122,8 @@ class ImageHtml
         let wantMeta = false;
         let metaSrcs = [];
         let meta = {};
+        let width;
+        let height;
 
         if (mime) {
             imgSpec.type = mime;
