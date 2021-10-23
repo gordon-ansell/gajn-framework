@@ -252,12 +252,12 @@ class ImageHtml
                             ret += ` ${name}="${imgSpec[name]}"`;
                             retns += ` src="${imgSpec[name]}"`;
                         }
-                        if (generated) {
-                            syslog.inspect(generated.files, "warning")
-                        }
-                        if (generated && generated[src]) {
-                            for (let im of generated[src]) {
+
+                        if (generated && generated.files) {
+                            for (let im of generated.files) {
+                                syslog.warning(`Matching ${im.file} against ${imgSpec[name]}`);
                                 if (im.file == imgSpec[name]) {
+                                    syslog.warning('Got match.');
                                     if (im.width) {
                                         ret += ` width=${im.width}`;
                                         retns += ` width=${im.width}`;
