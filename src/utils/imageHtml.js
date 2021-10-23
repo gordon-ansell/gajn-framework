@@ -122,8 +122,6 @@ class ImageHtml
         let wantMeta = false;
         let metaSrcs = [];
         let meta = {};
-        let width;
-        let height;
 
         if (mime) {
             imgSpec.type = mime;
@@ -145,6 +143,7 @@ class ImageHtml
         if ('source' == tag) {
             delete imgSpec.alt;
             delete imgSpec.width;
+            delete imgSpec.height;
         }
 
         if ('img' == tag) {
