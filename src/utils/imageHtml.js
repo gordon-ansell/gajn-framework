@@ -111,12 +111,10 @@ class ImageHtml
      * @param   {object}            imgSpec     Image spec.
      * @param   {string}            tag         HTML tag to use.
      * @param   {string}            mime        Mime type.
-     * @param   {string}            rawUrl      As input in HTML (unqualified).
-     * @param   {object}            generated   Generated image info.
      * 
      * @return  {string}
      */
-    createConstruct(src, imgSpec, tag = 'img', mime = null, rawUrl = null, generated = null)
+    createConstruct(src, imgSpec, tag = 'img', mime = null)
     {
         let ret = `<${tag}`;
         let retns = `<${tag}`;      // No script.
@@ -180,20 +178,6 @@ class ImageHtml
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if (name == srcName) {
                             retns += ` src="${imgSpec[name]}"`;
-                            if (generated && generated[src]) {
-                                for (let im of generated[src]) {
-                                    if (im.file == imgSpec[name]) {
-                                        if (im.width) {
-                                            ret += ` width=${im.width}`;
-                                            retns += ` width=${im.width}`;
-                                        }
-                                        if (im.height) {
-                                            ret += ` height=${im.height}`;
-                                            retns += ` height=${im.height}`;
-                                        }
-                                    }
-                                }
-                            }
                         } else if ('class' == name) {
                             let cl = imgSpec[name].replace('lazyload', '');
                             if (cl.trim() != "") {
@@ -254,24 +238,6 @@ class ImageHtml
                             retns += ` src="${imgSpec[name]}"`;
                         }
 
-                        if (generated && generated.files && rawUrl) {
-                            for (let im of generated.files) {
-                                syslog.warning(`Matching ${im.file} against ${rawUrl}`);
-                                if (im.file == rawUrl) {
-                                    syslog.warning('Got match.');
-                                    if (im.width) {
-                                        ret += ` width=${im.width}`;
-                                        retns += ` width=${im.width}`;
-                                    }
-                                    if (im.height) {
-                                        ret += ` height=${im.height}`;
-                                        retns += ` height=${im.height}`;
-                                    }
-                                }
-                            }
-                        } else {
-                            syslog.warning(`No generated entry for ${src}.`);
-                        }
                     } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if ('class' == name) {
@@ -315,12 +281,10 @@ class ImageHtml
      * @param   {string|object}     src         Source.
      * @param   {object}            imgSpec     Image spec.
      * @param   {boolean}           complex     Is this a complex construct?
-     * @param   {string}            rawUrl      As input in HTML (unqualified).
-     * @param   {object}            generated   Generated image info.
      * 
      * @return  {string}
      */
-    render(src, imgSpec, complex = false, rawUrl = null, generated = null)
+    render(src, imgSpec, complex = false)
     {
 
         // -----------------------------
@@ -364,7 +328,7 @@ class ImageHtml
             let count = 1;
             for (let mime in src) {
                 if (count == Object.keys(src).length) {
-                    ret += this.createConstruct(src[mime], imgSpec, 'img', null, rawUrl, generated)
+                    ret += this.createConstruct(src[mime], imgSpec, 'img')
                 } else {
                     ret += this.createConstruct(src[mime], imgSpec, 'source', mime)
                 }
