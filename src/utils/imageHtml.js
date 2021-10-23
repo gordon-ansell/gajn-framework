@@ -111,10 +111,12 @@ class ImageHtml
      * @param   {object}            imgSpec     Image spec.
      * @param   {string}            tag         HTML tag to use.
      * @param   {string}            mime        Mime type.
+     * @param   {number}            w           Width.
+     * @param   {number}            h           Height.
      * 
      * @return  {string}
      */
-    createConstruct(src, imgSpec, tag = 'img', mime = null)
+    createConstruct(src, imgSpec, tag = 'img', mime = null, w = null, h = null)
     {
         let ret = `<${tag}`;
         let retns = `<${tag}`;      // No script.
@@ -144,6 +146,8 @@ class ImageHtml
             delete imgSpec.alt;
             delete imgSpec.width;
             delete imgSpec.height;
+            w = null;
+            h = null;
         }
 
         if ('img' == tag) {
@@ -178,6 +182,14 @@ class ImageHtml
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if (name == srcName) {
                             retns += ` src="${imgSpec[name]}"`;
+                            if (w) {
+                                ret += ` width=${w}`;
+                                retns += ` width=${w}`;
+                            }
+                            if (h) {
+                                ret += ` height=${h}`;
+                                retns += ` height=${h}`;
+                            }
                         } else if ('class' == name) {
                             let cl = imgSpec[name].replace('lazyload', '');
                             if (cl.trim() != "") {
@@ -237,6 +249,14 @@ class ImageHtml
                             ret += ` ${name}="${imgSpec[name]}"`;
                             retns += ` src="${imgSpec[name]}"`;
                         }
+                        if (w) {
+                            ret += ` width=${w}`;
+                            retns += ` width=${w}`;
+                        }
+                        if (h) {
+                            ret += ` height=${h}`;
+                            retns += ` height=${h}`;
+                        }
 
                     } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
@@ -281,10 +301,12 @@ class ImageHtml
      * @param   {string|object}     src         Source.
      * @param   {object}            imgSpec     Image spec.
      * @param   {boolean}           complex     Is this a complex construct?
+     * @param   {number}            w           Width.
+     * @param   {number}            h           Height.
      * 
      * @return  {string}
      */
-    render(src, imgSpec, complex = false)
+    render(src, imgSpec, complex = false, w = null, h = null)
     {
 
         // -----------------------------
@@ -328,7 +350,7 @@ class ImageHtml
             let count = 1;
             for (let mime in src) {
                 if (count == Object.keys(src).length) {
-                    ret += this.createConstruct(src[mime], imgSpec, 'img')
+                    ret += this.createConstruct(src[mime], imgSpec, 'img', null, w, h)
                 } else {
                     ret += this.createConstruct(src[mime], imgSpec, 'source', mime)
                 }
@@ -340,7 +362,7 @@ class ImageHtml
             }
 
         } else {
-            ret = this.createConstruct(src, imgSpec, 'img');
+            ret = this.createConstruct(src, imgSpec, 'img', null, w, h);
         }
 
         if (caption) {
