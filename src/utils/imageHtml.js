@@ -174,7 +174,7 @@ class ImageHtml
                     } else if ('width' == name) {
                         ret += ` ${name}="${imgSpec[name].replace('px', '')}"`;
                         retns += ` ${name}="${imgSpec[name].replace('px', '')}"`;
-                   } else {
+                    } else {
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if (name == srcName) {
                             retns += ` src="${imgSpec[name]}"`;
