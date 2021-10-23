@@ -111,11 +111,12 @@ class ImageHtml
      * @param   {object}            imgSpec     Image spec.
      * @param   {string}            tag         HTML tag to use.
      * @param   {string}            mime        Mime type.
+     * @param   {string}            rawUrl      As input in HTML (unqualified).
      * @param   {object}            generated   Generated image info.
      * 
      * @return  {string}
      */
-    createConstruct(src, imgSpec, tag = 'img', mime = null, generated = null)
+    createConstruct(src, imgSpec, tag = 'img', mime = null, rawUrl = null, generated = null)
     {
         let ret = `<${tag}`;
         let retns = `<${tag}`;      // No script.
@@ -253,10 +254,10 @@ class ImageHtml
                             retns += ` src="${imgSpec[name]}"`;
                         }
 
-                        if (generated && generated.files) {
+                        if (generated && generated.files && rawUrl) {
                             for (let im of generated.files) {
-                                syslog.warning(`Matching ${im.file} against ${imgSpec[name]}`);
-                                if (im.file == imgSpec[name]) {
+                                syslog.warning(`Matching ${im.file} against ${rawUrl}`);
+                                if (im.file == rawUrl) {
                                     syslog.warning('Got match.');
                                     if (im.width) {
                                         ret += ` width=${im.width}`;
@@ -314,11 +315,12 @@ class ImageHtml
      * @param   {string|object}     src         Source.
      * @param   {object}            imgSpec     Image spec.
      * @param   {boolean}           complex     Is this a complex construct?
+     * @param   {string}            rawUrl      As input in HTML (unqualified).
      * @param   {object}            generated   Generated image info.
      * 
      * @return  {string}
      */
-    render(src, imgSpec, complex = false, generated = null)
+    render(src, imgSpec, complex = false, rawUrl = null, generated = null)
     {
 
         // -----------------------------
@@ -362,7 +364,7 @@ class ImageHtml
             let count = 1;
             for (let mime in src) {
                 if (count == Object.keys(src).length) {
-                    ret += this.createConstruct(src[mime], imgSpec, 'img', null, generated)
+                    ret += this.createConstruct(src[mime], imgSpec, 'img', null, rawUrl, generated)
                 } else {
                     ret += this.createConstruct(src[mime], imgSpec, 'source', mime)
                 }
