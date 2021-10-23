@@ -252,6 +252,9 @@ class ImageHtml
                             ret += ` ${name}="${imgSpec[name]}"`;
                             retns += ` src="${imgSpec[name]}"`;
                         }
+                        if (generated) {
+                            syslog.inspect(generated.files, "warning")
+                        }
                         if (generated && generated[src]) {
                             for (let im of generated[src]) {
                                 if (im.file == imgSpec[name]) {
