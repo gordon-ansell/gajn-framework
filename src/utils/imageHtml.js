@@ -179,8 +179,8 @@ class ImageHtml
                         ret += ` ${name}="${imgSpec[name]}"`;
                         if (name == srcName) {
                             retns += ` src="${imgSpec[name]}"`;
-                            if (generated) {
-                                for (let im of generated) {
+                            if (generated && generated[src]) {
+                                for (let im of generated[src]) {
                                     if (im.file == imgSpec[name]) {
                                         if (im.width) {
                                             ret += ` width=${im.width}`;
@@ -252,8 +252,8 @@ class ImageHtml
                             ret += ` ${name}="${imgSpec[name]}"`;
                             retns += ` src="${imgSpec[name]}"`;
                         }
-                        if (generated) {
-                            for (let im of generated) {
+                        if (generated && generated[src]) {
+                            for (let im of generated[src]) {
                                 if (im.file == imgSpec[name]) {
                                     if (im.width) {
                                         ret += ` width=${im.width}`;
