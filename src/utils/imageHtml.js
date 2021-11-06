@@ -113,10 +113,11 @@ class ImageHtml
      * @param   {string}            mime        Mime type.
      * @param   {number}            w           Width.
      * @param   {number}            h           Height.
+     * @param   {boolean}           rss         Rss?    
      * 
      * @return  {string}
      */
-    createConstruct(src, imgSpec, tag = 'img', mime = null, w = null, h = null)
+    createConstruct(src, imgSpec, tag = 'img', mime = null, w = null, h = null, rss = false)
     {
         let ret = `<${tag}`;
         let retns = `<${tag}`;      // No script.
@@ -292,7 +293,11 @@ class ImageHtml
             //ret += schema;
         }
 
-        return ret + '<noscript>' + retns + '</noscript>';
+        if (!rss) {
+            ret += '<noscript>' + retns + '</noscript>';
+        }
+
+        return ret;
     }
 
     /**
@@ -326,6 +331,12 @@ class ImageHtml
             }
         }
 
+        let rss = false;
+        if (imgSpec.rss) {
+            rss = imgSpec.rss;
+            delete imgSpec.rss;
+        }
+
         if (this.opts.lazyload) {
             if (imgSpec.sizes) {
                 imgSpec['data-sizes'] = imgSpec.sizes;
@@ -350,9 +361,9 @@ class ImageHtml
             let count = 1;
             for (let mime in src) {
                 if (count == Object.keys(src).length) {
-                    ret += this.createConstruct(src[mime], imgSpec, 'img', null, w, h)
+                    ret += this.createConstruct(src[mime], imgSpec, 'img', null, w, h, rss)
                 } else {
-                    ret += this.createConstruct(src[mime], imgSpec, 'source', mime)
+                    ret += this.createConstruct(src[mime], imgSpec, 'source', mime, null, null, rss)
                 }
                 count++;
             }
