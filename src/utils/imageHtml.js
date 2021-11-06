@@ -334,7 +334,6 @@ class ImageHtml
 
         let rss = false;
         if (imgSpec.rss && imgSpec.rss == true) {
-            syslog.error('It is true');
             rss = true;
             delete imgSpec.rss;
         }
@@ -375,7 +374,7 @@ class ImageHtml
             }
 
         } else {
-            ret = this.createConstruct(src, imgSpec, 'img', null, w, h);
+            ret = this.createConstruct(src, imgSpec, 'img', null, w, h, rss);
         }
 
         if (caption) {
