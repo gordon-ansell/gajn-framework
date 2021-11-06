@@ -295,9 +295,10 @@ class ImageHtml
 
         if (!rss) {
             ret += '<noscript>' + retns + '</noscript>';
+            return ret;
         }
 
-        return ret;
+        return retns;
     }
 
     /**
@@ -332,8 +333,9 @@ class ImageHtml
         }
 
         let rss = false;
-        if (imgSpec.rss) {
-            rss = imgSpec.rss;
+        if (imgSpec.rss && imgSpec.rss == true) {
+            syslog.error('It is true');
+            rss = true;
             delete imgSpec.rss;
         }
 
