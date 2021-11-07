@@ -90,9 +90,24 @@ function removeBothSlashes(str)
     return removeTrailingSlash(removeLeadingSlash(str));
 }
   
+/**
+ * Remove last segment.
+ * 
+ * @param   {string}    str     String to frig.
+ * 
+ * @return  {string}
+ */
+function removeLastSeg(str)
+{
+    let sp = str.split('/');
+    sp.pop();
+    return sp.join('/');
+}
+ 
 exports.addTrailingSlash = addTrailingSlash;
 exports.addLeadingSlash = addLeadingSlash;
 exports.addBothSlashes = addBothSlashes;
 exports.removeTrailingSlash = removeTrailingSlash;
 exports.removeLeadingSlash = removeLeadingSlash;
 exports.removeBothSlashes = removeBothSlashes;
+exports.removeLastSeg = removeLastSeg;
