@@ -252,7 +252,7 @@ class FsParser
     freeformCheckFile(file)
     {
         let sp = file.split('/');
-        let fn = sp.pop();
+        sp.pop();
         let entry = sp.pop();
 
         if (!this.doWeProcessDir(path.join(sp, entry), entry)) {
