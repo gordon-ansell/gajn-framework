@@ -28,15 +28,18 @@ class FsParser
     /**
      * Constructor.
      * 
-     * @param   {string}    startPath   Path to start parsing at.
-     * @param   {string}    absPath     Absolute path (used for getting relative paths).
-     * @param   {object}    opts        Options. 
+     * @param   {string}                startPath   Path to start parsing at.
+     * @param   {string}                absPath     Absolute path (used for getting relative paths).
+     * @param   {object}                opts        Options. 
+     * @param   {FsParserFilters|null}  filters     Filters or null.
      */
-    constructor(startPath, absPath, opts = {})
+    constructor(startPath, absPath, opts = {}, filters = null)
     {
         this.#startPath = startPath;
         this.#absPath = absPath;
         this.#opts = opts;
+
+        this.#log = [];
 
         this.#regex = {
             allowPaths: undefined,
@@ -48,7 +51,6 @@ class FsParser
             ignoreExts: undefined,
         };
 
-        this.#log = [];
 
         if (opts) {
             this._configureRegex();
@@ -117,9 +119,9 @@ class FsParser
             let filePath = path.join(dir, entry);
             let stats = fs.statSync(filePath);
 
-            if (stats.isFile() && this._doWeProcessFile(filePath)) {
+            if (stats.isFile() && this.doWeProcessFile(filePath)) {
                 this.#results.push(filePath);
-            } else if (stats.isDirectory() && this._doWeProcessDir(filePath, entry)) {
+            } else if (stats.isDirectory() && this.doWeProcessDir(filePath, entry)) {
                 this._parseDir(filePath);
             }
     
@@ -133,7 +135,7 @@ class FsParser
      * @param   {string}    filePath    File to check.
      * @return  {boolean}               True if we do, else false.
      */
-    _doWeProcessFile(filePath)
+    doWeProcessFile(filePath)
     {
         let rel = filePath.replace(this.#absPath, '');
         if (path.sep != rel[0]) {
@@ -196,7 +198,7 @@ class FsParser
      * @param   {string}    entry       The actual entry, not prefixed with full root.
      * @return  {boolean}               True if we do, else false.
      */
-    _doWeProcessDir(filePath, entry)
+    doWeProcessDir(filePath, entry)
     {
         let rel = filePath.replace(this.#absPath, '');
         if (path.sep != rel[0]) {
@@ -239,6 +241,29 @@ class FsParser
             return true;
         }
 
+    }
+
+    /**
+     * Freeform check to see if a passed file needs processing.
+     * 
+     * @param   {string}    file    File to check.
+     * @return  {boolean}           True if we have to process it, else false.
+     */
+    freeformCheckFile(file)
+    {
+        let sp = file.split('/');
+        let fn = sp.pop();
+        let entry = sp.pop();
+
+        if (!this.doWeProcessDir(path.join(sp, entry), entry)) {
+            return false;
+        }
+
+        if (!this.doWeProcessFile(file)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
