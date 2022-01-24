@@ -16,11 +16,14 @@ const syslog = require('../logger/syslog');
  * Delete a folder recursively.
  * 
  * @param   {string}    dir     Directory to clean.
+ * @param   {boolean}   force   Force?
  * 
  * @return  {boolean}           True if it worked else false.              
  */
-function deleteFolderRecursive(dir)
+function deleteFolderRecursive(dir, force = true)
 {
+    let rmdOpts = {recursive: true, maxRetries: 5, force: force};
+
     try {
         if (fs.existsSync(dir)) {
             fs.readdirSync(dir).forEach((file) => {
@@ -31,7 +34,7 @@ function deleteFolderRecursive(dir)
                     fs.unlinkSync(curPath);
                 }
             });
-            fs.rmdirSync(dir, {recursive: true, maxRetries: 5});
+            fs.rmSync(dir, rmdOpts);
         }
     } catch (err) {
         throw new GAError("Error in deleteFolderRecursive: " + err.message, '', err);
