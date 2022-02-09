@@ -161,6 +161,9 @@ class ImageHtml
             }
         }
 
+        syslog.inspect(src, "error");
+        syslog.inspect(imgSpec, "error");
+
         if ("string" == typeof src) {
             if (this.hostname) {
                 imgSpec[srcName] = this.qualify(src);
@@ -314,9 +317,6 @@ class ImageHtml
      */
     render(src, imgSpec, complex = false, w = null, h = null)
     {
-        syslog.inspect(src, "error");
-        syslog.inspect(imgSpec, "error");
-
         // -----------------------------
         // Initialise.
         // -----------------------------
