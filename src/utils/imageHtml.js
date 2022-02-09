@@ -351,8 +351,14 @@ class ImageHtml
         // -----------------------------
 
         let caption = null;
+        let link = null;
         let figureSpec = {};
         this.metaIds = [];
+
+        if (imgSpec.link) {
+            link = imgSpec.link;
+            delete imgSpec.link;
+        }
 
         if (imgSpec.caption) {
             caption = imgSpec.caption;
@@ -408,7 +414,10 @@ class ImageHtml
             ret = this.createConstruct(src, imgSpec, 'img', null, w, h, rss);
         }
 
-        syslog.error(this.biggestImage);
+        if (link) {
+            let l = ('self' == link.trim()) ? this.biggestImage : link;
+            ret = `<a class="imglink" href="${l}">${ret}</a>`;
+        }
 
         if (caption) {
             ret = this.wrapInFigure(ret, figureSpec, caption, this.opts);
