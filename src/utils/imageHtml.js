@@ -8,6 +8,7 @@
 
 const syslog = require('../logger/syslog');
 const { URL } = require('url');
+const path = require('path');
 
 /**
  * Image html renderer.
@@ -39,8 +40,9 @@ class ImageHtml
     hostname = null;
 
     /**
-     * Metadata.
+     * Biggest images.
      */
+    biggestImage = null;
 
     /**
      * Constructor.
@@ -180,9 +182,16 @@ class ImageHtml
             }
         }
 
-        syslog.inspect(biggest, "error");
-        //syslog.inspect(src, "error");
-        //syslog.inspect(imgSpec, "error");
+        if (null === this.biggestImage) {
+            this.biggestImage = biggest;
+        } else {
+            let extb = path.extname(this.biggestImage);
+            let extn = path.extname(biggest);
+            let preferredFormats = ['.jpeg', '.jpg', '.png'];
+            if (!preferredFormats.contains(extb) && preferredFormats.contains(extn)) {
+                this.biggestImage = biggest;
+            }
+        }
 
         if ("string" == typeof src) {
             if (this.hostname) {
@@ -398,6 +407,8 @@ class ImageHtml
         } else {
             ret = this.createConstruct(src, imgSpec, 'img', null, w, h, rss);
         }
+
+        syslog.error(this.biggestImage);
 
         if (caption) {
             ret = this.wrapInFigure(ret, figureSpec, caption, this.opts);
