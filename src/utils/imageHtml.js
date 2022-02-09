@@ -163,12 +163,20 @@ class ImageHtml
 
         let biggest = null;
         let biggestSz = 0;
-        for (let s1 of src) {
-            let sp = s1.split(' ');
-            let sz = parseInt(s1[1].replace('w', ''));
-            if (sz > biggestSz) {
-                biggestSz = sz;
-                biggest = sp[0];
+        if (Array.isArray(src)) {
+            for (let s1 of src) {
+                let sp = s1.split(' ');
+                let sz = parseInt(s1[1].replace('w', ''));
+                if (sz > biggestSz) {
+                    biggestSz = sz;
+                    biggest = sp[0];
+                }
+            }
+        } else {
+            if (-1 !== src.indexOf(' ')) {
+                biggest = src.split(' ')[0];
+            } else {
+                biggest = src;
             }
         }
 
