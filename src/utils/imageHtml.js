@@ -182,6 +182,7 @@ class ImageHtml
             }
         }
 
+        /*
         if (null === this.biggestImage) {
             this.biggestImage = biggest;
         } else {
@@ -192,6 +193,7 @@ class ImageHtml
                 this.biggestImage = biggest;
             }
         }
+        */
 
         if ("string" == typeof src) {
             if (this.hostname) {

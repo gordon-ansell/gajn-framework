@@ -265,7 +265,7 @@ class Logger
                 this.message(`==> An exception of type '${orig.name}' was encountered: ${orig.message}`, 
                     level, null, null, indent);
 
-                if (orig.stack && st) {
+                if (orig.stack && stackTraces) {
                     for (let line of orig.stack.split('\n').slice(1)) {
                         this.message(line.trim(), level, null, null, indent);
                     }
