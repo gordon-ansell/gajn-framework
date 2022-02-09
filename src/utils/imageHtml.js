@@ -356,7 +356,6 @@ class ImageHtml
         this.metaIds = [];
 
         if (imgSpec.link) {
-            syslog.error("Got a link")
             link = imgSpec.link;
             delete imgSpec.link;
         }
@@ -416,6 +415,7 @@ class ImageHtml
         }
 
         if (link) {
+            syslog.error("Got a link")
             let l = ('self' == link.trim()) ? this.biggestImage : link;
             ret = `<a class="imglink" href="${l}">${ret}</a>`;
         }
