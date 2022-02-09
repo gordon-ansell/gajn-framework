@@ -314,6 +314,8 @@ class ImageHtml
      */
     render(src, imgSpec, complex = false, w = null, h = null)
     {
+        syslog.inspect(src, "error");
+        syslog.inspect(imgSpec, "error");
 
         // -----------------------------
         // Initialise.
