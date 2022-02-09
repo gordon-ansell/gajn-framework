@@ -167,6 +167,7 @@ class ImageHtml
             for (let s1 of src) {
                 let sp = s1.split(' ');
                 let sz = parseInt(s1[1].replace('w', ''));
+                syslog.warning(sz + ' > ' + biggestSz)
                 if (sz > biggestSz) {
                     biggestSz = sz;
                     biggest = sp[0];
@@ -181,8 +182,8 @@ class ImageHtml
         }
 
         syslog.inspect(biggest, "error");
-        syslog.inspect(src, "error");
-        syslog.inspect(imgSpec, "error");
+        //syslog.inspect(src, "error");
+        //syslog.inspect(imgSpec, "error");
 
         if ("string" == typeof src) {
             if (this.hostname) {
