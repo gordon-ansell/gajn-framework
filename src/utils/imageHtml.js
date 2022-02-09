@@ -415,9 +415,8 @@ class ImageHtml
         }
 
         if (link) {
-            syslog.error("Got a link")
             let l = ('self' == link.trim()) ? this.biggestImage : link;
-            ret = `<a class="imglink" href="${l}">${ret}</a>`;
+            ret = `<a class="imglink" target="_blank" title="Open image in new tab." href="${l}">${ret}</a>`;
         }
 
         if (caption) {
