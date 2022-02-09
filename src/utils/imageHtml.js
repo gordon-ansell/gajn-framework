@@ -182,18 +182,16 @@ class ImageHtml
             }
         }
 
-        /*
         if (null === this.biggestImage) {
             this.biggestImage = biggest;
         } else {
             let extb = path.extname(this.biggestImage);
             let extn = path.extname(biggest);
             let preferredFormats = ['.jpeg', '.jpg', '.png'];
-            if (!preferredFormats.contains(extb) && preferredFormats.contains(extn)) {
+            if (!preferredFormats.includes(extb) && preferredFormats.includes(extn)) {
                 this.biggestImage = biggest;
             }
         }
-        */
 
         if ("string" == typeof src) {
             if (this.hostname) {
