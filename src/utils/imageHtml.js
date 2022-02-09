@@ -161,6 +161,18 @@ class ImageHtml
             }
         }
 
+        let biggest = null;
+        let biggestSz = 0;
+        for (let s1 of src) {
+            let sp = s1.split(' ');
+            let sz = parseInt(s1[1].replace('w', ''));
+            if (sz > biggestSz) {
+                biggestSz = sz;
+                biggest = sp[0];
+            }
+        }
+
+        syslog.inspect(biggest, "error");
         syslog.inspect(src, "error");
         syslog.inspect(imgSpec, "error");
 
