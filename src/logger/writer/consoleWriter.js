@@ -42,16 +42,18 @@ class ConsoleWriter extends Writer
      */
     printProgress(progress, desc)
     {
-        this.progressIsActive = true;
-        process.stdout.clearLine();
-        process.stdout.cursorTo(0);
-        this.lastProgress = Math.round(progress);
-        let msg = this.lastProgress + '%';
-        if (desc && desc != '') {
-            this.lastProgressDesc = desc;
-            msg += ' ' + desc; 
+        if (Level.SILENT !== this.level) {
+            this.progressIsActive = true;
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+            this.lastProgress = Math.round(progress);
+            let msg = this.lastProgress + '%';
+            if (desc && desc != '') {
+                this.lastProgressDesc = desc;
+                msg += ' ' + desc; 
+            }
+            process.stdout.write(msg);
         }
-        process.stdout.write(msg);
     }
 
     /**
@@ -61,10 +63,12 @@ class ConsoleWriter extends Writer
      */
     endProgress()
     {
-        process.stdout.clearLine();
-        process.stdout.cursorTo(0);
-        this.progressIsActive = false;
-        this.lastProgressDesc = '';
+        if (Level.SILENT !== this.level) {
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+            this.progressIsActive = false;
+            this.lastProgressDesc = '';
+        }
     }
 
     /**
@@ -79,7 +83,7 @@ class ConsoleWriter extends Writer
     */
     _output(msg, level, context, extra)
     {
-        if (this.progressIsActive) {
+        if (this.progressIsActive && level.SILENT !== this.level) {
             process.stdout.clearLine();
             process.stdout.cursorTo(0);
         }
@@ -101,7 +105,7 @@ class ConsoleWriter extends Writer
                 break;
         }
 
-        if (this.progressIsActive) {
+        if (this.progressIsActive && level.SILENT !== this.level) {
             this.printProgress(this.lastProgress, this.lastProgressDesc);
         }
     }
