@@ -16,6 +16,7 @@ exports.EXCEPTION = 450;
 exports.CRITICAL = 500;
 exports.ALERT = 550;
 exports.EMERGENCY = 600;
+exports.SILENT = 999;
 
 exports.TRACE_TXT = 'trace';
 exports.DEBUG_TXT = 'debug';
@@ -27,6 +28,7 @@ exports.EXCEPTION_TXT = 'exception';
 exports.CRITICAL_TXT = 'critical';
 exports.ALERT_TXT = 'alert';
 exports.EMERGENCY_TXT = 'emergency';
+exports.SILENT_TXT = 'silent';
 
 const Conversions = {
     'trace': this.TRACE,
@@ -38,7 +40,8 @@ const Conversions = {
     'exception': this.EXCEPTION,
     'critical': this.CRITICAL,
     'alert': this.ALERT,
-    'emergency': this.EMERGENCY
+    'emergency': this.EMERGENCY,
+    'silent': this.SILENT
 };
 
 /**
