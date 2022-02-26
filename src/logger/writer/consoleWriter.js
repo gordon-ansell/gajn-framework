@@ -33,6 +33,12 @@ class ConsoleWriter extends Writer
     lastProgessDesc = '';
 
     /**
+     * Progress has just ended?
+     * @member {boolean}
+     */
+    progressEnded = false;
+
+    /**
      * Print a progress message.
      * 
      * @param   {number}    progress    Progress percent.
@@ -68,6 +74,7 @@ class ConsoleWriter extends Writer
             process.stdout.cursorTo(0);
             this.progressIsActive = false;
             this.lastProgressDesc = '';
+            this.progressEnded = true;
         }
     }
 
@@ -86,6 +93,11 @@ class ConsoleWriter extends Writer
         if (this.progressIsActive && level.SILENT !== this.level) {
             process.stdout.clearLine();
             process.stdout.cursorTo(0);
+        }
+
+        if (this.progressEnded && level.SILENT !== this.level) {
+            process.stdout.clearLine();
+            this.progressEnded = false;
         }
 
         switch (level) {
