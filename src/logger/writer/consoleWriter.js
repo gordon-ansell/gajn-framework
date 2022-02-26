@@ -46,7 +46,7 @@ class ConsoleWriter extends Writer
      * 
      * @return  {void} 
      */
-    printProgress(progress, desc)
+    async printProgress(progress, desc)
     {
         if (Level.SILENT !== this.level) {
             this.progressIsActive = true;
@@ -67,7 +67,7 @@ class ConsoleWriter extends Writer
      * 
      * @return  {void}
      */
-    endProgress()
+    async endProgress()
     {
         if (Level.SILENT !== this.level) {
             this.progressIsActive = false;

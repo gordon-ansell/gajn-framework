@@ -58,10 +58,10 @@ class Logger
      * 
      * @return  {void} 
      */
-    printProgress(progress, desc, writerName = 'console')
+    async printProgress(progress, desc, writerName = 'console')
     {
         if (writerName in this.#writers) {
-            this.#writers[writerName].printProgress(progress, desc);
+            await this.#writers[writerName].printProgress(progress, desc);
         }
     }
  
@@ -71,10 +71,10 @@ class Logger
      * @param   {string}    writerName  Writer name.
      * @return  {void}
      */
-    endProgress(writerName = 'console')
+    async endProgress(writerName = 'console')
     {
         if (writerName in this.#writers) {
-            this.#writers[writerName].endProgress();
+            await this.#writers[writerName].endProgress();
         }
     }
  
