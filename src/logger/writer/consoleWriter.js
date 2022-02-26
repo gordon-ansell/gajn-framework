@@ -70,12 +70,12 @@ class ConsoleWriter extends Writer
     endProgress()
     {
         if (Level.SILENT !== this.level) {
-            console.log('here');
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
             this.progressIsActive = false;
             this.lastProgressDesc = '';
             this.progressEnded = true;
+            console.log('here');
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
         }
     }
 
