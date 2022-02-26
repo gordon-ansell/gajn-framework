@@ -70,6 +70,7 @@ class ConsoleWriter extends Writer
     endProgress()
     {
         if (Level.SILENT !== this.level) {
+            process.stdout.cursorTo(0);
             process.stdout.clearLine();
             process.stdout.cursorTo(0);
             this.progressIsActive = false;
@@ -100,9 +101,7 @@ class ConsoleWriter extends Writer
             process.stdout.cursorTo(0);
             process.stdout.clearLine();
             this.progressEnded = false;
-        } else {
-            console.log('NOT Triggered');
-        }
+        } 
 
         switch (level) {
             case Level.TRACE:
