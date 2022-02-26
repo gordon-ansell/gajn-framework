@@ -99,6 +99,9 @@ class ConsoleWriter extends Writer
             this.progressEnded = false;
         } 
 
+        readline.clearLine(process.stdout, 0)
+        readline.cursorTo(process.stdout, 0, null)
+
         switch (level) {
             case Level.TRACE:
             case Level.DEBUG:
