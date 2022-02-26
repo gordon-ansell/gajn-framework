@@ -97,7 +97,7 @@ class ConsoleWriter extends Writer
         }
 
         if (this.progressEnded && level.SILENT !== this.level) {
-            console.log('Triggered');
+            console.log('Triggered 1');
             process.stdout.cursorTo(0);
             process.stdout.clearLine();
             this.progressEnded = false;
@@ -123,6 +123,13 @@ class ConsoleWriter extends Writer
         if (this.progressIsActive && level.SILENT !== this.level) {
             this.printProgress(this.lastProgress, this.lastProgressDesc);
         }
+
+        if (this.progressEnded && level.SILENT !== this.level) {
+            console.log('Triggered 2');
+            process.stdout.cursorTo(0);
+            process.stdout.clearLine();
+            this.progressEnded = false;
+        } 
     }
 }
 
