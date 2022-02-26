@@ -70,7 +70,7 @@ class ConsoleWriter extends Writer
     endProgress()
     {
         if (Level.SILENT !== this.level) {
-            process.stdout.cursorTo(0);
+            console.log('here');
             process.stdout.clearLine();
             process.stdout.cursorTo(0);
             this.progressIsActive = false;
