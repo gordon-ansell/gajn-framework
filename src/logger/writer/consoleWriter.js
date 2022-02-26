@@ -97,6 +97,7 @@ class ConsoleWriter extends Writer
 
         if (this.progressEnded && level.SILENT !== this.level) {
             process.stdout.clearLine();
+            process.stdout.cursorTo(0);
             this.progressEnded = false;
         }
 
