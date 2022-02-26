@@ -8,6 +8,7 @@
 
 const Level = require('../level');
 const Writer = require('./writer');
+const readline = require('readline');
 
 /**
  * The console log writer class.
@@ -44,8 +45,10 @@ class ConsoleWriter extends Writer
     {
         if (Level.SILENT !== this.level) {
             this.progressIsActive = true;
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
+            readline.clearLine(process.stdout, 0)
+            readline.cursorTo(process.stdout, 0, null)
+            //process.stdout.clearLine();
+            //process.stdout.cursorTo(0);
             this.lastProgress = Math.round(progress);
             let msg = this.lastProgress + '%';
             if (desc && desc != '') {
@@ -66,9 +69,11 @@ class ConsoleWriter extends Writer
         if (Level.SILENT !== this.level) {
             this.progressIsActive = false;
             this.lastProgressDesc = '';
-            process.stdout.cursorTo(0);
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
+            readline.clearLine(process.stdout, 0)
+            readline.cursorTo(process.stdout, 0, null)
+            //process.stdout.cursorTo(0);
+            //process.stdout.clearLine();
+            //process.stdout.cursorTo(0);
         }
     }
 
@@ -85,10 +90,12 @@ class ConsoleWriter extends Writer
     _output(msg, level, context, extra)
     {
         if ((true === this.progressEnded) && (level.SILENT !== this.level)) {
-            console.log('Triggered 1');
-            process.stdout.cursorTo(0);
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
+            //console.log('Triggered 1');
+            readline.clearLine(process.stdout, 0)
+            readline.cursorTo(process.stdout, 0, null)
+            //process.stdout.cursorTo(0);
+            //process.stdout.clearLine();
+            //process.stdout.cursorTo(0);
             this.progressEnded = false;
         } 
 
