@@ -90,17 +90,17 @@ class ConsoleWriter extends Writer
     */
     _output(msg, level, context, extra)
     {
-        if (this.progressIsActive && (level.SILENT !== this.level)) {
-            process.stdout.clearLine();
-            process.stdout.cursorTo(0);
-        }
-
         if ((true === this.progressEnded) && (level.SILENT !== this.level)) {
             console.log('Triggered 1');
             process.stdout.cursorTo(0);
             process.stdout.clearLine();
             this.progressEnded = false;
         } 
+
+        if (this.progressIsActive && (level.SILENT !== this.level)) {
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+        }
 
         switch (level) {
             case Level.TRACE:
