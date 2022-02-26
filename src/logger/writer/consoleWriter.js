@@ -96,6 +96,7 @@ class ConsoleWriter extends Writer
         }
 
         if (this.progressEnded && level.SILENT !== this.level) {
+            console.log('Triggered');
             process.stdout.cursorTo(0);
             process.stdout.clearLine();
             this.progressEnded = false;
