@@ -1,14 +1,14 @@
 {
-	"name": "gajn-framework",
+	"name": "js-framework",
 	"version": "0.1.0",
 	"description": "My common Node framework",
-	"homepage": "https://gordonansell.com/gajn-framework",
+	"homepage": "https://gordonansell.com/js-framework",
 	"license": "MIT",
 	"minimum-stability": "dev",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/gordon-ansell/gajn-framework"
+		"url": "git+https://github.com/gordon-ansell/js-framework"
 	},
 	"authors": [
 		{
