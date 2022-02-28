@@ -320,7 +320,11 @@ class HtmlGenerator
 			data = this.data;
 		}
         if (null !== data) {
-            ret += data;
+            if (data instanceof HtmlGenerator) {
+                ret += data.render();
+            } else {
+                ret += data;
+            }
         }
 
         if (null !== this.beforeClose) {
