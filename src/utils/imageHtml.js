@@ -559,6 +559,7 @@ class ImageHtml
 
         // Are we lazy-loading?
         if (this.opts.lazyload) {
+            debugf(`We are lazy-loading ${src}`);
             if (imgSpec.class) {
                 if (!imgSpec.class.includes('lazyload')) {
                     imgSpec.class += ' lazyload';
@@ -572,6 +573,7 @@ class ImageHtml
         // Do we need to qualify the src?
         if (this.hostname) {
             imgSpec[srcName] = this.qualify(src);
+            debugf(`We've qualified the src name as ${imgSpec[srcName]}`);
         } else {
             imgSpec[srcName] = src;
         }
@@ -633,21 +635,21 @@ class ImageHtml
             }
         }      
 
-       let ret = imgGen;  
+       let ret = imgGen.render();  
 
         // Link?
         if (link) {
             let lk = ('self' === link.trim()) ? imgSpec.src : link.trim();
             let linkGen = new HtmlGenerator('a', 
                 {class: "imgLink", target: "_blank", title: "Open image in new tab.", href: lk},
-                imgGen
+                ret
             );
-            ret = linkGen;
+            ret = linkGen.render();
         }
 
         // Figure?
         if (figureGen) {
-            ret = figureGen.setData(ret);
+            ret = figureGen.setData(ret).render();
         }
 
         // Do we need meta?
@@ -665,7 +667,7 @@ class ImageHtml
 
         if (!rss) {
             let nos = new HtmlGenerator('noscript', null, imgGenNoScript);
-            return ret.render() + nos.render() + this.schema;
+            return ret + nos.render() + this.schema;
         } else {
             return imgGenNoScript.render() + this.schema;
         }
