@@ -528,10 +528,10 @@ class ImageHtml
 
         // If we have a caption, this will need a figure.
         if (imgSpec.caption) {
+            syslog.error(`We have a caption`);
             figureGen = new HtmlFigure();
             figureGen.setCaption(imgSpec.caption);
             delete imgSpec.caption;
-                syslog.inspect(figureGen);
 
             // The class will go on the figure instead of the image.
             if (imgSpec.class) {
