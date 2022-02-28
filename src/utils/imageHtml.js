@@ -180,7 +180,7 @@ class ImageHtml
                     biggestSz = sz;
                     biggest = sp[0];
                 }
-                if (sz < smallest) {
+                if (sz < smallestSz) {
                     smallestSz = sz;
                     smallest = sp[0]
                 }
@@ -194,6 +194,9 @@ class ImageHtml
                 smallest = src;
             }
         }
+
+        this.biggestSz = biggestSz;
+        this.smallestSz = smallestSz;
 
         if (null === this.biggestImage) {
             this.biggestImage = biggest;
@@ -426,8 +429,8 @@ class ImageHtml
                 count++;
             }
 
-            console.log(this.biggestImage);
-            console.log(this.smallestImage);
+            console.log(this.biggestSz + ' : ' + this.biggestImage);
+            console.log(this.smallestSz + ' : ' + this.smallestImage);
             /*
             for (let mime in src) {
                 if (count == Object.keys(src).length) {
