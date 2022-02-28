@@ -713,7 +713,7 @@ class ImageHtml
         // Set the srcset. If we're lazt loading this will be data-srcset, otherwise just srcset.
         // Deal with sizes whilst we're at it.
         if (this.opts.lazyload) {
-            sourceGen.setAttrib('data-srcset', setSpec.join(' '));
+            sourceGen.setAttrib('data-srcset', setSpec.join(', '));
             if (null === sizes) {
                 sourceGen.setAttrib(`data-sizes`, 'auto');
             } else {
@@ -727,7 +727,7 @@ class ImageHtml
             }
             sourceGen.setAttrib('srcset', src);
         } else {
-            sourceGen.setAttrib('srcset', setSpec.join(' '));
+            sourceGen.setAttrib('srcset', setSpec.join(', '));
             if (null !== sizes) {
                 sourceGen.setAttrib(`sizes`, sizes);
             }
