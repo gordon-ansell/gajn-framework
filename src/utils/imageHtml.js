@@ -616,7 +616,7 @@ class ImageHtml
 
                     // Add what's left to the noscript.
                     } else {
-                        imgGenNoScript.asetAttrib(name, imgSpec[name]);
+                        imgGenNoScript.setAttrib(name, imgSpec[name]);
                     }
                 }
             }
