@@ -525,21 +525,21 @@ class ImageHtml
 
         // Extract the libk, if any.
         if (imgSpec.link) {
-            debug(`Has link: ${imgLink.link}`);
+            debug(`Has link: ${imgSpec.link}`);
             link = imgSpec.link;
             delete imgSpec.link;
         }
 
         // If we have a caption, this will need a figure.
         if (imgSpec.caption) {
-            debug(`Has caption (therfore figure): ${imgLink.caption}`);
+            debug(`Has caption (therfore figure): ${imgSpec.caption}`);
             figureGen = new HtmlFigure();
             figureGen.setCaption(imgSpec.caption);
             delete imgSpec.caption;
 
             // The class will go on the figure instead of the image.
             if (imgSpec.class) {
-                debug(`Has class (needed on figure): ${imgLink.class}`);
+                debug(`Has class (needed on figure): ${imgSpec.class}`);
                 figureGen.appendAttrib('class', imgSpec.class);
                 let cl = (this.opts.figureClass) ? this.opts.figureClass : 'respimg';
                 figureGen.appendAttrib('class', cl);
