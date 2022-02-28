@@ -453,11 +453,15 @@ class ImageHtml
             let base = src[src.length - 1];
             let srch = 'src';
             let load = '';
+            let alt = '';
             if (this.opts.lazyload) {
                 srch = 'data-src';
                 load = ` load="lazy"`;
             }
-            ret += `<img ${srch}="${this.smallestImage}" width="${this.biggestWidth}" height="${this.biggestheight}"${load}  />`;
+            if (imgSpec.alt) {
+                alt = ` alt="${imgSpec.alt}"`;
+            }
+            ret += `<img ${srch}="${this.smallestImage}" width="${this.biggestWidth}" height="${this.biggestHeight}" class="${imgSpec.class}"${load}${alt}  />`;
 
             /*
             for (let mime in src) {
