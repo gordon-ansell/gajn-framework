@@ -12,7 +12,6 @@ const path = require('path');
 const fs = require('fs');
 const imageSize = require("image-size");
 const HtmlGenerator = require('../html/htmlGenerator');
-const HtmlAttribs = require('../html/htmlAttribs');
 const HtmlFigure = require('../html/htmlFigure');
 
 /**
@@ -543,7 +542,7 @@ class ImageHtml
             }
         }
 
-        syslog.inspect(figureGen.attribs, "error")
+        syslog.inspect(figureGen, "error")
 
         // Are we rendering for RSS?
         if (imgSpec.rss && imgSpec.rss == true) {
