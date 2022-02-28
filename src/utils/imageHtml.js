@@ -193,7 +193,7 @@ class ImageHtml
                 if (is.height > biggestHeight) {
                     biggestHeight = is.height;
                 }
-                if (is.height < smallesHeight) {
+                if (is.height < smallestHeight) {
                     smallestHeight = is.height;
                 }
             }
