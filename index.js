@@ -20,6 +20,10 @@ exports.ConsoleWriter = require('./src/logger/writer/consoleWriter');
 exports.FileWriter = require('./src/logger/writer/fileWriter');
 exports.syslog = require('./src/logger/syslog');
 
+// HTML.
+exports.HtmlAttribs = require('./src/html/htmlAttribs');
+exports.HtmlGenerator = require('./src/html/htmlGenerator');
+
 // FS.
 exports.FsParser = require('./src/fs/fsParser');
 exports.fsutils = require('./src/fs/fsutils');
