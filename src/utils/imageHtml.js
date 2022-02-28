@@ -545,7 +545,7 @@ class ImageHtml
                 figureGen.appendAttrib('class', cl);
                 delete imgSpec.class;
             }
-            debugf(`Figure object initialised with: %O`, figureGen);
+            //debugf(`Figure object initialised with: %O`, figureGen);
         }
 
         // Are we rendering for RSS?
@@ -638,6 +638,10 @@ class ImageHtml
                 }
             }
         }      
+
+        if (null !== figureGen) {
+            debugf(`Figure object just AFTER value loop: %O`, figureGen);
+        }
 
        let ret = imgGen.render();  
 
