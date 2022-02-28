@@ -444,13 +444,18 @@ class ImageHtml
         if (complex) {
 
             let count = 1;
-            
+
             for (let mime in src) {
                 ret += this.createConstruct(src[mime], imgSpec, 'source', mime, null, null, rss)
                 count++;
             }
 
-            //ret += `<img `
+            let base = src[src.length - 1];
+            let srch = 'src';
+            if (this.opts.lazyload) {
+                let srch = 'data-src';
+            }
+            ret += `<img ${srch}=${this.smallestImage} />`;
 
             /*
             for (let mime in src) {
