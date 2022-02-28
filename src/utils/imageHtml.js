@@ -568,6 +568,8 @@ class ImageHtml
         // Push the src into meta.
         metaSrcs.push(src);
 
+        syslog.inspect(imgSpec, "error");
+
         // Now loop for the rest of the imgSpec and set attributes or do other stuff accordingly.
         for (let name in imgSpec) {
 
@@ -623,8 +625,6 @@ class ImageHtml
         }      
 
         let ret = imgGen;  
-
-        console.log(ret.render());  
 
         // Link?
         if (link) {
