@@ -829,7 +829,7 @@ class ImageHtml
         // Determine the source.
         for (let type in obj) {
             if (this.opts.baseTypes.includes(type)) {
-                let last = bj[type].files.length - 1;
+                let last = obj[type].files.length - 1;
                 if (this.opts.lazyload) {
                     imgSpec['src'] = obj[type].files[0].file;
                     imgSpec['data-src'] = obj[type].files[last].file;
