@@ -508,8 +508,8 @@ class ImageHtml
      */
     renderSimple(src, imgSpec, width = null, height = null)
     {
-        let imgGen = new HtmlGenerator('image');
-        let imgGenNoScript = new HtmlGenerator('image');
+        let imgGen = new HtmlGenerator('img');
+        let imgGenNoScript = new HtmlGenerator('img');
         let figureGen = null;
 
         let link = null;
