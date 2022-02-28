@@ -927,7 +927,7 @@ class ImageHtml
 
         // Picture.
         let pictureGen = new HtmlGenerator('picture');
-        let ret = pictureGen.render(sources.join("\n") + "\n" + ret);
+        ret = pictureGen.render(sources.join("\n") + "\n" + ret);
 
         // Figure?
         if (figureGen) {
