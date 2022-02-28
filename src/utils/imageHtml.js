@@ -534,8 +534,9 @@ class ImageHtml
 
             // The class will go on the figure instead of the image.
             if (imgSpec.class) {
-                figureGen.setAttrib('class', imgSpec.class);
-                figureGen.appendAttrib('class', (this.opts.figureClass || 'respimg'));
+                figureGen.appendAttrib('class', imgSpec.class);
+                let cl = (this.opts.figureClass) ? this.opts.figureClass : 'respimg';
+                figureGen.appendAttrib('class', cl);
                 delete imgSpec.class;
             }
         }
