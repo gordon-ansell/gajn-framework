@@ -23,6 +23,7 @@
     "dependencies": {
         "dateformat": "^2.0.0",
 		"deepmerge": "*",
+        "image-size": "*",
 		"is-plain-object": "*",
         "rimraf": "*"
     },

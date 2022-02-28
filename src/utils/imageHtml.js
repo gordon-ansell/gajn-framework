@@ -10,6 +10,7 @@ const syslog = require('../logger/syslog');
 const { URL } = require('url');
 const path = require('path');
 const fs = require('fs');
+const imageSize = require("image-size");
 
 /**
  * Image html renderer.
@@ -176,8 +177,8 @@ class ImageHtml
         if (Array.isArray(src)) {
             for (let s1 of src) {
                 let sp = s1.split(' ');
-                let stats = fs.statSync(path.resolve('.' + sp[0]));
-                syslog.inspect(stats, "error");
+                let is = imageSize(path.resolve('.' + sp[0]));
+                syslog.inspect(is, "error");
                 let sz = parseInt(sp[1].replace('w', ''));
                 if (sz > biggestSz) {
                     biggestSz = sz;
