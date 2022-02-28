@@ -452,10 +452,12 @@ class ImageHtml
 
             let base = src[src.length - 1];
             let srch = 'src';
+            let load = '';
             if (this.opts.lazyload) {
-                let srch = 'data-src';
+                srch = 'data-src';
+                load = ` load="lazy"`;
             }
-            ret += `<img ${srch}=${this.smallestImage} />`;
+            ret += `<img ${srch}="${this.smallestImage}" width="${this.biggestWidth}" height="${this.biggestheight}"${load}  />`;
 
             /*
             for (let mime in src) {
