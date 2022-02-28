@@ -23,6 +23,7 @@ exports.syslog = require('./src/logger/syslog');
 // HTML.
 exports.HtmlAttribs = require('./src/html/htmlAttribs');
 exports.HtmlGenerator = require('./src/html/htmlGenerator');
+exports.HtmlFigure = require('./src/html/htmlFigure');
 
 // FS.
 exports.FsParser = require('./src/fs/fsParser');

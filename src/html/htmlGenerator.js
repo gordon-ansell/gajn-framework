@@ -101,6 +101,19 @@ class HtmlGenerator
     }
 
     /**
+     * Set the data.
+     * 
+     * @param   {any}       data    Data to set.
+     * 
+     * @return  {HtmlGenerator}
+     */
+    setData(data)
+    {
+        this.data = data;
+        return this;
+    }
+
+    /**
      * See if we have an attribute.
      * 
      * @param   {string}    name    Name of attribute to test.
@@ -253,6 +266,16 @@ class HtmlGenerator
     {
         this.beforeClose = something;
         return this;
+    }
+
+    /**
+     * Get the before close thing.
+     * 
+     * @return  {HtmlGenerator|any}
+     */
+    getBeforeClose()
+    {
+        return this.beforeClose;
     }
 
     /**
