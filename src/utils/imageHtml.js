@@ -567,7 +567,7 @@ class ImageHtml
                 imgSpec.class = 'lazyload';
             }
             srcName = 'data-src';
-            imgGen.setAttribute('loading', 'lazy');
+            imgGen.setAttrib('loading', 'lazy');
         }
 
         // Do we need to qualify the src?
@@ -823,7 +823,7 @@ class ImageHtml
                 imgSpec.class = 'lazyload';
             }
             srcName = 'data-src';
-            imgGen.setAttribute('loading', 'lazy');
+            imgGen.setAttrib('loading', 'lazy');
         }
 
         // Determine the source.
