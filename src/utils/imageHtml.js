@@ -543,6 +543,8 @@ class ImageHtml
             }
         }
 
+        syslog.inspect(figureGen.attribs, "error")
+
         // Are we rendering for RSS?
         if (imgSpec.rss && imgSpec.rss == true) {
             rss = true;
