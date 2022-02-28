@@ -542,7 +542,9 @@ class ImageHtml
             }
         }
 
-        syslog.inspect(figureGen, "error")
+        if (null !== figureGen) {
+            syslog.inspect(figureGen.attribs, "error");
+        }
 
         // Are we rendering for RSS?
         if (imgSpec.rss && imgSpec.rss == true) {
