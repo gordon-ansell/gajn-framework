@@ -531,6 +531,7 @@ class ImageHtml
             figureGen = new HtmlFigure();
             figureGen.setCaption(imgSpec.caption);
             delete imgSpec.caption;
+                syslog.inspect(figureGen);
 
             // The class will go on the figure instead of the image.
             if (imgSpec.class) {
@@ -538,7 +539,6 @@ class ImageHtml
                 let cl = (this.opts.figureClass) ? this.opts.figureClass : 'respimg';
                 figureGen.appendAttrib('class', cl);
                 delete imgSpec.class;
-                syslog.inspect(figureGen);
             }
         }
 
