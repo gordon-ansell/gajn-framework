@@ -14,7 +14,8 @@ const imageSize = require("image-size");
 const HtmlGenerator = require('../html/htmlGenerator');
 const HtmlFigure = require('../html/htmlFigure');
 const debug = require('debug')('Framework:utils:ImageHtml'),
-      debugf = require('debug')('Full.Framework:utils:ImageHtml');
+      debugf = require('debug')('Full.Framework:utils:ImageHtml'),
+      debugs = require('debug')('Test.Framework:utils:ImageHtml'); 
 
 
 /**
@@ -510,6 +511,8 @@ class ImageHtml
      */
     renderSimple(src, imgSpec, width = null, height = null)
     {
+        let trap = "/assets/images/posts/2022-01-18-eternals.jpeg";
+
         debug(`==> In renderSimple for ${src}`);
         let imgGen = new HtmlGenerator('img');
         let imgGenNoScript = new HtmlGenerator('img');
@@ -541,10 +544,11 @@ class ImageHtml
             if (imgSpec.class) {
                 debug(`Has class (needed on figure): ${imgSpec.class}`);
                 figureGen.appendAttrib('class', imgSpec.class);
-                let cl = (this.opts.figureClass) ? this.opts.figureClass : 'respimg';
-                figureGen.appendAttrib('class', cl);
-                delete imgSpec.class;
             }
+
+            let cl = (this.opts.figureClass) ? this.opts.figureClass : 'respimg';
+            figureGen.appendAttrib('class', cl);
+            delete imgSpec.class;
             //debugf(`Figure object initialised with: %O`, figureGen);
         }
 
