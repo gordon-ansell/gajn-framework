@@ -571,7 +571,7 @@ class ImageHtml
         // Now loop for the rest of the imgSpec and set attributes or do other stuff accordingly.
         for (let name in imgSpec) {
 
-            if (name.startsWith('__')) {
+            if (!name.startsWith('__')) {
 
                 // Meta elements all start with @.
                 if (name.startsWith('@')) {
@@ -622,8 +622,7 @@ class ImageHtml
             }
         }      
 
-            syslog.inspect(imgGen.attribs, "error");
-        let ret = imgGen;  
+       let ret = imgGen;  
 
         // Link?
         if (link) {

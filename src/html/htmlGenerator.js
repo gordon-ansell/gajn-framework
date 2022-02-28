@@ -151,7 +151,6 @@ class HtmlGenerator
     setAttrib(name, val)
     {
         this.attribs.set(name, val);
-        console.log(`Setting ${name} = ${val}`)
         return this;
     }
 
