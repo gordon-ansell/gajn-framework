@@ -664,8 +664,7 @@ class ImageHtml
         // Figure?
         if (figureGen) {
             debugf(`Figure object just before we render it: %O`, figureGen);
-            figureGen.setData(ret);
-            ret = figureGen.render();
+            ret = figureGen.render(ret);
         }
 
         // Do we need meta?
