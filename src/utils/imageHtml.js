@@ -13,6 +13,9 @@ const fs = require('fs');
 const imageSize = require("image-size");
 const HtmlGenerator = require('../html/htmlGenerator');
 const HtmlFigure = require('../html/htmlFigure');
+const debug = require('debug')('Framework:utils:ImageHtml'),
+      debugf = require('debug')('Full.Framework:utils:ImageHtml');
+
 
 /**
  * Image html renderer.
@@ -507,6 +510,7 @@ class ImageHtml
      */
     renderSimple(src, imgSpec, width = null, height = null)
     {
+        debug(`==> In renderSimple for ${src}`);
         let imgGen = new HtmlGenerator('img');
         let imgGenNoScript = new HtmlGenerator('img');
         let figureGen = null;
@@ -521,35 +525,36 @@ class ImageHtml
 
         // Extract the libk, if any.
         if (imgSpec.link) {
+            debug(`Has link: ${imgLink.link}`);
             link = imgSpec.link;
             delete imgSpec.link;
         }
 
         // If we have a caption, this will need a figure.
         if (imgSpec.caption) {
-            syslog.error(`We have a caption`);
+            debug(`Has caption (therfore figure): ${imgLink.caption}`);
             figureGen = new HtmlFigure();
             figureGen.setCaption(imgSpec.caption);
             delete imgSpec.caption;
 
             // The class will go on the figure instead of the image.
             if (imgSpec.class) {
-                syslog.error(`We have a class`);
+                debug(`Has class (needed on figure): ${imgLink.class}`);
                 figureGen.appendAttrib('class', imgSpec.class);
                 let cl = (this.opts.figureClass) ? this.opts.figureClass : 'respimg';
                 figureGen.appendAttrib('class', cl);
                 delete imgSpec.class;
             }
-        }
-
-        if (null !== figureGen) {
-            syslog.inspect(figureGen.attribs, "error");
+            debugf(`Figure object initialised with: %O`, figureGen);
         }
 
         // Are we rendering for RSS?
         if (imgSpec.rss && imgSpec.rss == true) {
             rss = true;
+            debug(`Rendering image for RSS.`);
             delete imgSpec.rss;
+        } else {
+            debug(`NOT rendering image for RSS.`);
         }
 
         // Are we lazy-loading?
