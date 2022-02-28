@@ -171,9 +171,11 @@ class ImageHtml
         }
 
         let biggest = null;
-        let biggestSz = 0;
+        let biggestWidth = 0;
+        let biggestHeight = 0;
         let smallest = null;
-        let smallestSz = 99999;
+        let smallestWidth = 99999;
+        let smallestHeight = 99999;
         if (Array.isArray(src)) {
             for (let s1 of src) {
                 let sp = s1.split(' ');
@@ -181,26 +183,41 @@ class ImageHtml
                 syslog.inspect(is, "error");
                 let sz = parseInt(sp[1].replace('w', ''));
                 if (sz > biggestSz) {
-                    biggestSz = sz;
+                    biggestWidth = sz;
                     biggest = sp[0];
                 }
                 if (sz < smallestSz) {
-                    smallestSz = sz;
+                    smallestWidth = sz;
                     smallest = sp[0]
+                }
+                if (is.height > biggestHeight) {
+                    biggestHeight = is.height;
+                }
+                if (is.height < smallesHeight) {
+                    smallestHeight = is.height;
                 }
             }
         } else {
+            let is;
             if (-1 !== src.indexOf(' ')) {
+                is = imageSize(path.resolve('.' + src.split(' ')[0]));
                 biggest = src.split(' ')[0];
                 smallest = src.split(' ')[0];
             } else {
+                is = imageSize(path.resolve('.' + src));
                 biggest = src;
                 smallest = src;
             }
+            biggestHeight = is.height;
+            smallestHeight = is.height;
+            biggestWidth = is.width;
+            smallestWidth = is.width;
         }
 
-        this.biggestSz = biggestSz;
-        this.smallestSz = smallestSz;
+        this.biggestWidth = biggestWidth;
+        this.smallestWidth = smallestWidth;
+        this.biggestHeight = biggestHeight;
+        this.smallestHeight = smallestHeight;
 
         if (null === this.biggestImage) {
             this.biggestImage = biggest;
