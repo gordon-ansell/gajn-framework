@@ -622,7 +622,9 @@ class ImageHtml
             }
         }      
 
-        let ret = imgGen;    
+        let ret = imgGen;  
+
+        console.log(ret.render());  
 
         // Link?
         if (link) {
