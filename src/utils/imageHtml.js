@@ -656,7 +656,7 @@ class ImageHtml
             let nos = new HtmlGenerator('noscript', null, imgGenNoScript);
             return ret.render() + nos.render() + this.schema;
         } else {
-            return retns.render() + this.schema;
+            return imgGenNoScript.render() + this.schema;
         }
     }
 }
