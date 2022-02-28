@@ -176,7 +176,7 @@ class ImageHtml
         if (Array.isArray(src)) {
             for (let s1 of src) {
                 let sp = s1.split(' ');
-                let stats = fs.statSync(sp[0]);
+                let stats = fs.statSync(path.resolve(sp[0]));
                 syslog.inspect(stats, "error");
                 let sz = parseInt(sp[1].replace('w', ''));
                 if (sz > biggestSz) {
