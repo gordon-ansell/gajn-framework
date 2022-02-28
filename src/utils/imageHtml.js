@@ -182,11 +182,11 @@ class ImageHtml
                 let is = imageSize(path.resolve('.' + sp[0]));
                 syslog.inspect(is, "error");
                 let sz = parseInt(sp[1].replace('w', ''));
-                if (sz > biggestSz) {
+                if (sz > biggestWidth) {
                     biggestWidth = sz;
                     biggest = sp[0];
                 }
-                if (sz < smallestSz) {
+                if (sz < smallestWidth) {
                     smallestWidth = sz;
                     smallest = sp[0]
                 }
