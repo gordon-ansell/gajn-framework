@@ -622,7 +622,7 @@ class ImageHtml
             }
         }      
 
-            syslog.inspect(imgGen, "error");
+            syslog.inspect(imgGen.attribs, "error");
         let ret = imgGen;  
 
         // Link?
