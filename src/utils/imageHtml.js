@@ -591,7 +591,7 @@ class ImageHtml
                 } else {
 
                     // Simply save in the first instance.
-                    imgGen.setAttrib(name, imgSpec[name]);
+                    imgGen.appendAttrib(name, imgSpec[name]);
 
                     // Special things to add if the name is the srcName.
                     if (name === srcName) {
@@ -611,12 +611,12 @@ class ImageHtml
                     } else if ('class' === name) {
                         let cl = imgSpec[name].replace('lazyload', '').trim();
                         if ('' !== cl) {
-                            imgGenNoScript.setAttrib('class', cl);
+                            imgGenNoScript.appendAttrib('class', cl);
                         }
 
                     // Add what's left to the noscript.
                     } else {
-                        imgGenNoScript.setAttrib(name, imgSpec[name]);
+                        imgGenNoScript.appendAttrib(name, imgSpec[name]);
                     }
                 }
             }
