@@ -581,6 +581,10 @@ class ImageHtml
         // Push the src into meta.
         metaSrcs.push(src);
 
+        if (null !== figureGen) {
+            debugf(`Figure object just before value loop: %O`, figureGen);
+        }
+
         // Now loop for the rest of the imgSpec and set attributes or do other stuff accordingly.
         for (let name in imgSpec) {
 
