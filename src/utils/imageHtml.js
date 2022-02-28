@@ -581,7 +581,9 @@ class ImageHtml
         // Push the src into meta.
         metaSrcs.push(src);
 
+        let hasFigure = false;
         if (null !== figureGen) {
+            hasFigure = true;
             debugf(`Figure object just before value loop: %O`, figureGen);
         }
 
@@ -639,8 +641,12 @@ class ImageHtml
             }
         }      
 
-        if (null !== figureGen) {
-            debugf(`Figure object just AFTER value loop: %O`, figureGen);
+        if (hasFigure) {
+            if (null !== figureGen) {
+                debugf(`Figure object just AFTER value loop: %O`, figureGen);
+            } else {
+                debug(`SOMETHING HAS GONE WRONG - WE SHOULD HAVE A FIGURE.`);
+            }
         }
 
        let ret = imgGen.render();  
