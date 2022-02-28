@@ -814,7 +814,7 @@ class ImageHtml
 
         // Are we lazy-loading?
         if (this.opts.lazyload) {
-            debugf(`We are lazy-loading ${src}`);
+            debugf(`We are lazy-loading ${base}`);
             if (imgSpec.class) {
                 if (!imgSpec.class.includes('lazyload')) {
                     imgSpec.class += ' lazyload';
