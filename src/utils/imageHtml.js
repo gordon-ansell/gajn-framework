@@ -40,9 +40,14 @@ class ImageHtml
     hostname = null;
 
     /**
-     * Biggest images.
+     * Biggest image.
      */
     biggestImage = null;
+
+    /**
+     * Smallest image.
+     */
+    smallestImage = null;
 
     /**
      * Constructor.
@@ -165,6 +170,8 @@ class ImageHtml
 
         let biggest = null;
         let biggestSz = 0;
+        let smallest = null;
+        let smallestSz = 99999;
         if (Array.isArray(src)) {
             for (let s1 of src) {
                 let sp = s1.split(' ');
@@ -173,12 +180,18 @@ class ImageHtml
                     biggestSz = sz;
                     biggest = sp[0];
                 }
+                if (sz < smallest) {
+                    smallestSz = sz;
+                    smallest = sp[0]
+                }
             }
         } else {
             if (-1 !== src.indexOf(' ')) {
                 biggest = src.split(' ')[0];
+                smallest = src.split(' ')[0];
             } else {
                 biggest = src;
+                smallest = src;
             }
         }
 
@@ -190,6 +203,17 @@ class ImageHtml
             let preferredFormats = ['.jpeg', '.jpg', '.png'];
             if (!preferredFormats.includes(extb) && preferredFormats.includes(extn)) {
                 this.biggestImage = biggest;
+            }
+        }
+
+        if (null === this.smallestImage) {
+            this.smallestImage = smallest;
+        } else {
+            let extb = path.extname(this.smallestImage);
+            let extn = path.extname(smallest);
+            let preferredFormats = ['.jpeg', '.jpg', '.png'];
+            if (!preferredFormats.includes(extb) && preferredFormats.includes(extn)) {
+                this.smallestImage = smallest;
             }
         }
 
@@ -398,6 +422,14 @@ class ImageHtml
 
             let count = 1;
             for (let mime in src) {
+                ret += this.createConstruct(src[mime], imgSpec, 'source', mime, null, null, rss)
+                count++;
+            }
+
+            console.log(this.biggestImage);
+            console.log(this.smallestImage);
+            /*
+            for (let mime in src) {
                 if (count == Object.keys(src).length) {
                     ret += this.createConstruct(src[mime], imgSpec, 'img', null, w, h, rss)
                 } else {
@@ -405,6 +437,7 @@ class ImageHtml
                 }
                 count++;
             }
+            */
 
             if (count > 1) {
                 ret = '<picture>' + ret + '</picture>';
