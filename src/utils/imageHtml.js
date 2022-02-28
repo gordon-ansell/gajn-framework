@@ -538,6 +538,7 @@ class ImageHtml
                 let cl = (this.opts.figureClass) ? this.opts.figureClass : 'respimg';
                 figureGen.appendAttrib('class', cl);
                 delete imgSpec.class;
+                syslog.inspect(figureGen);
             }
         }
 
