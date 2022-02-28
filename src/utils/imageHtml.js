@@ -535,6 +535,7 @@ class ImageHtml
 
             // The class will go on the figure instead of the image.
             if (imgSpec.class) {
+                syslog.error(`We have a class`);
                 figureGen.appendAttrib('class', imgSpec.class);
                 let cl = (this.opts.figureClass) ? this.opts.figureClass : 'respimg';
                 figureGen.appendAttrib('class', cl);
