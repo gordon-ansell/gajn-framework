@@ -174,6 +174,7 @@ class ImageHtml
         let smallestSz = 99999;
         if (Array.isArray(src)) {
             for (let s1 of src) {
+                console.log(s1);
                 let sp = s1.split(' ');
                 let sz = parseInt(sp[1].replace('w', ''));
                 if (sz > biggestSz) {
@@ -429,8 +430,8 @@ class ImageHtml
                 count++;
             }
 
-            console.log(this.biggestSz + ' : ' + this.biggestImage);
-            console.log(this.smallestSz + ' : ' + this.smallestImage);
+            ret += `<img`
+
             /*
             for (let mime in src) {
                 if (count == Object.keys(src).length) {
