@@ -180,7 +180,6 @@ class ImageHtml
             for (let s1 of src) {
                 let sp = s1.split(' ');
                 let is = imageSize(path.resolve('.' + sp[0]));
-                syslog.inspect(is, "error");
                 let sz = parseInt(sp[1].replace('w', ''));
                 if (sz > biggestWidth) {
                     biggestWidth = sz;
@@ -445,12 +444,13 @@ class ImageHtml
         if (complex) {
 
             let count = 1;
+            
             for (let mime in src) {
                 ret += this.createConstruct(src[mime], imgSpec, 'source', mime, null, null, rss)
                 count++;
             }
 
-            //ret += `<img`
+            //ret += `<img `
 
             /*
             for (let mime in src) {
