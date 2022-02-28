@@ -429,8 +429,8 @@ class ImageHtml
                 count++;
             }
 
-            //console.log(this.biggestSz + ' : ' + this.biggestImage);
-            //console.log(this.smallestSz + ' : ' + this.smallestImage);
+            console.log(this.biggestSz + ' : ' + this.biggestImage);
+            console.log(this.smallestSz + ' : ' + this.smallestImage);
             /*
             for (let mime in src) {
                 if (count == Object.keys(src).length) {
