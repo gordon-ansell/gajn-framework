@@ -14,8 +14,7 @@ const imageSize = require("image-size");
 const HtmlGenerator = require('../html/htmlGenerator');
 const HtmlFigure = require('../html/htmlFigure');
 const debug = require('debug')('Framework:utils:ImageHtml'),
-      debugf = require('debug')('Full.Framework:utils:ImageHtml'),
-      debugs = require('debug')('Test.Framework:utils:ImageHtml'); 
+      debugf = require('debug')('Full.Framework:utils:ImageHtml');
 
 
 /**
@@ -502,17 +501,13 @@ class ImageHtml
     /**
      * Simple render.
      * 
-     * @param   {string|object}     src         Source.
-     * @param   {object}            imgSpec     Image spec.
-     * @param   {number}            width       Width.
-     * @param   {number}            height      Height.
+     * @param   {string}            src         Source.
+     * @param   {object}            imgSpec     Image spec passed in markdown.
      * 
      * @return  {string}
      */
-    renderSimple(src, imgSpec, width = null, height = null)
+    renderSimple(src, imgSpec)
     {
-        let trap = "/assets/images/posts/2022-01-18-eternals.jpeg";
-
         debug(`==> In renderSimple for ${src}`);
         let imgGen = new HtmlGenerator('img');
         let imgGenNoScript = new HtmlGenerator('img');
@@ -572,6 +567,7 @@ class ImageHtml
                 imgSpec.class = 'lazyload';
             }
             srcName = 'data-src';
+            imgGen.setAttribute('loading', 'lazy');
         }
 
         // Do we need to qualify the src?
@@ -605,11 +601,6 @@ class ImageHtml
                         meta[name.substring(1)] = imgSpec[name];
                     }   
 
-                // Have we specified width?
-                } else if ('width' === name) {
-                    imgGen.setAttrib('width', imgSpec[name].replace('px', ''))
-                    imgGenNoScript.setAttrib('width', imgSpec[name].replace('px', ''))
-
                 // Anything else?
                 } else {
 
@@ -619,16 +610,6 @@ class ImageHtml
                     // Special things to add if the name is the srcName.
                     if (name === srcName) {
                         imgGenNoScript.setAttrib('src', imgSpec[name]);
-
-                        // If we've passed in width or height, use them too.
-                        if (width) {
-                            imgGen.setAttrib('width', width);
-                            imgGenNoScript.setAttrib('width', width);
-                        }
-                        if (height) {
-                            imgGen.setAttrib('height', height);
-                            imgGenNoScript.setAttrib('height', height);
-                        }
 
                     // Deal with the class.
                     } else if ('class' === name) {
@@ -664,6 +645,289 @@ class ImageHtml
             );
             ret = linkGen.render();
         }
+
+        // Figure?
+        if (figureGen) {
+            debugf(`Figure object just before we render it: %O`, figureGen);
+            ret = figureGen.render(ret);
+        }
+
+        // Do we need meta?
+        if (wantMeta) {
+            for (let item of metaSrcs) {
+                this.metaIds.push(item);
+                let singleMeta = new HtmlGenerator('link', {href: item, itemid: `#${item}`});
+                this.metaIds.push(item);
+                for (let name in meta) {
+                    singleMeta.setAttrib(name, meta[name]);
+                }
+                this.schema += singleMeta.render();;
+            }
+        }
+
+        if (!rss) {
+            let nos = new HtmlGenerator('noscript', null, imgGenNoScript);
+            return ret + nos.render() + this.schema;
+        } else {
+            return imgGenNoScript.render() + this.schema;
+        }
+    }
+
+    /**
+     * Render a source statement.
+     * 
+     * @param   {string[]}  files   Array of files.
+     * @param   {string}    sizes   Sizes.
+     * 
+     * @return  {string}            <source> HTML.
+     */
+    renderSourceStmt(files, sizes = null)
+    {
+        let sourceGen = new HtmlGenerator('source');
+        sourceGen.setAttrib('type', files[0].mime);
+
+        let setSpec = [];
+
+        // Loop for each file.
+        for (let item of files) {
+
+            // Retain the dimensions of the biggest image.
+            if (item.width > this.biggestWidth) {
+                this.biggestWidth = item.width;
+                this.biggest = item.file;
+            }
+            if (item.height > this.biggestHeight) {
+                this.biggestHeight = item.height;
+            }
+
+            // If we need to qualify the source, do it here.
+            let sourceToUse = item.file;
+            if (this.hostname) {
+                sourceToUse = this.qualify(item.file);
+            }
+
+            // Add to the running array.
+            setSpec.push(`${sourceToUse} ${item.width}w`);
+        }
+
+        // Set the srcset. If we're lazt loading this will be data-srcset, otherwise just srcset.
+        // Deal with sizes whilst we're at it.
+        if (this.opts.lazyload) {
+            sourceGen.setAttrib('data-srcset', setSpec.join(' '));
+            if (null === sizes) {
+                sourceGen.setAttrib(`data-sizes`, 'auto');
+            } else {
+                sourceGen.setAttrib(`data-sizes`, sizes);
+            }
+
+            // If we're lazy-loading we just add the smallest image as the srcset.
+            let src = files[0].file;
+            if (this.hostname) {
+                src = this.qualify(src);
+            }
+            sourceGen.setAttrib('srcset', src);
+        } else {
+            sourceGen.setAttrib('srcset', setSpec.join(' '));
+            if (null !== sizes) {
+                sourceGen.setAttrib(`sizes`, sizes);
+            }
+        }
+
+        // Return the rendered <source>.
+        return sourceGen.render();
+    }
+
+    /**
+     * Complex render, using the image plugin.
+     * 
+     * @param   {string}            base        Base source file (relative path)
+     * @param   {object}            obj         Details of generated files for this image.
+     * @param   {object}            imgSpec     Image spec passed in markdown.
+     * 
+     * @return  {string}
+     * 
+     * The obj above is as follows:
+     * 
+     * relative-path-of-source: {
+     *      format: {
+     *          files: [
+     *              {file, width, height, mime},
+     *              {file, width, height, mime},
+     *              ...
+     *          ],
+     *          thumbnail: {file, width, height, mime}
+     *      }
+     * }
+     * 
+     * files[] is sorted from smallest width to largest width.
+     */
+    renderComplex(base, obj, imgSpec)
+    {
+        debug(`==> In renderComplex for ${base}`);
+
+        let imgGen = new HtmlGenerator('img');
+        let imgGenNoScript = new HtmlGenerator('img');
+        let figureGen = null;
+
+        let link = null;
+        let rss = false;
+        let wantMeta = false;
+        let metaSrcs = [];
+        let meta = {};
+
+        let srcName = 'src';
+
+        // Extract the libk, if any.
+        if (imgSpec.link) {
+            debug(`Has link: ${imgSpec.link}`);
+            link = imgSpec.link;
+            delete imgSpec.link;
+        }
+
+        // If we have a caption, this will need a figure.
+        if (imgSpec.caption) {
+            debug(`Has caption (therfore figure): ${imgSpec.caption}`);
+            figureGen = new HtmlFigure();
+            figureGen.setCaption(imgSpec.caption);
+            delete imgSpec.caption;
+
+            // The class will go on the figure instead of the image.
+            if (imgSpec.class) {
+                debug(`Has class (needed on figure): ${imgSpec.class}`);
+                figureGen.appendAttrib('class', imgSpec.class);
+            }
+
+            let cl = (this.opts.figureClass) ? this.opts.figureClass : 'respimg';
+            figureGen.appendAttrib('class', cl);
+            delete imgSpec.class;
+            //debugf(`Figure object initialised with: %O`, figureGen);
+        }
+
+        // Are we rendering for RSS?
+        if (imgSpec.rss && imgSpec.rss == true) {
+            rss = true;
+            debug(`Rendering image for RSS.`);
+            delete imgSpec.rss;
+        } else {
+            debug(`NOT rendering image for RSS.`);
+        }
+
+        // Are we lazy-loading?
+        if (this.opts.lazyload) {
+            debugf(`We are lazy-loading ${src}`);
+            if (imgSpec.class) {
+                if (!imgSpec.class.includes('lazyload')) {
+                    imgSpec.class += ' lazyload';
+                }
+            } else {
+                imgSpec.class = 'lazyload';
+            }
+            srcName = 'data-src';
+            imgGen.setAttribute('loading', 'lazy');
+        }
+
+        // Determine the source.
+        for (let type in obj) {
+            if (this.opts.baseTypes.includes(type)) {
+                let last = bj[type].files.length - 1;
+                if (this.opts.lazyload) {
+                    imgSpec['src'] = obj[type].files[0].file;
+                    imgSpec['data-src'] = obj[type].files[last].file;
+                } else {
+                    imgSpec['src'] = obj[type].files[last].file;
+                }
+                imgSpec['width'] = obj[type].files[last].width;
+                imgSpec['height'] = obj[type].files[last].height;
+
+                break;
+            }
+        }
+
+        // Do we need to qualify the src?
+        if (this.hostname) {
+            imgSpec['src'] = this.qualify(imgSpec['src']);
+            if (imgSpec['data-src']) {
+                imgSpec['data-src'] = this.qualify(imgSpec['data-src']);
+            }
+        }
+
+        // Push the src into meta.
+        //metaSrcs.push(src);
+
+        let hasFigure = false;
+        if (null !== figureGen) {
+            hasFigure = true;
+            debugf(`Figure object just before value loop: %O`, figureGen);
+        }
+
+        // Now loop for the rest of the imgSpec and set attributes or do other stuff accordingly.
+        for (let name in imgSpec) {
+
+            if (!name.startsWith('__')) {
+
+                // Meta elements all start with @.
+                if (name.startsWith('@')) {
+                    wantMeta = true;
+
+                    // Specific meta?
+                    if (name.length > 1) {
+                        meta[name.substring(1)] = imgSpec[name];
+                    }   
+
+                // Anything else?
+                } else {
+
+                    // Simply save in the first instance.
+                    imgGen.appendAttrib(name, imgSpec[name]);
+
+                    // Special things to add if the name is the srcName.
+                    if (name === 'src') {
+                        imgGenNoScript.setAttrib('src', imgSpec[name]);
+
+                    // Deal with the class.
+                    } else if ('class' === name) {
+                        let cl = imgSpec[name].replace('lazyload', '').trim();
+                        if ('' !== cl) {
+                            imgGenNoScript.appendAttrib('class', cl);
+                        }
+
+                    // Add what's left to the noscript.
+                    } else {
+                        imgGenNoScript.appendAttrib(name, imgSpec[name]);
+                    }
+                }
+            }
+        }      
+
+        if (hasFigure) {
+            if (null !== figureGen) {
+                debugf(`Figure object just AFTER value loop: %O`, figureGen);
+            } else {
+                debug(`SOMETHING HAS GONE WRONG - WE SHOULD HAVE A FIGURE.`);
+            }
+        }
+
+        let ret = imgGen.render();  
+
+        // Link?
+        if (link) {
+            let lk = ('self' === link.trim()) ? imgSpec.src : link.trim();
+            let linkGen = new HtmlGenerator('a', 
+                {class: "imgLink", target: "_blank", title: "Open image in new tab.", href: lk},
+                ret
+            );
+            ret = linkGen.render();
+        }
+
+        // Generate the <source> statements.
+        let sources = [];
+        for (let type of obj) {
+            sources.push(this.renderSourceStmt(obj[type].files));
+        }
+
+        // Picture.
+        let pictureGen = new HtmlGenerator('picture');
+        let ret = pictureGen.render(sources.join("\n") + "\n" + ret);
 
         // Figure?
         if (figureGen) {
