@@ -827,7 +827,7 @@ class ImageHtml
         }
 
         // Determine the source.
-        for (let type in obj) {
+        for (let type of Object.keys(obj)) {
             if (this.opts.baseTypes.includes(type)) {
                 let last = obj[type].files.length - 1;
                 if (this.opts.lazyload) {
