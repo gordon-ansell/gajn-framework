@@ -280,7 +280,7 @@ class HtmlAttribs
             if (this.isBoolean(name)) {
                 ret += ` ${name}`;
             } else {
-                ret += ` ${name}="${this.get(name)}"`;
+                ret += ` ${name}="${this.attribs[name]}"`;
             }
         }
 
