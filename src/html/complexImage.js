@@ -395,8 +395,8 @@ class ComplexImage
 
             // Generate the source statements.
             let sources = [];
-            for (let type of src.files) {
-                sources.push(this.renderSourceStmt(src.files[type], sizes));
+            for (let type of Object.keys(src)) {
+                sources.push(this.renderSourceStmt(src[type].files, sizes));
             }
 
             // Extract the first base type we find.
