@@ -122,7 +122,7 @@ class ComplexImage
     qualify(raw)
     {
         if ('string' !== typeof(raw)) {
-            syslog.inspect(raw, "error");
+            syslog.inspect(raw, "error", "Passed in to qualify.");
             throw new GAError(`ComplexImage:qualify needs a string, you passed a ${typeof(raw)} with value '${raw}'.`);
         }
 
@@ -368,6 +368,7 @@ class ComplexImage
 
         // Return variable.
         let ret = '';
+        let savedBiggestLink = null;
 
         // If this is simple.
         if (null === base) {
@@ -420,22 +421,24 @@ class ComplexImage
             let last = src[using].files.length - 1;
             let imageSrc = src[using].files[0].file;
             let biggest = src[using].files[last];
+            let biggestFile = this.qualify(biggest.file);
+            savedBiggestLink = biggestFile;
 
             if (this.lazyload) {
                 // Standard.
                 this.imgGen.setAttrib('src', this.qualify(imageSrc));
-                this.imgGen.setAttrib('data-src', this.qualify(biggest.file));
+                this.imgGen.setAttrib('data-src', biggestFile);
                 this.imgGen.setAttrib('width', biggest.width);
                 this.imgGen.setAttrib('height', biggest.height);
 
                 // And the <noscript>.
-                this.imgGenNoScript.setAttrib('src', this.qualify(biggest.file));
+                this.imgGenNoScript.setAttrib('src', biggestFile);
                 this.imgGenNoScript.setAttrib('width', biggest.width);
                 this.imgGenNoScript.setAttrib('height', biggest.height);
 
             // What, no lazy-loading?
             } else {
-                this.imgGen.setAttrib('src', this.qualify(biggest.file));
+                this.imgGen.setAttrib('src', biggestFile);
                 this.imgGen.setAttrib('width', biggest.width);
                 this.imgGen.setAttrib('height', biggest.height);
             }
@@ -458,7 +461,11 @@ class ComplexImage
         // Add the link if necessary.
         if (null !== this.aGen) {
             if ('self' === link) {
-                this.aGen.setAttrib('href', this.qualify(src));
+                if (null === base) {
+                    this.aGen.setAttrib('href', this.qualify(src));
+                } else {
+                    this.aGen.setAttrib('href', savedBiggestLink);
+                }
             } else {
                 this.aGen.setAttrib('href', this.qualify(link));
             }
