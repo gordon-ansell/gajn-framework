@@ -154,13 +154,15 @@ class HtmlAttribs
             throw new GAError(`Cannot append to '${name}' attribute on '<${this.elem}>' because it is boolean.`);
         }
 
-        let sp = this.attribs[name].split(' ');
-        if (sp.includes(val) && !dup) {
-            return this;
-        }
+        let multi = val.trim().split(' ');
 
-        sp.push(val);
-        this.set(name, sp.join(' '));
+        for (let item of multi) {
+            let sp = this.attribs[name].split(' ');
+            if (!sp.includes(item) || dup) {
+                sp.push(item);
+                this.set(name, sp.join(' '));
+            }
+        }
 
         return this;
     }
@@ -186,13 +188,15 @@ class HtmlAttribs
             throw new GAError(`Cannot prepend to '${name}' attribute on '<${this.elem}>' because it is boolean.`);
         }
 
-        let sp = this.attribs[name].split(' ');
-        if (sp.includes(val) && !dup) {
-            return this;
-        }
+        let multi = val.trim().split(' ');
 
-        sp.unshift(val);
-        this.set(name, sp.join(' '));
+        for (let item of multi) {
+            let sp = this.attribs[name].split(' ');
+            if (!sp.includes(item) || dup) {
+                sp.unshift(item);
+                this.set(name, sp.join(' '));
+            }
+        }
 
         return this;
     }
