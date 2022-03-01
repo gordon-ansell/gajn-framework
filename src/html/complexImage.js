@@ -418,7 +418,7 @@ class ComplexImage
             let imageSrc = src[using].files[0].file;
             let biggest = src[using].files[last];
 
-            if (lazyload) {
+            if (this.lazyload) {
                 // Standard.
                 this.imgGen.setAttrib('src', this.qualify(imageSrc));
                 this.imgGen.setAttrib('data-src', this.qualify(biggest.file));
