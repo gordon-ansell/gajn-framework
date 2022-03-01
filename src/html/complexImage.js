@@ -11,6 +11,7 @@ const { URL } = require('url');
 const path = require('path');
 const HtmlGenerator = require('./htmlGenerator');
 const HtmlFigure = require('./htmlFigure');
+const syslog = require('../logger/syslog');
 const debug = require('debug')('Framework:html:ComplexImage'),
       debugf = require('debug')('Full.Framework:html:ComplexImage');
 
@@ -121,6 +122,7 @@ class ComplexImage
     qualify(raw)
     {
         if ('string' !== typeof(raw)) {
+            syslog.inspect(raw, "error");
             throw new GAError(`ComplexImage:qualify needs a string, you passed a ${typeof(raw)} with value '${raw}'.`);
         }
 
@@ -196,9 +198,6 @@ class ComplexImage
             }
 
             // If we're lazy-loading we just add the smallest image as the srcset.
-            if ('string' !== typeof(files[0].file)) {
-                throw new GAError(`Oops, extraction in renderSourceStmt does not yield a string.`);
-            }
             let src = this.qualify(files[0].file);
             sourceGen.setAttrib('srcset', src);
         } else {
