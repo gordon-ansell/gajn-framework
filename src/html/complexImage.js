@@ -276,6 +276,9 @@ class ComplexImage
             // Save the src for later reference.
             this.files.push(qsrc);
 
+            // Save the meta for later.
+            metaSrcs.push(qsrc);
+
             // Render the image.
             ret = this.imgGen.render();
 
