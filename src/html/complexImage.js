@@ -196,9 +196,9 @@ class ComplexImage
             }
 
             // If we're lazy-loading we just add the smallest image as the srcset.
-            let src = files[0].file;
-            if (this.hostname) {
-                src = this.qualify(src);
+            let src = this.qualify(files[0].file);
+            if ('string' !== typeof(src)) {
+                throw new GAError(`Oops, extraction in renderSourceStmt does not yield a string.`);
             }
             sourceGen.setAttrib('srcset', src);
         } else {
