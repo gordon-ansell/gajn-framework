@@ -154,7 +154,8 @@ class HtmlAttribs
             throw new GAError(`Cannot append to '${name}' attribute on '<${this.elem}>' because it is boolean.`);
         }
 
-        let multi = val.trim().split(' ');
+        val = val.trim();
+        let multi = val.split(' ');
 
         for (let item of multi) {
             let sp = this.attribs[name].split(' ');
@@ -188,7 +189,8 @@ class HtmlAttribs
             throw new GAError(`Cannot prepend to '${name}' attribute on '<${this.elem}>' because it is boolean.`);
         }
 
-        let multi = val.trim().split(' ');
+        val = val.trim();
+        let multi = val.split(' ');
 
         for (let item of multi) {
             let sp = this.attribs[name].split(' ');
