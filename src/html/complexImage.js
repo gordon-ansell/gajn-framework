@@ -61,7 +61,7 @@ class ComplexImage
     imgGenNoScript = null;
     pictureGen = null;
     figureGen = null;
-    aGen = true;
+    aGen = null;
 
     /**
      * List of files used.
