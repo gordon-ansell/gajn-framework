@@ -446,7 +446,7 @@ class ComplexImage
             // Render stuff.
             let pictureGen = new HtmlGenerator('picture');
 
-            let tmpRet = sources.join(', ') + this.imgGen.render();
+            let tmpRet = sources.join('\n') + this.imgGen.render();
 
             if (this.lazyload && !this.rss) {
                 tmpRet += '<noscript>' + this.imgGenNoScript.render() + '</noscript>';
