@@ -211,8 +211,10 @@ class ComplexImage
         // Is there a link on this image?
         // =====================================================================================
         
+        let link = null;
         if (attribs.link) {
             this.aGen = new HtmlGenerator('a');
+            link = attribs.link;
             delete attribs.link;
         }
 
