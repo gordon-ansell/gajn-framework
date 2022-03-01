@@ -213,7 +213,7 @@ class ComplexImage
         
         let link = null;
         if (attribs.link) {
-            this.aGen = new HtmlGenerator('a');
+            this.aGen = new HtmlGenerator('a', {class: 'imglink', target: '_blank', title: 'Open image in new tab.'});
             link = attribs.link;
             delete attribs.link;
         }
@@ -280,7 +280,7 @@ class ComplexImage
             ret = this.imgGen.render();
 
             // Add the <noscript> if we're lazy loading.
-            if (this.lazyload) {
+            if (this.lazyload && !this.rss) {
                 ret += '<noscript>' + this.imgGenNoScript.render() + '</noscript>';
             }
         }
@@ -300,8 +300,26 @@ class ComplexImage
             ret = this.figureGen.render(ret);
         }
 
-        // Return.
-        return ret;
+        // =====================================================================================
+        // Deal with metadata for schema.
+        // =====================================================================================
+
+        if (wantMeta) {
+            for (let item of metaSrcs) {
+                let linkGen = new HtmlGenerator('link', {href: item});
+                this.metaIds.push(item);
+                for (let name in meta) {
+                    linkGen.addAttrib(name, meta[name]);
+                }
+                this.schema += linkGen.render();
+            }
+        }
+
+        // =====================================================================================
+        // Return the HTML string.
+        // =====================================================================================
+
+        return ret + this.schema;
     }
 }
 
