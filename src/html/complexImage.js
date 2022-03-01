@@ -184,7 +184,9 @@ class ComplexImage
             }
 
             // The class attributes go on the figure instead of the img.
-            this.figureGen.appendAttrib('class', attribs.class);
+            if (attribs.class) {
+                this.figureGen.appendAttrib('class', attribs.class);
+            }
 
         } else if (attribs.class) {
             // There's no figure so all the classes go on the img.
