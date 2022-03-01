@@ -199,13 +199,14 @@ class HtmlGenerator
      * @param   {string}    name    Attribute name.
      * @param   {any}       value   Attribute value.
      * @param   {boolean}   dup     Allow duplicates?
+     * @param   {string}    tag     Debugging tag.
      * 
      * @return  {HtmlGenerator}
      */
-    appendAttrib(name, val, dup = false)
+    appendAttrib(name, val, dup = false, tag = 'notag')
     {
         if (!val) {
-            throw new GAError(`Cannot append to '${name}' attribute on '<${this.elem}>' because no value was passed.`);
+            throw new GAError(`Cannot append to '${name}' attribute on '<${this.elem}>' because no value was passed. (${tag})`);
         }
         this.attribs.append(name, val, dup);
         return this;

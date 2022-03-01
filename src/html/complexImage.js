@@ -169,8 +169,8 @@ class ComplexImage
             }
 
             // We also need to tell the image to lazyload.
-            this.imgGen.appendAttrib('class', 'lazyload');
-            this.imgGen.appendAttrib('loading', 'lazy');
+            this.imgGen.appendAttrib('class', 'lazyload', false, 'lazyload');
+            this.imgGen.appendAttrib('loading', 'lazy', false, 'lazy');
         }
 
         // See if we'll need a figure.
@@ -188,7 +188,7 @@ class ComplexImage
 
         } else {
             // There's no figure so all the classes go on the img.
-            this.imgGen.appendAttrib('class', attribs.class);
+            this.imgGen.appendAttrib('class', attribs.class, false, 'attribs.class');
         }
 
         // We've sorted out all the class stuff at this point, so we can get rid of the class from attribs.
