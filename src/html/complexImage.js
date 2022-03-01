@@ -98,13 +98,17 @@ class ComplexImage
      * 
      * @return  {ComplexImage}
      */
-    constructor (lazyload, figureClass, sitePath = null, hostname = null, config = null)
+    constructor (lazyload, figureClass = null, sitePath = null, hostname = null, config = null)
     {
         this.lazyload = lazyload;
         this.figureClass = figureClass;
         this.hostname = hostname;
         this.sitePath = sitePath;
         this.config = config;
+
+        if (!this.figureClass) {
+            this.figureClass = 'respimg';
+        }
     }
 
     /**
