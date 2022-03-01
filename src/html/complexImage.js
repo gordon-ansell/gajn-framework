@@ -161,11 +161,14 @@ class ComplexImage
             // If we're lazy-loading we'll need the class (if any) on the <noscript>
             // regardless of anything else.
             if (attribs.class) {
+                debug('class, attribs.class');
                 this.imgGenNoScript.appendAttrib('class', attribs.class);
             }
 
             // We also need to tell the image to lazyload.
+            debug('class, lazyload');
             this.imgGen.appendAttrib('class', 'lazyload');
+            debug('loading, lazyload');
             this.imgGen.appendAttrib('loading', 'lazy');
         }
 
@@ -176,6 +179,7 @@ class ComplexImage
 
             // Do we need a specific figure class?
             if (this.figureClass) {
+                this.imgGen.appendAttrib('class', 'this.figureClass');
                 this.figureGen.appendAttrib('class', this.figureClass);
             }
 
@@ -279,6 +283,11 @@ class ComplexImage
 
         // Add the link if necessary.
         if (null !== this.aGen) {
+            if ('self' === link) {
+                this.aGen.setAttrib('href', this.qualify(src));
+            } else {
+                this.aGen.setAttrib('href', this.qualify(link));
+            }
             ret = this.aGen.render(ret);
         }
 
