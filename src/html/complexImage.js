@@ -165,12 +165,14 @@ class ComplexImage
 
 
         // Loop for each file.
-        for (let item of files) {
+        for (let item of files.filter(f => f.width !== this.config.placeholderWidth)) {
 
             // Skip the placeholder.
+            /*
             if (item.width === this.config.placeholderWidth) {
                 continue;
             }
+            */
 
             // If we need to qualify the source, do it here.
             let qsrc = this.qualify(item.file);
