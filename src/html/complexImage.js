@@ -179,7 +179,7 @@ class ComplexImage
 
         // Set the srcset. If we're lazt loading this will be data-srcset, otherwise just srcset.
         // Deal with sizes whilst we're at it.
-        if (this.opts.lazyload) {
+        if (this.lazyload) {
             sourceGen.setAttrib('data-srcset', setSpec.join(', '));
             sourceGenNoScript.setAttrib('srcset', setSpec.join(', '));
 
