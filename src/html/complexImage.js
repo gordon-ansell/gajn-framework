@@ -401,7 +401,7 @@ class ComplexImage
 
             // Extract the first base type we find.
             let using = null;
-            for (let name in src.files) {
+            for (let name in src) {
                 if (this.config.baseTypes.includes(name)) {
                     using = name;
                     break;
