@@ -7,6 +7,7 @@
 'use strict';
 
 const HtmlAttribs = require("./htmlAttribs");
+const GAError = require('../utils/gaError');
 
 /**
  * HTML generator class.
@@ -136,6 +137,9 @@ class HtmlGenerator
      */
     addAttrib(name, val, or = false)
     {
+        if (this.hasAttrib(name) && !or) {
+            throw new GAError(`Attribute '${name}' already exists. Cannot add attribute to element '<${this.elem}>'.`);
+        }
         this.attribs.add(name, val, or);
         return this;
     }
@@ -200,6 +204,9 @@ class HtmlGenerator
      */
     appendAttrib(name, val, dup = false)
     {
+        if (!val) {
+            throw new GAError(`Cannot append to '${name}' attribute on '<${this.elem}>' because no value was passed.`);
+        }
         this.attribs.append(name, val, dup);
         return this;
     }

@@ -75,7 +75,7 @@ class HtmlAttribs
     add(name, val, or = false)
     {
         if (this.has(name) && !or) {
-            throw new GAError(`Attribute '${name}' already exists. Cannot add attribute to element '<${this.elem}>'.`);
+            throw new GAError(`Attribute '${name}' already exists. Cannot add attribute.`);
         }
 
         this.attribs[name] = val;
@@ -147,7 +147,7 @@ class HtmlAttribs
     append(name, val, dup = false)
     {
         if (!val) {
-            throw new GAError(`Cannot append to '${name}' attribute on '<${this.elem}>' because no value was passed.`);
+            throw new GAError(`Cannot append to '${name}' attribute because no value was passed.`);
         }
 
         if (!this.has(name)) {
@@ -155,7 +155,7 @@ class HtmlAttribs
         }
 
         if (this.isBoolean(name)) {
-            throw new GAError(`Cannot append to '${name}' attribute on '<${this.elem}>' because it is boolean.`);
+            throw new GAError(`Cannot append to '${name}' attribute because it is boolean.`);
         }
 
         val = val.trim();
@@ -190,7 +190,7 @@ class HtmlAttribs
         }
 
         if (this.isBoolean(name)) {
-            throw new GAError(`Cannot prepend to '${name}' attribute on '<${this.elem}>' because it is boolean.`);
+            throw new GAError(`Cannot prepend to '${name}' attribute because it is boolean.`);
         }
 
         val = val.trim();
@@ -237,7 +237,7 @@ class HtmlAttribs
     {
         if (!this.has(name)) {
             if (excp) {
-                throw new GAError(`Cannot get attribute '${name}' because it does not exists for element '<${this.elem}>'.`)
+                throw new GAError(`Cannot get attribute '${name}' because it does not exist.`)
             }
             return null;
         }
@@ -259,7 +259,7 @@ class HtmlAttribs
     {
         if (!this.has(name)) {
             if (excp) {
-                throw new GAError(`Cannot get attribute '${name}' because it does not exists for element '<${this.elem}>'.`)
+                throw new GAError(`Cannot get attribute '${name}' because it does not exist.`)
             }
             return null;
         }
