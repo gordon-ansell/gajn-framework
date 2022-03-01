@@ -146,6 +146,10 @@ class HtmlAttribs
      */
     append(name, val, dup = false)
     {
+        if (!val) {
+            throw new GAError(`Cannot append to '${name}' attribute on '<${this.elem}>' because no value was passed.`);
+        }
+
         if (!this.has(name)) {
             return this.add(name, val);
         }
