@@ -120,6 +120,10 @@ class ComplexImage
      */
     qualify(raw)
     {
+        if ('string' !== typeof(raw)) {
+            throw new GAError(`ComplexImage:qualify needs a string, you passed a ${typeof(raw)} with value '${raw}'.`);
+        }
+
         if (raw.startsWith('http://') || raw.startsWith('https')) {
             return raw;
         }
