@@ -12,6 +12,9 @@ const fsutils = require("./fs/fsutils");
 const merge = require("./utils/merge");
 const fs = require('fs');
 const path = require('path');
+const debug = require('debug')('Framework:CacheManager'),
+      debugf = require('debug')('Full.Framework:CacheManager');
+
 
 /**
  * Cache manager class.
@@ -66,10 +69,10 @@ class CacheManager
     loadMap()
     {
         if (!fs.existsSync(this.#cacheLogPath)) {
-            syslog.debug(`No map file found at ${this.#cacheLogPath}.`, 'CacheManager');
+            debug(`No map file found at ${this.#cacheLogPath}.`);
             this.#cacheLog = new Map();
         } else {
-            syslog.debug(`Found map file at ${this.#cacheLogPath}.`, 'CacheManager');
+            debug(`Found map file at ${this.#cacheLogPath}.`);
             let serialised = fs.readFileSync(this.#cacheLogPath, 'utf8');
             this.#cacheLog = new Map(JSON.parse(serialised));
         }
@@ -86,7 +89,7 @@ class CacheManager
         let serialised = JSON.stringify(Array.from(this.#cacheLog.entries()));
         fsutils.mkdirRecurse(path.dirname(this.#cacheLogPath));
         fs.writeFileSync(this.#cacheLogPath, serialised, 'utf8');
-        syslog.debug(`Wrote map file to disk.`, 'CacheManager');
+        debug(`Wrote map file to disk.`);
         return this;
     }
 
@@ -161,7 +164,7 @@ class CacheManager
         // If we have no key, this is a new entry.
         if (!this.has(key)) {
 
-            syslog.trace(`Key does not yet exist for asset: ${key}`, 'CacheManager');
+            debug(`Key does not yet exist for asset: ${key}`);
 
             let fn = key;
             if (this.#options.basePath) {
@@ -181,7 +184,7 @@ class CacheManager
     
             this._set(key, cd);
 
-            syslog.trace(`Created key for asset: ${key}`, 'CacheManager');
+            debug(`Created key for asset: ${key}`);
 
             if (save) {
                 this.saveMap();
@@ -192,7 +195,7 @@ class CacheManager
         // We do have a key ...
         } else {        
         
-            syslog.trace(`Key already exists for asset: ${key}`, 'CacheManager');
+            debug(`Key already exists for asset: ${key}`);
 
             let fn = key;
 
@@ -209,7 +212,7 @@ class CacheManager
                 // If the file has changed ...
                 if (stats.mtimeMs > current.modified || stats.size != current.size) {
 
-                    syslog.trace(`Asset has expired for key: ${key}`, 'CacheManager');
+                    debug(`Asset has expired for key: ${key}`);
 
                     if (upd) {
                         let cd = {
@@ -217,7 +220,7 @@ class CacheManager
                             size: stats.size
                         };
                         this._set(key, cd);
-                        syslog.trace(`Updated cache details for asset: ${key}`, 'CacheManager');
+                        debug(`Updated cache details for asset: ${key}`);
 
                         if (save) {
                             this.saveMap();
@@ -227,14 +230,14 @@ class CacheManager
                 
                 // If the file has not changed ...
                 } else {
-                    syslog.trace(`Asset has not changed for key: ${key}`, 'CacheManager');
+                    debug(`Asset has not changed for key: ${key}`);
                     return false;
                 }
             
             // We have a key but the file does not exist.
             } else {
                 this.#cacheLog.delete(key);
-                syslog.trace(`File for asset no longer exists so will delete cache: ${key}`, 'CacheManager');
+                debug(`File for asset no longer exists so will delete cache: ${key}`);
                 if (save) {
                     this.saveMap();
                 }
