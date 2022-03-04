@@ -356,9 +356,11 @@ class ComplexImage
                 continue;
             }
 
+            /*
             if (!isNaN(name)) {
                 continue;
             }
+            */
 
             if ('@' === name[0]) {
                 wantMeta = true;
