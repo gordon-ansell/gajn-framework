@@ -362,9 +362,9 @@ class ComplexImage
                     meta[name.substring(1)] = attribs[name];
                 }
             } else {
-                this.imgGen.setAttrib(name, attribs[name]);
+                this.imgGen.appendAttrib(name, attribs[name]);
                 if (this.lazyload) {
-                    this.imgGenNoScript.setAttrib(name, attribs[name]);
+                    this.imgGenNoScript.appendAttrib(name, attribs[name]);
                 }
             }
         }
