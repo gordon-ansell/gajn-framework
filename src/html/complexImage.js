@@ -356,15 +356,19 @@ class ComplexImage
                 continue;
             }
 
+            if (!isNaN(value)) {
+                continue;
+            }
+
             if ('@' === name[0]) {
                 wantMeta = true;
                 if (name.length > 1) {
                     meta[name.substring(1)] = attribs[name];
                 }
             } else {
-                this.imgGen.appendAttrib(name, attribs[name]);
+                this.imgGen.setAttrib(name, attribs[name]);
                 if (this.lazyload) {
-                    this.imgGenNoScript.appendAttrib(name, attribs[name]);
+                    this.imgGenNoScript.setAttrib(name, attribs[name]);
                 }
             }
         }
