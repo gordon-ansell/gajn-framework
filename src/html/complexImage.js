@@ -356,7 +356,7 @@ class ComplexImage
                 continue;
             }
 
-            if (!isNaN(value)) {
+            if (!isNaN(name)) {
                 continue;
             }
 
