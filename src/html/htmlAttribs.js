@@ -165,9 +165,9 @@ class HtmlAttribs
             let sp = this.attribs[name].split(' ');
             if (!sp.includes(item) || dup) {
                 sp.push(item);
-                this.set(name, sp.join(' '));
             }
         }
+        this.set(name, sp.join(' '));
 
         return this;
     }
