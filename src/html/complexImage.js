@@ -325,7 +325,7 @@ class ComplexImage
         
         let link = null;
         if (attribs.link) {
-            this.aGen = new HtmlGenerator('a', {class: 'imglink', target: '_blank', title: 'Open image in new tab.'});
+            //this.aGen = new HtmlGenerator('a', {class: 'imglink', target: '_blank', title: 'Open image in new tab.'});
             link = attribs.link;
             delete attribs.link;
         }
