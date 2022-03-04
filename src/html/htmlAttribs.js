@@ -159,15 +159,19 @@ class HtmlAttribs
         }
 
         val = val.trim();
+
+        /*
         let multi = val.split(' ');
 
         for (let item of multi) {
             let sp = this.attribs[name].split(' ');
             if (!sp.includes(item) || dup) {
                 sp.push(item);
+                this.set(name, sp.join(' '));
             }
         }
-        this.set(name, sp.join(' '));
+        */
+       this.set(name, this.attribs[name] + ' ' + val);
 
         return this;
     }
