@@ -263,6 +263,8 @@ class ComplexImage
             debug(`Processing ComplexImage for ${base} (complex)`);
         }
 
+        debug(`Attribs for the render are: %O`, attribs);
+
         // Generate an class for the image HTML.
         this.imgGen = new HtmlGenerator('img');
 
