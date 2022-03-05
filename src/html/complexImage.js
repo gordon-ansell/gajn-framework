@@ -352,6 +352,8 @@ class ComplexImage
         // Loop for remaining attribs.
         for (let name in attribs) {
 
+            debug (`In attrin look for name '%s' and val '%s'`, name. attrins[name]);
+
             name = name.trim();
 
             if (name.startsWith('__')) {
