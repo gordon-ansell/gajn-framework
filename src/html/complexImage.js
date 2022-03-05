@@ -354,7 +354,7 @@ class ComplexImage
         // Loop for remaining attribs.
         for (let name in attribs) {
 
-            debug (`In attrin look for name '%s' and val '%s'`, name. attrins[name]);
+            debug (`In attrib loop for name '%s' and val '%s'`, name, attribs[name]);
 
             name = name.trim();
 
