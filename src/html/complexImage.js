@@ -257,7 +257,7 @@ class ComplexImage
     render(src, attribs = {}, base = null)
     {
         // Some debugging.
-        if (null === this.config) {
+        if (null === base) {
             debug(`Processing ComplexImage for ${src} (simple)`);
         } else {
             debug(`Processing ComplexImage for ${base} (complex)`);
