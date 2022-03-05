@@ -74,6 +74,13 @@ class HtmlAttribs
      */
     add(name, val, or = false)
     {
+        if ("string" !== typeof(name)) {
+            throw new GAError(`1st parameter (name) of HtmlAttribs.add must be a string, we were passed a ${typeof(name)}.`);
+        } 
+        if (Array.isArray(val)) {
+            throw new GAError(`2nd parameter (val) of HtmlAttribs.add must not be an array.`);
+        }
+
         if (this.has(name) && !or) {
             throw new GAError(`Attribute '${name}' already exists. Cannot add attribute.`);
         }
@@ -97,7 +104,7 @@ class HtmlAttribs
             throw new GAError(`1st parameter (name) of HtmlAttribs.set must be a string, we were passed a ${typeof(name)}.`);
         } 
         if (Array.isArray(val)) {
-            throw new GAError(`2nd parameter (val) of HtmlAttribs.set must not ba an array.`);
+            throw new GAError(`2nd parameter (val) of HtmlAttribs.set must not be an array.`);
         }
 
         return this.add(name, val, true);
@@ -163,6 +170,13 @@ class HtmlAttribs
 
         if (this.isBoolean(name)) {
             throw new GAError(`Cannot append to '${name}' attribute because it is boolean.`);
+        }
+
+        if ("string" !== typeof(name)) {
+            throw new GAError(`1st parameter (name) of HtmlAttribs.append must be a string, we were passed a ${typeof(name)}.`);
+        } 
+        if (Array.isArray(val)) {
+            throw new GAError(`2nd parameter (val) of HtmlAttribs.append must not be an array.`);
         }
 
         val = val.trim();
