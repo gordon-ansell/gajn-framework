@@ -352,11 +352,13 @@ class ComplexImage
         // Loop for remaining attribs.
         for (let name in attribs) {
 
+            name = name.trim();
+
             if (name.startsWith('__')) {
                 continue;
             }
 
-            if ('@' === name[0]) {
+            if (name.startsWith('@')) {
                 wantMeta = true;
                 if (name.length > 1) {
                     meta[name.substring(1)] = attribs[name];
