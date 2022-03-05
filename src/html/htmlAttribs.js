@@ -93,6 +93,9 @@ class HtmlAttribs
      */
     set(name, val, or = false)
     {
+        if ("string" !== typeof(name)) {
+            throw new GAError(`1st parameter of HtmlAttribs.set must be a string, we were passed a ${typeof(name)}.`);
+        } 
         return this.add(name, val, true);
     }
 
@@ -160,7 +163,6 @@ class HtmlAttribs
 
         val = val.trim();
 
-        /*
         let multi = val.split(' ');
 
         for (let item of multi) {
@@ -170,8 +172,6 @@ class HtmlAttribs
                 this.set(name, sp.join(' '));
             }
         }
-        */
-       this.set(name, this.attribs[name] + ' ' + val);
 
         return this;
     }
