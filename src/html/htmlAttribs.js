@@ -94,8 +94,12 @@ class HtmlAttribs
     set(name, val, or = false)
     {
         if ("string" !== typeof(name)) {
-            throw new GAError(`1st parameter of HtmlAttribs.set must be a string, we were passed a ${typeof(name)}.`);
+            throw new GAError(`1st parameter (name) of HtmlAttribs.set must be a string, we were passed a ${typeof(name)}.`);
         } 
+        if (Array.isArray(val)) {
+            throw new GAError(`2nd parameter (val) of HtmlAttribs.set must not ba an array.`);
+        }
+
         return this.add(name, val, true);
     }
 

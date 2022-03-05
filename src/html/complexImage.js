@@ -366,6 +366,7 @@ class ComplexImage
                 wantMeta = true;
                 if (name.length > 1) {
                     meta[name.substring(1)] = attribs[name];
+                    this.imgGen,setAttrib(name.substring(1), attribs[name])
                 }
             } else {
                 this.imgGen.setAttrib(name, attribs[name]);
