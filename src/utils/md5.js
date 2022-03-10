@@ -168,9 +168,6 @@ function hex(x) {
     return x.join('');
 }
 
-function md5(s) {
-    return hex(md51(s));
-}
 
 /* this function is much faster,
 so if possible we use it. Some IEs
@@ -192,4 +189,8 @@ if (md5('hello') != '5d41402abc4b2a76b9719d911017c592') {
 }
 */
 
-exports.md5 = md5;
+function md5(s) {
+    return hex(md51(s));
+}
+
+modile.exports = md5;
