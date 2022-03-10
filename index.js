@@ -39,6 +39,7 @@ exports.GAError = require('./src/utils/gaError');
 exports.MultiDate = require('./src/utils/multiDate');
 exports.ImageHtml = require('./src/utils/imageHtml');
 exports.duration = require('./src/utils/duration');
+exports.md5 = require('./src/utils/md5');
 
 // EventManager.
 exports.EventManager = require('./src/eventManager');
