@@ -193,4 +193,4 @@ function md5(s) {
     return hex(md51(s));
 }
 
-modile.exports = md5;
+module.exports = md5;
