@@ -479,6 +479,14 @@ class Schema
                 obj.setAttrib('keywords', this.ctx.tags);
             }
 
+            if (this.ctx.wordcount) {
+                obj.setAttrib('wordcount', this.ctx.wordcount);
+            }
+
+            if (this.ctx.excerpt_text) {
+                obj.settAttrib('backstory', this.ctx.excerpt_text);
+            }
+
             if (this.imageIds.length > 0) {
                 obj.setAttrib('image', this.getImageIds());
             }
