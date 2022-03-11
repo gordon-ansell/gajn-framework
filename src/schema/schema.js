@@ -496,6 +496,54 @@ class Schema
     }
 
     /**
+     * Render a product.
+     * 
+     * @param   {string}    page 
+     * @param   {object}    productFields
+     * 
+     * @return  {string}    Product ID.
+     */
+    _renderProduct(page, productFields)
+    {
+        let id = 'product-' + slugify(productFields.name);
+        let obj = new SchemaObject(productFields.type, {}, id);
+
+        for (let idx of Object.keys(productFields)) {
+            if ('type' !== idx && !idx.startsWith('__') && !idx.startsWith('@')) {
+
+                if ('brand' === idx) {
+                    obj.setAttrib(idx, {'@type': "Organization", name: productFields[idx]});
+                } else if ('operatingSystem' === idx) {
+                    obj.setAttrib(idx, productFields[idx]);
+                } else {
+                    obj.setAttrib(idx, productFields[idx]);
+                }
+            }
+        }
+
+        return id;
+    }
+
+    /**
+     * Render a review.
+     * 
+     * @param   {string}    page 
+     * 
+     * @return  {void}
+     */
+    _renderReview(page)
+    {
+        if (!this.raw.review) {
+            return;
+        }
+
+        let pid = null;
+        if (this.raw.review.product) {
+            pid = this._renderProduct(page, this.raw.review.product);
+        }
+    }
+
+    /**
      * Render the schema.
      * 
      * @return  {string}
@@ -506,6 +554,7 @@ class Schema
         this._renderWebsite(page);
         this._renderWebpage(page);
         this._renderArticle(page);
+        this._renderReview(page);
 
         //this.dumpImages(page);
 
