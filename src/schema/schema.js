@@ -651,7 +651,7 @@ class Schema
 
         obj.setAttrib('step', this._renderHowToSteps(page));
 
-        obj.settAttrib('mainEntityOfPage', this.ref('article'));
+        obj.setAttrib('mainEntityOfPage', this.ref('article'));
 
         this.items['howto'] = obj;
     }
