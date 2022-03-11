@@ -484,7 +484,7 @@ class Schema
             }
 
             if (this.ctx.excerpt_text) {
-                obj.settAttrib('backstory', this.ctx.excerpt_text);
+                obj.setAttrib('backstory', this.ctx.excerpt_text);
             }
 
             if (this.imageIds.length > 0) {
