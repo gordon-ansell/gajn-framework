@@ -561,7 +561,7 @@ class Schema
 
         let pid = null;
         if (this.raw.review.product) {
-            pid = this._renderProduct(page, this.raw.review.product), rating;
+            pid = this._renderProduct(page, this.raw.review.product, rating);
         }
 
         let reviewFields = this.raw.review.review;
