@@ -413,7 +413,7 @@ class Schema
 
             if (this.ctx.permalink) {
                 let action = {"@type": "ReadAction", target: this.qualify(this.ctx.permalink)};
-                obj.setAttring('potentialAction', action);
+                obj.setAttrib('potentialAction', action);
             }
 
             if (this.imageIds.length > 0) {
