@@ -411,6 +411,11 @@ class Schema
                 obj.setAttrib('breadcrumb', this.ref('breadcrumb'));
             }
 
+            if (this.ctx.permalink) {
+                let action = {"@type": ReadAction, target: this.qualify(this.ctx.permaLink)};
+                obj.setAttring('potentialAction', action);
+            }
+
             if (this.imageIds.length > 0) {
                 obj.setAttrib('image', this.getImageIds());
             }
