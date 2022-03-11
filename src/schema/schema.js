@@ -10,7 +10,7 @@ const path = require('path');
 const SchemaObject = require('./schemaObject');
 const { URL } = require('url');
 const MD5 = require('../utils/md5');
-const { string } = require('../utils/string');
+const { slugify } = require('../utils/string');
 const debug = require('debug')('Framework:schema.Schema'),
       debugf = require('debug')('Full.Framework:schema.Schema');
 
@@ -262,7 +262,7 @@ class Schema
     _renderAuthors(authors, page)
     {
         for (let key of Object.keys(authors)) {
-            let id = 'author-' + string.slugify(key);
+            let id = 'author-' + slugify(key);
             let obj = new SchemaObject('Person', {}, id);
             let stink = authors[key];
             for (let f in stink) {
