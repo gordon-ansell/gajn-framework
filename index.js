@@ -26,6 +26,10 @@ exports.HtmlGenerator = require('./src/html/htmlGenerator');
 exports.HtmlFigure = require('./src/html/htmlFigure');
 exports.ComplexImage = require('./src/html/complexImage');
 
+// Schema.
+exports.Schema = require('./src/schema/schema');
+exports.SchemaObject = require('./src/schema/schemaObject');
+
 // FS.
 exports.FsParser = require('./src/fs/fsParser');
 exports.fsutils = require('./src/fs/fsutils');
