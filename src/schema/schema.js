@@ -377,7 +377,27 @@ class Schema
                 obj.setAttrib('dateModified', this.ctx._modified.iso);
             }
 
-            obj.setAttrib('isPartOf', this.ref('website'))
+            obj.setAttrib('isPartOf', this.ref('website'));
+
+            let bc = {
+                "@type": 'BreadcrumbList',
+                "@id": this.qualify('#breadcrumb'),
+                itemListElement: []
+            }
+            if (this.raw.breadcrumb) {
+                for (let item of this.raw.breadcrumb) {
+                    let s = {
+                        "@type": "ListItem",
+                        "@id": this.qualify(item.url), 
+                        name: item.title,
+                        url: this.qualify(item.url),
+                        position: item.num
+                    }
+                    bc.itemListElement.push(s);
+                }
+                this.items['breadcrumb'] = bc;
+                obj.setAttrib('breadcrumb', this/this.ref('breadcrumb'));
+            }
 
             this.items['webpage'] = obj;
         }
