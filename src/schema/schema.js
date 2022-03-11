@@ -369,6 +369,14 @@ class Schema
                 obj.setAttrib('headline', this.ctx.title)
             }
 
+            if (this.ctx._date) {
+                obj.setAttrib('datePublished', this.ctx._date.iso);
+            }
+
+            if (this.ctx._modified) {
+                obj.setAttrib('dateModified', this.ctx._modified.iso);
+            }
+
             obj.setAttrib('isPartOf', this.ref('website'))
 
             this.items['webpage'] = obj;
