@@ -641,7 +641,7 @@ class Schema
             return;
         }
 
-        let obj = new SchemaObject(HowTo, {}, 'howto');
+        let obj = new SchemaObject('HowTo', {}, 'howto');
 
         for (let idx of Object.keys(this.raw.howto)) {
             if ('type' !== idx && !idx.startsWith('__') && !idx.startsWith('@')) {
