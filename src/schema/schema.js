@@ -552,12 +552,12 @@ class Schema
 
         let aggr = null;
         if (this.raw.review.review.aggr) {
-            aggr = raw.review.review.aggr;
+            aggr = this.raw.review.review.aggr;
         }
         let rating = null;
-        //if (aggr) {
-            rating = raw.review.review.rating;
-        //}
+        if (aggr) {
+            rating = this.raw.review.review.rating;
+        }
 
         let pid = null;
         if (this.raw.review.product) {
