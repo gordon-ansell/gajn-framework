@@ -442,7 +442,7 @@ class Schema
         for (let idx in this.items) {
             ret['@graph'].push(this.items[idx].attribs);
         }
-        return JSON.stringify(ret);
+        return JSON.stringify(ret, null);
     }
 }
 
