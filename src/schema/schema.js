@@ -402,8 +402,8 @@ class Schema
                         position: item.num
                     }
                     if (item.url) {
-                        s['@id'] = this.qualify(item.url);
-                        s['item'] = this.qualify(item.url);
+                        //s['@id'] = this.qualify(item.url);
+                        s['item'] = {"@type": "WebPage", "@id": this.qualify(item.url)};
                     }
                     itemListElement.push(s);
                 }
