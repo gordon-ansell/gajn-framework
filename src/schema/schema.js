@@ -109,6 +109,23 @@ class Schema
     }
 
     /**
+     * Push raw.
+     * 
+     * @param   {string}    name        Name.
+     * @param   {object}    obj         Raw data.
+     * 
+     * @return  {Schema}
+     */
+    pushRaw(name, obj)
+    {
+        if (!this.raw[name]) {
+            this.raw[name] = [];
+        }
+        this.raw[name].push(obj);
+        return this;
+    }
+
+    /**
      * Add global image.
      * 
      * @param   {string}    name        Name.
@@ -609,6 +626,63 @@ class Schema
 
         obj.setAttrib('itemReviewed', this.ref(pid));
         this.items[id] = obj;
+    }
+
+    /**
+     * Render a howto.
+     * 
+     * @param   {string}    page 
+     * 
+     * @return  {void}
+     */
+    _renderHowTo(page)
+    {
+        if (!this.raw.howto) {
+            return;
+        }
+
+        let obj = new SchemaObject(HowTo, {}, 'howto');
+
+        for (let idx of Object.keys(this.raw.howto)) {
+            if ('type' !== idx && !idx.startsWith('__') && !idx.startsWith('@')) {
+                obj.setAttrib(idx, this.raw.howtos[idx]);
+            }
+        }
+
+        obj.setAttrib('step', this._renderHowToSteps(page));
+
+        obj.settAttrib('mainEntityOfPage', this.ref('article'));
+
+        this.items['howto'] = obj;
+    }
+
+    /**
+     * Render howto steps.
+     * 
+     * @param   {string}    page 
+     * 
+     * @return  {void}
+     */
+    _renderHowToSteps(page)
+    {
+        if (!this.raw.howtostep) {
+            return [];
+        }
+
+        let ret = [];
+
+        for (let item of this.raw.howtostep) {
+
+            let step = {
+                "@Type": "HowToStep",
+                name: item.name,
+                text: item.text
+            }
+
+            ret.push(step);
+        }
+
+        return ret;
     }
 
     /**
