@@ -473,7 +473,7 @@ class Schema
             obj.setAttrib('mainEntityOfPage', this.ref('webpage'));
 
             let author = 'author-' + slugify(this.ctx.author || this.ctx.site.defaultAuthor); 
-            obj,setAttrib('author', this.ref(author));
+            obj.setAttrib('author', this.ref(author));
 
             if (this.imageIds.length > 0) {
                 obj.setAttrib('image', this.getImageIds());
