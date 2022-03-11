@@ -278,6 +278,7 @@ class Schema
                 }
             }
             this.items[id] = obj;
+            debug(`Rendering author ${id}`);
         }
     }
 
