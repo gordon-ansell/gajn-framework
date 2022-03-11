@@ -475,6 +475,10 @@ class Schema
             let author = 'author-' + slugify(this.ctx.author || this.ctx.site.defaultAuthor); 
             obj.setAttrib('author', this.ref(author));
 
+            if (this.ctx.tags) {
+                obj.setAttrib('keywords', this.ctx.tags);
+            }
+
             if (this.imageIds.length > 0) {
                 obj.setAttrib('image', this.getImageIds());
             }
