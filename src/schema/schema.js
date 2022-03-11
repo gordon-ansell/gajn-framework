@@ -532,6 +532,10 @@ class Schema
             obj.setAttrib('aggregateRating', ar);
         }
 
+        if (this.imageIds.length > 0) {
+            obj.setAttrib('image', this.getImageIds());
+        }
+
         this.items[id] = obj;
 
         return id;
@@ -589,6 +593,10 @@ class Schema
         }
 
         obj.setAttrib('mainEntityOfPage', this.ref('article'));
+
+        let author = 'author-' + slugify(this.ctx.author || this.ctx.site.defaultAuthor); 
+        obj.setAttrib('author', this.ref(author));
+
 
         obj.setAttrib('itemReviewed', this.ref(pid));
         this.items[id] = obj;
