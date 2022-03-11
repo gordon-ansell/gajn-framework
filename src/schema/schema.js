@@ -396,7 +396,7 @@ class Schema
                     bc.itemListElement.push(s);
                 }
                 this.items['breadcrumb'] = bc;
-                obj.setAttrib('breadcrumb', this/this.ref('breadcrumb'));
+                obj.setAttrib('breadcrumb', this.ref('breadcrumb'));
             }
 
             this.items['webpage'] = obj;
