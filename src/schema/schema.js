@@ -697,6 +697,7 @@ class Schema
         this._renderWebpage(page);
         this._renderArticle(page);
         this._renderReview(page);
+        this._renderHowTo(page);
 
         //this.dumpImages(page);
 
