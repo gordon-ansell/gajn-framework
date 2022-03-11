@@ -569,6 +569,7 @@ class Schema
         }
 
         obj.setAttrib('itemReviewed', this.ref(pid));
+        this.items[id] = obj;
     }
 
     /**
