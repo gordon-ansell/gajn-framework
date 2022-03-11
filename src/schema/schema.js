@@ -425,6 +425,62 @@ class Schema
     }
 
     /**
+     * Render the article.
+     * 
+     * @param   {string}    page
+     * 
+     * @return  {void}
+     */
+    _renderArticle(page)
+    {
+        if (this.ctx) {
+
+            //debug("ctx: %O", this.ctx);
+
+            let type = 'BlogPosting';
+            if (this.ctx.type && 'post' !== this.ctx.type) {
+                type = 'Article';
+            }
+
+            let obj = new SchemaObject(type, {}, 'article');
+
+            if (this.ctx.title) {
+                obj.setAttrib('name', this.ctx.title);
+            }
+
+            for (let item of ['headline', 'description']) {
+                if (this.ctx[item]) {
+                    obj.setAttrib(item, this.ctx[item]);
+                }
+            }
+
+            if (this.ctx.permalink) {
+                obj.setAttrib('url', this.qualify(this.ctx.permalink));
+            }
+
+            if (!obj.hasAttrib('headline') && this.ctx.title) {
+                obj.setAttrib('headline', this.ctx.title)
+            }
+
+            if (this.ctx._date) {
+                obj.setAttrib('datePublished', this.ctx._date.iso);
+            }
+
+            if (this.ctx._modified) {
+                obj.setAttrib('dateModified', this.ctx._modified.iso);
+            }
+
+            obj.setAttrib('mainEntityOfPage', this.ref('webpage'));
+
+            if (this.imageIds.length > 0) {
+                obj.setAttrib('image', this.getImageIds());
+            }
+
+            this.items['article'] = obj;
+        }
+    }
+
+    /**
      * Render the schema.
      * 
      * @return  {string}
@@ -434,6 +490,7 @@ class Schema
         this._renderImages(page);
         this._renderWebsite(page);
         this._renderWebpage(page);
+        this._renderArticle(page);
 
         //this.dumpImages(page);
 
