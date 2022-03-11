@@ -555,9 +555,9 @@ class Schema
             aggr = this.raw.review.review.aggr;
         }
         let rating = null;
-        if (aggr) {
+        //if (aggr) {
             rating = this.raw.review.review.rating;
-        }
+        //}
 
         let pid = null;
         if (this.raw.review.product) {
