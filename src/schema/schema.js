@@ -487,6 +487,15 @@ class Schema
                 obj.setAttrib('backstory', this.ctx.excerpt_text);
             }
 
+            if (this.raw.citation) {
+                let c = {
+                    "@type": "WebPage",
+                    name: this.raw.citation.title,
+                    url: this.raw.citation.url
+                };
+                obj.setAttrib('citation', c);
+            }
+
             if (this.imageIds.length > 0) {
                 obj.setAttrib('image', this.getImageIds());
             }
