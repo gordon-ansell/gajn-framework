@@ -521,6 +521,8 @@ class Schema
             }
         }
 
+        this.items[id] = obj;
+
         return id;
     }
 
