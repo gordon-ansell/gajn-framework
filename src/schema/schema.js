@@ -412,7 +412,7 @@ class Schema
             }
 
             if (this.ctx.permalink) {
-                let action = {"@type": ReadAction, target: this.qualify(this.ctx.permaLink)};
+                let action = {"@type": ReadAction, target: this.qualify(this.ctx.permalink)};
                 obj.setAttring('potentialAction', action);
             }
 
