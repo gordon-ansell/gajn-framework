@@ -347,6 +347,8 @@ class Schema
     {
         if (this.ctx) {
 
+            //debug("ctx: %O", this.ctx);
+
             let obj = new SchemaObject('WebPage', {}, 'webpage');
 
             if (this.ctx.title) {
@@ -355,7 +357,7 @@ class Schema
 
             for (let item of ['headline', 'description']) {
                 if (this.ctx[item]) {
-                    obj.setAttrib(item, this.ctx.item);
+                    obj.setAttrib(item, this.ctx[item]);
                 }
             }
 
