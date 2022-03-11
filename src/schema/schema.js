@@ -379,24 +379,21 @@ class Schema
 
             obj.setAttrib('isPartOf', this.ref('website'));
 
-            let bc = {
-                "@type": 'BreadcrumbList',
-                "@id": this.qualify('#breadcrumb'),
-                itemListElement: []
-            }
             if (this.raw.breadcrumb) {
+                let itemListElement = [];
                 for (let item of this.raw.breadcrumb) {
                     let s = {
                         "@type": "ListItem",
-                        "@id": this.qualify(item.url), 
                         name: item.title,
-                        url: this.qualify(item.url),
                         position: item.num
                     }
-                    bc.itemListElement.push(s);
+                    if (item.url) {
+                        s['@id'] = this.qualify(item.url);
+                        s['url'] = this.qualify(item.url);
+                    }
+                    itemListElement.push(s);
                 }
-                this.items['breadcrumb'] = bc;
-                obj.setAttrib('breadcrumb', this.ref('breadcrumb'));
+                this.items['breadcrumb'] = new SchemaObject('BreadcrumbList', {itemListElement: itemListElement}, 'breadcrumb');
             }
 
             this.items['webpage'] = obj;
