@@ -71,6 +71,18 @@ class SchemaObject
     }
 
     /**
+     * See if we have an attribute.
+     * 
+     * @param   {string}    name        Name to test.
+     * 
+     * @return  {boolean}
+     */
+    hasAttrib(name)
+    {
+        return Object.keys(this.attribs).includes(name);
+    }
+
+    /**
      * Set the type.
      * 
      * @param   {string}    type        Type to set.

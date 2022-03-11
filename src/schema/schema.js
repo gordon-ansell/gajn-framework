@@ -361,6 +361,16 @@ class Schema
                 }
             }
 
+            if (this.ctx.permalink) {
+                obj.setAttrib('url', this.qualify(this.ctx.permalink));
+            }
+
+            if (!obj.hasAttrib('headline') && this.ctx.title) {
+                obj.setAttrib('headline', this.ctx.title)
+            }
+
+            obj.setAttrib('isPartOf', this.ref('website'))
+
             this.items['webpage'] = obj;
         }
     }
