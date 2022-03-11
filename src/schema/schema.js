@@ -645,7 +645,7 @@ class Schema
 
         for (let idx of Object.keys(this.raw.howto)) {
             if ('type' !== idx && !idx.startsWith('__') && !idx.startsWith('@')) {
-                obj.setAttrib(idx, this.raw.howtos[idx]);
+                obj.setAttrib(idx, this.raw.howto[idx]);
             }
         }
 
