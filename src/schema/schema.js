@@ -394,6 +394,7 @@ class Schema
                     itemListElement.push(s);
                 }
                 this.items['breadcrumb'] = new SchemaObject('BreadcrumbList', {itemListElement: itemListElement}, 'breadcrumb');
+                obj.setAttrib('breadcrumb', this.ref('breadcrumb'));
             }
 
             this.items['webpage'] = obj;
