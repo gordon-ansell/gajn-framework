@@ -543,6 +543,32 @@ class Schema
         if (this.raw.review.product) {
             pid = this._renderProduct(page, this.raw.review.product);
         }
+
+        let reviewFields = this.raw.review.review;
+
+        let id = 'review-' + slugify(reviewFields.name);
+
+        let obj = new SchemaObject('Review', {}, id);
+
+        for (let idx of Object.keys(reviewFields)) {
+            if ('type' !== idx && !idx.startsWith('__') && !idx.startsWith('@')) {
+
+                if ('rating' === idx) {
+                    let r = {
+                        '@type': "Rating",
+                        ratingValue: reviewFields[idx],
+                        beastRating: 5,
+                        worstRating: 0
+                    }
+                    obj.setAttrib('reviewRating', r);
+                } else {
+                    obj.setAttrib(idx, reviewFields[idx]);
+                }
+
+            }
+        }
+
+        obj.setAttrib('itemReviewed', this.ref(pid));
     }
 
     /**
