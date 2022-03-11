@@ -282,6 +282,20 @@ class Schema
     }
 
     /**
+     * Get all the image IDs
+     * 
+     * @return
+     */
+    getImageIds()
+    {
+        let ret = [];
+        for (let item of this.imageIds) {
+            ret.push(this.ref(item));
+        }
+        return ret;
+    }
+
+    /**
      * Render the publisher.
      * 
      * @param   {object}    punlisher
@@ -395,6 +409,10 @@ class Schema
                 }
                 this.items['breadcrumb'] = new SchemaObject('BreadcrumbList', {itemListElement: itemListElement}, 'breadcrumb');
                 obj.setAttrib('breadcrumb', this.ref('breadcrumb'));
+            }
+
+            if (this.imageIds.length > 0) {
+                obj.setAttrib('image', this.getImageIds());
             }
 
             this.items['webpage'] = obj;
