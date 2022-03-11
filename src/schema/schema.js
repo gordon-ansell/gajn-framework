@@ -66,7 +66,7 @@ class Schema
      * Context.
      * @member {object}
      */
-    ctx = {};
+    ctx = null;
 
     /**
      * Constructor.
@@ -278,7 +278,6 @@ class Schema
                 }
             }
             this.items[id] = obj;
-            debug(`Rendering author ${id}`);
         }
     }
 
@@ -341,7 +340,28 @@ class Schema
      * Render the web page.
      * 
      * @param   {string}    page
+     * 
+     * @return  {void}
      */
+    _renderWebpage(page)
+    {
+        if (this.ctx) {
+
+            let obj = new SchemaObject('WebPage', {}, 'webpage');
+
+            if (this.ctx.title) {
+                obj.setAttrib('name', this.ctx.title);
+            }
+
+            for (let item of ['headline', 'description']) {
+                if (this.ctx[item]) {
+                    obj.setAttrib(item, this.ctx.item);
+                }
+            }
+
+            this.items['webpage'] = obj;
+        }
+    }
 
     /**
      * Render the schema.
@@ -352,6 +372,7 @@ class Schema
     {
         this._renderImages(page);
         this._renderWebsite(page);
+        this._renderWebpage(page);
 
         //this.dumpImages(page);
 
