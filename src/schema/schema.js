@@ -424,7 +424,7 @@ class Schema
      * 
      * @return  {string}
      */
-    render(page)
+    render(page, replacer = null, space = null)
     {
         this._renderImages(page);
         this._renderWebsite(page);
@@ -442,7 +442,7 @@ class Schema
         for (let idx in this.items) {
             ret['@graph'].push(this.items[idx].attribs);
         }
-        return JSON.stringify(ret, null);
+        return JSON.stringify(ret, replacer, space);
     }
 }
 
