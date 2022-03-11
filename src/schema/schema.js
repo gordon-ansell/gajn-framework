@@ -403,7 +403,7 @@ class Schema
                     }
                     if (item.url) {
                         s['@id'] = this.qualify(item.url);
-                        s['url'] = this.qualify(item.url);
+                        s['item'] = this.qualify(item.url);
                     }
                     itemListElement.push(s);
                 }
