@@ -588,6 +588,8 @@ class Schema
             }
         }
 
+        obj.setAttrib('mainEntityOfPage', this.ref('article'));
+
         obj.setAttrib('itemReviewed', this.ref(pid));
         this.items[id] = obj;
     }
