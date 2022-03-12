@@ -399,6 +399,17 @@ class Schema
                 type = 'CollectionPage';
             }
 
+            if (this.ctx.home && true === this.ctx.home) {
+                if (this.ctx.pagination && this.ctx.pagination.page && this.ctx.pagination.page != 1) {
+                    this.ctx.title = `${this.ctx.site.title} (Page ${this.ctx.pagination.page })`;
+                    this.ctx.description = `${this.ctx.site.description} (Page ${this.ctx.pagination.page })`;
+                } else {
+                    this.ctx.title = this.ctx.site.title;
+                    this.ctx.description = this.ctx.site.description;
+                }
+            }
+
+
             let obj = new SchemaObject(type, {}, 'webpage');
 
             if (this.ctx.title) {
