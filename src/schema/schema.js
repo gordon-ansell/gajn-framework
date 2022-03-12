@@ -395,6 +395,8 @@ class Schema
                 type = 'AboutPage';
             } else if (this.ctx.contact && true === this.ctx.contact) {
                 type = 'ContactPage';
+            } else if (this.ctx.type && 'collection' === this.ctx.type) {
+                type = 'CollectionPage';
             }
 
             let obj = new SchemaObject(type, {}, 'webpage');
