@@ -730,7 +730,7 @@ class Schema
 
         obj.setAttrib('mainEntity', this._renderFaqQAs(page));
 
-        obj.setAttrib('isPartOf', this.ref('article'));
+        //obj.setAttrib('mainEntityOfPage', this.ref('article'));
 
         this.items['faqpage'] = obj;
     }
