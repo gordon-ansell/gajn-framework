@@ -674,7 +674,7 @@ class Schema
         for (let item of this.raw.howtostep) {
 
             let step = {
-                "@Type": "HowToStep",
+                "@type": "HowToStep",
                 name: item.name,
                 text: item.text
             }
