@@ -708,6 +708,70 @@ class Schema
     }
 
     /**
+     * Render an FAQ page.
+     * 
+     * @param   {string}    page 
+     * 
+     * @return  {void}
+     */
+    _renderFaqPage(page)
+    {
+        if (!this.raw.faqpage) {
+            return;
+        }
+
+        let obj = new SchemaObject('FAQPage', {}, 'faqpage');
+
+        for (let idx of Object.keys(this.raw.howto)) {
+            if ('type' !== idx && !idx.startsWith('__') && !idx.startsWith('@')) {
+                obj.setAttrib(idx, this.raw.howto[idx]);
+            }
+        }
+
+        obj.setAttrib('step', this._renderFaqQAs(page));
+
+        obj.setAttrib('isPartOf', this.ref('article'));
+
+        this.items['faqpage'] = obj;
+    }
+
+    /**
+     * Render FAQ QAs.
+     * 
+     * @param   {string}    page 
+     * 
+     * @return  {void}
+     */
+    _renderFaqQAs(page)
+    {
+        if (!this.raw.faqqa) {
+            return [];
+        }
+
+        let ret = [];
+
+        let stepNum = 1;
+
+        for (let item of this.raw.faqqa) {
+
+            let step = {
+                "@type": "Question",
+                name: item.q,
+                url: this.qualify(path.join(page, '#faq-' + stepNum)),
+                acceptedAnswer: {
+                    "@type": "Answer",
+                    text: item.html
+                } 
+            }
+
+            ret.push(step);
+            stepNum++;
+        }
+
+        return ret;
+    }
+
+    /**
      * Render the schema.
      * 
      * @return  {string}
@@ -720,6 +784,7 @@ class Schema
         this._renderArticle(page);
         this._renderReview(page);
         this._renderHowTo(page);
+        this._renderFaqPage(page);
 
         //this.dumpImages(page);
 
