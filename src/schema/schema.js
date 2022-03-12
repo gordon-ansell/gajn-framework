@@ -754,6 +754,8 @@ class Schema
 
         for (let item of this.raw.faqqa) {
 
+            debug("FAQQA: %O", item);
+
             let step = {
                 "@type": "Question",
                 name: item.q,
