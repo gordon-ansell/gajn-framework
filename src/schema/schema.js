@@ -588,6 +588,8 @@ class Schema
             obj.setAttrib('aggregateRating', ar);
         }
 
+        obj.setAttrib('review', this.ref('review'));
+
         if (this.imageIds.length > 0) {
             obj.setAttrib('image', this.getImageIds());
         }
