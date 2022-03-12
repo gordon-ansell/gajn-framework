@@ -728,7 +728,7 @@ class Schema
             }
         }
 
-        obj.setAttrib('step', this._renderFaqQAs(page));
+        obj.setAttrib('mainEntity', this._renderFaqQAs(page));
 
         obj.setAttrib('isPartOf', this.ref('article'));
 
