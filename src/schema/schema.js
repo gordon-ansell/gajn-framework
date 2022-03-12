@@ -57,6 +57,12 @@ class Schema
     imageIds = [];
 
     /**
+     * Image IDs for a source.
+     * @member {object}
+     */
+    imageIdsForSrc = {};
+
+    /**
      * Configs.
      * @member {object}
      */
@@ -227,6 +233,10 @@ class Schema
                     obj.setAttrib('representativeOfPage', true);
                     this.items[mdid] = obj; 
                     this.imageIds.push(mdid);
+                    if (!this.imageIdsForSrc[idx]) {
+                        this.imageIdsForSrc[idx] = [];
+                    }
+                    this.imageIdsForSrc[idx].push(mdid);
                 }
             }
         }
@@ -679,7 +689,11 @@ class Schema
                 "@type": "HowToStep",
                 name: item.name,
                 text: item.text,
-                url: new URL(path.join(page, '#step-' + stepNum), this.config.hostname)
+                url: this.qualify(path.join(page, '#step-' + stepNum))
+            }
+
+            if (item.image && this.imageIdsForSrc[item.image]) {
+                step.image = this.imageIdsForSrc[item.image];
             }
 
             ret.push(step);
