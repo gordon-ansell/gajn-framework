@@ -722,9 +722,9 @@ class Schema
 
         let obj = new SchemaObject('FAQPage', {}, 'faqpage');
 
-        for (let idx of Object.keys(this.raw.howto)) {
+        for (let idx of Object.keys(this.raw.faqpage)) {
             if ('type' !== idx && !idx.startsWith('__') && !idx.startsWith('@')) {
-                obj.setAttrib(idx, this.raw.howto[idx]);
+                obj.setAttrib(idx, this.raw.faqpage[idx]);
             }
         }
 
@@ -753,8 +753,6 @@ class Schema
         let stepNum = 1;
 
         for (let item of this.raw.faqqa) {
-
-            debug("FAQQA: %O", item);
 
             let step = {
                 "@type": "Question",
