@@ -390,7 +390,14 @@ class Schema
 
             //debug("ctx: %O", this.ctx);
 
-            let obj = new SchemaObject('WebPage', {}, 'webpage');
+            let type = 'WebPage';
+            if (this.ctx.about && true === this.ctx.about) {
+                type = 'AboutPage';
+            } else if (this.ctx.contact && true === this.ctx.contact) {
+                type = 'ContactPage';
+            }
+
+            let obj = new SchemaObject(type, {}, 'webpage');
 
             if (this.ctx.title) {
                 obj.setAttrib('name', this.ctx.title);
