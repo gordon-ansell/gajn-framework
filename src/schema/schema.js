@@ -693,7 +693,11 @@ class Schema
             }
 
             if (item.image && this.imageIdsForSrc[item.image]) {
-                step.image = this.imageIdsForSrc[item.image];
+                let imgs = [];
+                for (let im of this.imageIdsForSrc[item.image]) {
+                    imgs.push(this.ref(im));
+                }
+                step.image = imgs;
             }
 
             ret.push(step);
