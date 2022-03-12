@@ -164,7 +164,6 @@ class ComplexImage
         sourceGenNoScript.setAttrib('type', files[0].mime);
 
         // Lazyload check.
-        syslog.warning(`${files[0].url}: ${files.length}`)
         if (this.lazyload && 1 === files.length) {
             syslog.warning(`Really small images and lazyloading is a problem: ${files[0].url}`);
         }
