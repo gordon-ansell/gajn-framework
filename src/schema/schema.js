@@ -671,15 +671,19 @@ class Schema
 
         let ret = [];
 
+        let stepNum = 1;
+
         for (let item of this.raw.howtostep) {
 
             let step = {
                 "@type": "HowToStep",
                 name: item.name,
-                text: item.text
+                text: item.text,
+                url: new URL(path.join(page, '#step-' + stepNum), this.config.hostname)
             }
 
             ret.push(step);
+            stepNum++;
         }
 
         return ret;
