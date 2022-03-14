@@ -559,7 +559,7 @@ class Schema
      * 
      * @return  {string}    Product ID.
      */
-    _renderProduct(page, productFields, rating = null)
+    _renderProduct(page, productFields, rating = null, reviewId)
     {
         let id = 'product-' + slugify(productFields.name);
         let obj = new SchemaObject(productFields.type, {}, id);
@@ -588,7 +588,7 @@ class Schema
             obj.setAttrib('aggregateRating', ar);
         }
 
-        obj.setAttrib('review', this.ref('review'));
+        obj.setAttrib('review', this.ref(reviewId));
 
         if (this.imageIds.length > 0) {
             obj.setAttrib('image', this.getImageIds());
@@ -621,15 +621,14 @@ class Schema
             rating = this.raw.review.review.rating;
         //}
 
-        let pid = null;
-        if (this.raw.review.product) {
-            pid = this._renderProduct(page, this.raw.review.product, rating);
-        }
-
         let reviewFields = this.raw.review.review;
-
         let id = 'review-' + slugify(reviewFields.name);
 
+        let pid = null;
+        if (this.raw.review.product) {
+            pid = this._renderProduct(page, this.raw.review.product, rating, id);
+        }
+ 
         let obj = new SchemaObject('Review', {}, id);
 
         for (let idx of Object.keys(reviewFields)) {
