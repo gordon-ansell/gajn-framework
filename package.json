@@ -26,7 +26,8 @@
 		"deepmerge": "*",
         "image-size": "*",
 		"is-plain-object": "*",
-        "rimraf": "*"
+        "rimraf": "*",
+        "yaml": "*"
     },
 	"devDependencies": {},
 	"engines": {
