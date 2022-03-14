@@ -35,7 +35,7 @@ exports.FsParser = require('./src/fs/fsParser');
 exports.fsutils = require('./src/fs/fsutils');
 
 // YamlFile.
-exports.YamlFile = require('./src/yamlFile');
+//exports.YamlFile = require('./src/yamlFile');
 
 // Utils.
 exports.string = require('./src/utils/string');
