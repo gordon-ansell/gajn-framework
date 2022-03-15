@@ -11,6 +11,8 @@ const SchemaObject = require('./schemaObject');
 const { URL } = require('url');
 const MD5 = require('../utils/md5');
 const { slugify } = require('../utils/string');
+const { SchemaGraph, SchemaCreator } = require('js-schema');
+const { throws } = require('assert');
 const debug = require('debug')('Framework:schema.Schema'),
       debugf = require('debug')('Full.Framework:schema.Schema');
 
@@ -75,6 +77,12 @@ class Schema
     ctx = null;
 
     /**
+     * Schema graph.
+     * @member {SchemaGraph}
+     */
+    graph = null;
+
+    /**
      * Constructor.
      * 
      * @param   {object}    config      Configs.
@@ -85,6 +93,7 @@ class Schema
     {
         this.config = config;
         SchemaObject.url = this.config.hostname;
+        this.graph = new SchemaGraph;
     }
 
     /**
@@ -221,9 +230,7 @@ class Schema
         let mdc = new MD5();
         for (let idx of Object.keys(this.images)) {
             for (let type of Object.keys(this.images[idx])) {
-                //debug(`${page}: %O`, this.images[idx][type].files);
                 for (let f of this.images[idx][type].files) {
-                    //debug(`Processing %s`, f.file);
                     let mdid = mdc.md5(f.file);
                     let obj = new SchemaObject('ImageObject', {}, mdid);
                     obj.setAttrib('contentUrl', this.qualify(f.file));
@@ -231,6 +238,16 @@ class Schema
                     obj.setAttrib('width', f.width);
                     obj.setAttrib('height', f.height);
                     obj.setAttrib('representativeOfPage', true);
+
+                    let sch = SchemaCreator.create('ImageObject', mdid);
+                    sch.addProp('contentUrl', this.qualify(f.file));
+                    sch.addProp('url', this.qualify(f.file));
+                    sch.addProp('width', f.width);
+                    sch.addProp('height', f.height);
+                    sch.addProp('representativeOfPage', true);
+                    this.graph.set('image-' + mdid, sch);
+
+
                     this.items[mdid] = obj; 
                     this.imageIds.push(mdid);
                     if (!this.imageIdsForSrc[idx]) {
@@ -819,7 +836,7 @@ class Schema
         for (let idx in this.items) {
             ret['@graph'].push(this.items[idx].attribs);
         }
-        return JSON.stringify(ret, replacer, space);
+        return JSON.stringify(ret, replacer, space) + this.graph.render();
     }
 }
 
