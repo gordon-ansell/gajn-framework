@@ -10,7 +10,7 @@
 
 const path = require('path');
 const url = require('url');
-const YamlFile = require("../yamlFile");
+const YamlFile = require("../../yamlFile");
 const GAError = require("../utils/gaError");
 const syslog = require("../logger/syslog");
 
