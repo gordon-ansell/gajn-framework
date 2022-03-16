@@ -219,16 +219,14 @@ class ComplexImage
         }
 
         // Save the meta sources.
-        /*
         if (metaSrcs.length > 0) {
             for (let item of metaSrcs) {
-                let linkGen = new HtmlGenerator('link', {href: item});
+                //let linkGen = new HtmlGenerator('link', {href: item});
                 this.metaIds.push(item);
-                linkGen.addAttrib('itemprop', 'image');
-                this.schema += linkGen.render();
+                //linkGen.addAttrib('itemprop', 'image');
+                //this.schema += linkGen.render();
             }
         }
-        */
 
         // Return the rendered <source> (and possible <noscript>).
         if (this.lazyload && !this.rss) {
