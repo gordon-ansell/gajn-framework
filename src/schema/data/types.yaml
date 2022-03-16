@@ -1,0 +1,12 @@
+types:
+
+  EventStatusType: 
+    allowed: [Cancelled, MovedOnline, Postponed, Rescheduled, Scheduled]
+    prefix: Event
+
+  ItemAvailability: 
+    allowed: [Discontinued, InStock, InStoreOnly, LimitedAvailability, OnlineOnly, OutOfStock, PreOrder, PreSale, SoldOut]
+
+  EventAttendanceMode:
+    allowed: [Mixed, Offline, Online]
+    suffix: EventAttendanceMode

@@ -33,6 +33,11 @@ exports.fsutils = require('./src/fs/fsutils');
 // YamlFile.
 exports.YamlFile = require('./src/yamlFile');
 
+// Schema.
+exports.SchemaBase = require('./src/schema/schemaBase');
+exports.SchemaCreator = require('./src/schema/schemaCreator');
+exports.SchemaGraph = require('./src/schema/schemaGraph');
+
 // Utils.
 exports.string = require('./src/utils/string');
 exports.regex = require('./src/utils/regex');

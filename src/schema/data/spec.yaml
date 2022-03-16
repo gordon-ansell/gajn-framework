@@ -1,0 +1,771 @@
+classes:
+
+  Thing: 
+    fields:
+      additionalType: URL
+      alternateName: Text
+      description: Text
+      disambiguatingDescription: Text
+      identifier: [PropertyValue, Text, URL]
+      image: [ImageObject, URL]
+      mainEntityOfPage: [CreativeWork, URL]
+      name: Text
+      potentialAction: Action
+      sameAs: URL
+      subjectOf: [CreativeWork, Event]
+      url: URL
+
+  CreativeWork:
+    fields:
+      about: Thing
+      abstract: Text
+      accessMode: Text
+      accessModeSufficient: ItemList
+      accessibilityAPI: Text
+      accessibilityControl: Text
+      accessibilityFeature: Text
+      accessibilityHazard: Text
+      accessibilitySummary: Text
+      accountablePerson: Person
+      acquireLicensePage: [CreativeWork, URL]
+      aggregateRating: AggregateRating
+      alternativeHeadline: Text
+      assesses: [DefinedTerm, Text]
+      associatedMedia: MediaObject
+      audience: Audience
+      audio: [AudioObject, Clip, MusicRecording]
+      author: [Organization, Person]
+      award: Text
+      character: Person
+      citation: [CreativeWork, Text]
+      comment: Comment
+      commentCount: Integer
+      conditionsOfAccess: Text
+      contentLocation: Place
+      contentRating: [Rating, Text]
+      contentReferenceTime: DateTime
+      contributor: [Organization, Person]
+      copyrightHolder: [Organization, Person]
+      copyrightYear: Number
+      correction: [CorrectionComment, Text, URL]
+      creativeWorkStatus: [DefinedTerm, Text]
+      creator: [Organization, Person]
+      dateCreated: [Date, DateTime]
+      dateModified: [Date, DateTime]
+      datePublished: [Date, DateTime]
+      discussionUrl: URL
+      editEIDR: [Text, URL]
+      editor: Person
+      educationalAlignment: AlignmentObject
+      educationalLevel: [DefinedTerm, Text URL]
+      educationalUse: Text
+      encoding: MediaObject
+      encodingFormal: [Text, URL]
+      exampleOfWork: CreativeWork
+      expires: Date
+      funder: [Organization, Person]
+      genre: [Text, URL]
+      hasPart: CreativeWork
+      headline: Text
+      inLanguage: [Language, Text]
+      interactionStatistic: InteractionCounter
+      interactivityType: Text
+      isAccessibleForFree: Boolean
+      isBasedOn: [CreativeWork, Product, URL]
+      isFamilyFriendly: Boolean
+      isPartOf: [CreativeWork, URL]
+      keywords: [DefinedTerm, Text, URL]
+      learningResourceType: Text
+      license: [CreativeWork, URL]
+      locationCreated: [Place]
+      mainEntity: Thing
+      maintainer: [Organization, Person]
+      material: [Product, Text, URL]
+      materialExtent: [QuantatativeType, Text]
+      mentions: Thing
+      offers: [Demand, Offer]
+      pattern: [DefinedTerm, Text]
+      position: [Integer, Text]
+      producer: [Organization, Person]
+      provider: [Organization, Person]
+      publication: [PublicationEvent]
+      publisher: [Organization, Person]
+      publisherImprint: [Organization]
+      publishingPrinciples: [CreativeWork, URL]
+      recordedAt: Event
+      releasedEvent: PublicationEvent
+      review: Review
+      schemaVersion: [Text, URL]
+      sdDatePublished: Date
+      sdLicense: [CreativeWork, URL]
+      sdPublisher: [Organization, Person]
+      size: [DefinedTerm, QuantatativeValue, Text]
+      sourceOrganization: Organization
+      spatial: Place
+      spatialCoverage: Place
+      sponsor: [Organization, Person]
+      teaches: [DefinedTerm, Text]
+      temporal: [DateTime, Text]
+      temporalCoverage: [DateTime, Text, URL]
+      text: Text
+      thumbnailUrl: URL
+      timeRequired: [Text, Duration]
+      translationOfWork: CreativeWork
+      translator: [Organization, Person]
+      typicalAgeRange: Text
+      usageInfo: [CreativeWork, URL]
+      version: [Number, Text]
+      video: [Clip, VideoObject]
+      workExample: CreativeWork
+      workTranslation: CreativeWork
+    inherits: Thing
+    defaultTypes:
+      author: person
+      publisher: organization
+      citation: webPage
+
+  MediaObject:
+    fields:
+      associatedArticle: NewsArticle
+      bitrate: Text
+      contentSize: Text
+      contentUrl: URL
+      duration: [Text, Duration]
+      embedUrl: URL
+      encodesCreativeWork: CreativeWork
+      encodingFormat: [Text, URL]
+      endTime: [DateTime, Time]
+      height: [Number, Distance, QuantativeValue]
+      playerType: Text
+      productionCompany: Organization
+      regionsAllowed: Place
+      susbscriptionRequired: [Boolean, MediaSubscription]
+      startTime: [DateTime, Time]
+      uploadDate: Date
+      width: [Number, Distance, QuantativeValue]
+    inherits: [CreativeWork, Thing]
+
+  ImageObject:
+    fields:
+      caption: [MediaObject, Text]
+      exifData: [PropertyValue, Text]
+      representativeOfPage: Boolean
+      thumbnail: ImageObject
+    inherits: [MediaObject, CreativeWork, Thing]
+
+  VideoObject:
+    fields:
+      actor: Person
+      caption: [MediaObject, Text]
+      director: Person
+      musicBy: [MusicGroup, Person]
+      thumbnail: ImageObject
+      transcript: Text
+      videoFrameSize: Text
+      videoQuality: Text
+    inherits: [MediaObject, CreativeWork, Thing]
+
+  WebSite:
+    fields:
+      issn: Text
+    inherits: [CreativeWork, Thing]
+
+  Blog:
+    fields:
+      blogPost: BlogPosting
+      issn: Text
+    inherits: [CreativeWork, Thing]
+
+  Article:
+    fields:
+      articleBody: Text
+      articleSection: Text
+      backstory: [CreativeWork, Text]
+      pageEnd: [Integer, Text]
+      pageStart: [Integer, Text]
+      pagination: Text
+      speakable: [SpeakableSpecification, URL]
+      wordCount: Integer
+    inherits: [CreativeWork, Thing]
+    defaultTypes:
+      author: person
+      publisher: organization
+      citation: webPage
+
+  SocialMediaPosting:
+    fields:
+      sharedContent: CreativeWork
+    inherits: [Article, CreativeWork, Thing]
+
+  BlogPosting:
+    inherits: [SocialMediaPosting, Article, CreativeWork, Thing]
+    defaultTypes:
+      author: person
+      publisher: organization
+      citation: webPage
+
+  Comment:
+    fields:
+      downvoteCount: Integer
+      parentItem: Comment
+      upvoteCount: Integer
+    inherits: [CreativeWork, Thing]
+
+  Question:
+    fields:
+      acceptedAnswer: [Answer, ItemList]
+      answerCount: Integer
+      eduQuestionType: Text
+      suggestedAnswer: [Answer, ItemList]
+    inherits: [Comment, CreativeWork, Thing]
+
+  Answer:
+    fields:
+      answerExplanation: [Comment, WebContent]
+    inherits: [Comment, CreativeWork, Thing]
+
+  WebPage:
+    fields:
+      breadcrumb: [BreadcrumbList, Text]
+      lastReviewed: Date
+      mainContentOfPage: WebPageElement
+      primaryImageOfPage: ImageObject
+      relatedLink: URL
+      reviewedBy: [Organization, Person]
+      significantLink: URL
+      speakable: [SpeakableSpecification, URL]
+      specialty: Specialty
+    inherits: [CreativeWork, Thing]
+    defaultTypes:
+      author: person
+  
+  ContactPage:
+    inherits: [WebPage, CreativeWork, Thing]
+
+  AboutPage:
+    inherits: [WebPage, CreativeWork, Thing]
+
+  CollectionPage:
+    inherits: [WebPage, CreativeWork, Thing]
+
+  FAQPage:
+    inherits: [WebPage, CreativeWork, Thing]
+
+  QAPage:
+    inherits: [WebPage, CreativeWork, Thing]
+
+  WebPageElement:
+    fields:
+      cssSelector: CssSelectorType
+      xpath: XPathType
+    inherits: [CreativeWork, Thing]
+
+  WPHeader:
+    inherits: [WebPageElement, CreativeWork, Thing]
+
+  WPFooter:
+    inherits: [WebPageElement, CreativeWork, Thing]
+
+  SiteNavigationElement:
+    inherits: [WebPageElement, CreativeWork, Thing]
+
+  Rating:
+    fields:
+      author: [Organization, Person]
+      bestRating: [Number, Text]
+      ratingExplanation: Text
+      ratingValue: [Number, Text]
+      reviewAspect: Text
+      worstRating: [Number, Text]
+    inherits: Thing
+
+  AggregateRating:
+    fields:
+      itemReviewed: Thing
+      ratingCount: Integer
+      reviewCount: Integer
+    inherits: [Rating, Thing]
+
+  ItemList:
+    fields:
+      itemListElement: [ListItem, Text, Thing]
+      itemListOrder: [ItemListOrderType, Text]
+      numberOfItems: Integer
+    inherits: Thing
+
+  BreadcrumbList:
+    inherits: [ItemList, Thing]
+
+  ListItem:
+    fields:
+      item: [URL, Thing]
+      nextItem: ListItem
+      position: [Integer, Text]
+      previousItem: ListItem
+    inherits: Thing
+
+  Event:
+    fields:
+      about: Thing
+      actor: Person
+      aggregateRating: AggregateRating
+      attendee: [Organization, Person]
+      audience: Audience
+      composer: [Organization, Person]
+      contributor: [Organization, Person]
+      director: Person
+      doortime: [DateTime, Time]
+      duration: [Text, Duration]
+      endDate: [Date, DateTime]
+      eventAttendanceMode: [Text, EventAttendanceModeEnumeration]
+      eventSchedule: Schedule
+      eventStatus: [EventStatusType]
+      funder: [Organization, Person]
+      inLanguage: [Language, Text]
+      isAccessibleForFree: Boolean
+      location: [Place, PostalAddress, Text, VirtualLocation]
+      maximumAttendeeCapacity: Integer
+      maximumPhysicalAttendeeCapacity: Integer
+      maximumVirtualAttendeeCapacity: Integer
+      offers: [Demand, Offer]
+      organizer: [Organization, Person, Text]
+      performer: [Organization, Person, Text]
+      previousStartDate: Date
+      recordedIn: CreativeWork
+      remainingAttendeeCapacity: Integer
+      review: Review
+      sponsor: [Organization, Person]
+      startDate: [Date, DateTime]
+      subEvent: Event
+      superEvent: Event
+      translator: [Organization, Person]
+      typicalAgeRange: Text
+      workFeatured: CreativeWork
+      workPerformed: CreativeWork
+    inherits: Thing
+
+
+  HowTo:
+    fields:
+      estimatedCost: [MonetaryAmount, Text]
+      performTime: [Text, Duration]
+      prepTime: [Text, Duration]
+      step: [CreativeWork, HowToSection, HowToStep, Text]
+      supply: [HowToSupply, Text]
+      tool: [HowToTool, Text]
+      totalTime: [Text, Duration]
+      yield: [QuantitativeValue, Text]
+    inherits: [CreativeWork, Thing]
+
+  HowToStep:
+    inherits: [ListItem, ItemList, CreativeWork, Thing]
+
+  Organization:
+    fields:
+      address: [PostalAddress, Text]
+      aggregateRating: AggregateRating
+      alumni: [Person]
+      areaServed: [AdministrativeArea, GeoDhape, Place, Text]
+      award: Text
+      brand: [Brand, Organization]
+      contactPoint: ContactPoint 
+      department: Organization
+      dissolutionDate: Date
+      duns: Text
+      email: Text
+      employee: Person
+      event: Event
+      faxNumber: Text
+      founder: Person
+      foundingDate: Date
+      foundingLocation: Place
+      funder: [Organization, Person]
+      globalLocationNumber: Text
+      hasOfferCatalog: OfferCatalog
+      hasPOS: Place
+      interactionStatistic: InteractionCounter
+      isicV4: Text
+      legalName: Text
+      leiCode: Text
+      location: [Place, PostalAddress, Text, VirtualLocation]
+      logo: [ImageObject, URL]
+      makesOffer: Offer
+      member: [Organization, Person]
+      memberOf: [Organization, ProgramMembership]
+      naics: Text
+      numberOfEmployees: QuantitativeValue
+      owns: [OwnershipInfo, Product]
+      parentOrganization: Organization
+      publishingPrinciples: [CreativeWork, URL]
+      review: Review
+      seeks: Demand
+      slogan: Text
+      sponsor: [Organization, Person]
+      subOrganization: Organization
+      taxID: Text
+      telephone: Text
+      vatID: Text
+    inherits: Thing
+
+  Person:
+    fields:
+      additionalName: Text
+      address: [PostalAddress, Text]
+      affiliation: Organization
+      alumniOf: [RducationalOrganization, Organization]
+      award: Text
+      birthDate: Date
+      birthPlace: Place
+      brand: [Brand, Organization]
+      children: Person
+      colleague: [Person, URL]
+      contactPoint: ContactPoint
+      deathDate: Date
+      deathPlace: Place
+      duns: Text
+      email: Text
+      familyName: Text 
+      faxNumber: Text
+      follows: Person
+      funder: [Organization, Person]
+      givenName: Text
+      globalLocationNumber: Text
+      hasOccupation: Occupation
+      hasOfferCatalog: OfferCatalog
+      hasPOS: Place
+      height: [Distance, QuantitativeValue]
+      homeLocation: [ContactPoint, Place]
+      honorificPrefix: Text
+      honorificSuffix: Text
+      interactionStatistic: InteractionCounter
+      isicV4: Text
+      knows: Person
+      makesOffer: Offer
+      memberOf: [Organization, ProgramMembership]
+      naics: Text
+      nationality: Country 
+      netWorth: [MonetaryAmount, PriceSpecification]
+      owns: [OwnershipInfo, Product]
+      parent: Person
+      performerIn: Event
+      publishingPrinciples: [CreativeWork, URL]
+      relatedTo: Person
+      seeks: Demand
+      sibling: Person
+      sponsor: [Organization, Person]
+      spouse: Person
+      taxID: Text
+      telephone: Text
+      vatID: Text
+      weight: QuantitativeValue
+      workLocation: [ContactPoint, Place]
+      worksFor: Organization
+    inherits: Thing
+
+  Place:
+    fields:
+      additionalProperty: PropertyValue
+      address: [PostalAddress, Text]
+      aggregateRating: AggregateRating
+      amenityFeature: LocationFeatureSpecification
+      branchCode: Text
+      containedInPlace: Place
+      containsPlace: Place
+      event: Event
+      faxNumber: Text
+      geo: [GeoCoordinates, GeoShape]
+      geoContains: [GeoSpacialGeometry, Place]
+      geoCoveredBy: [GeoSpacialGeometry, Place]
+      geoCovers: [GeoSpacialGeometry, Place] 
+      geoCrosses: [GeoSpacialGeometry, Place]
+      geoDisjoint: [GeoSpacialGeometry, Place]
+      geoEquals: [GeoSpacialGeometry, Place]
+      geoIntersects: [GeoSpacialGeometry, Place]
+      geoOverlaps: [GeoSpacialGeometry, Place]
+      geoTouches: [GeoSpacialGeometry, Place]
+      geoWithin: [GeoSpacialGeometry, Place]
+      globalLocationNumber: Text
+      hasMap: [Map, URL]
+      isAccessibleForFree: Boolean
+      isicV4: Text
+      latitude: [Number, Text]
+      logo: [ImageObject, URL]
+      longitude: [Number, Text]
+      maximumAttendeeCapacity: Integer
+      openingHoursSpecification: OpeningHoursSpecification
+      photo: [ImageObject, Photograph]
+      publicAccess: Boolean
+      review: Review
+      slogan: Text
+      smokingAllowed: Boolean 
+      specialOpeningHoursSpecification: OpeningHoursSpecification
+      telephone: Text
+    inherits: Thing
+
+  LocalBusiness:
+    fields:
+      branchOf: Organization
+      currenciesAccepted: Text
+      openingHours: Text
+      paymentAccepted: Text
+      priceRange: Text
+    inherits: [Organization, Place, Thing] 
+
+  Movie:
+    fields:
+      actor: Person
+      countryOfOrigin: Country
+      director: Person
+      duration: [Text, Duration]
+      musicBy: [MusicGroup, Person]
+      productionCompany: Organization
+      trailer: VideoObject
+    inherits: [CreativeWork, Thing]
+
+  MusicPlaylist:
+    fields:
+      numTracks: Integer
+      track: [ItemList, MusicRecording]
+    inherits: [CreativeWork, Thing]
+
+
+  MusicGroup:
+    fields:
+      album: MusicAlbum
+      genre: [Text, URL]
+      track: [ItemList, MusicRecording]
+    inherits: [Organization, Thing]
+
+  MusicAlbum:
+    fields:
+      albumProductionType: MusicAlbumProductionType
+      albumRelease: MusicRelease
+      albumReleaseType: MusicAlbumReleaseType
+      byArtist: [MusicGroup, Person, Text]
+    inherits: [MusicPlaylist, CreativeWork, Thing]
+
+  MusicRecording:
+    fields:
+      byArtist: [MusicGroup, Person, Text]
+      duration: [Text, Duration]
+      inAlbum: MusicAlbum
+      inPlaylist: MusicPlaylist
+      isrcCode: Text
+      recordingOf: MusicComposition
+    inherits: [CreativeWork, Thing]
+
+  Offer:
+    fields:
+      acceptedPaymentMethod: [LoanOrCredit, PaymentMethod]
+      addOn: Offer
+      advanceBookingRequirement: QuantitativeValue
+      aggregateRating: AggregateRating
+      areaServed: [AdminstrativeArea, GeoShape, Place, Text]
+      availability: ItemAvailability
+      availabilityEnds: [Date, DateTime, Time]
+      availabilityStarts: [Date, DateTime, Time]
+      availableAtOrFrom: Place
+      availableDeliveryMethod: DeliveryMethod
+      businessFunction: BusinessFunction
+      category: [PhysicalActivityCategory, Text, Thing, URL]
+      deliveryLeadTime: QuantitativeValue
+      eligibleCustomerType: BusinessEntityType
+      eligibleDuration: QuantitativeValue
+      eligibleQuantity: QuantitativeValue
+      eligibleRegion: [GeoShape, Place, Text]
+      eligibleTransactionVolume: PriceSpecification
+      gtin12: Text
+      gtin13: Text
+      gtin14: Text
+      gtin8: Text
+      includesObject: TypeAndQuantityNode
+      inventoryLevel: QuantitativeValue
+      itemCondition: OfferItemCondition
+      itemOffered: [AggregateOffer, CreativeWork, Event, MenuItem, Product, Service, Trip]
+      mpn: Text
+      offeredBy: [Organization, Person] 
+      price: [Number, Text]
+      priceCurrency: Text
+      priceSpecification: PriceSpecification
+      priceValidUntil: Date
+      review: Review
+      seller: [Organization, Person]
+      serialNumber: Text
+      sku: Text
+      validFrom: [Date, DateTime]
+      validThrough: [Date, DateTime]
+      warranty: WarrantyPromise
+    inherits: [Thing]
+
+  AggregateOffer:
+    fields:
+      highPrice: [Number, Text]
+      lowPrice: [Number, Text]
+      offerCount: Integer
+      offers: [Demand, Offer]
+    inherits: [Offer, Thing]
+
+  PriceSpecification:
+    fields:
+      eligibleQuantity: QuantitativeValue
+      eligibleTransactionVolume: PriceSpecification
+      maxPrice: Number
+      minPrice: Number
+      price: [Number, Text]
+      priceCurrency: Text
+      validFrom: [Date, DateTime]
+      validThrough: [Date, DateTime]
+      valueAddedTaxIncluded: Boolean
+    inherits: [Thing]
+
+  UnitPriceSpecification:
+    fields:
+      billingIncrement: Number
+      priceType: Text
+      referenceQuantity: QuantitativeValue
+      unitCode: [Text, URL]
+      unitText: Text
+    inherits: [PriceSpecification, Thing]
+
+  QuantitativeValue:
+    fields:
+      additionalProperty: PropertyValue
+      maxValue: Number
+      minValue: Number
+      unitCode: [Text, URL]
+      unitText: Text
+      value: [Boolean, Number, StructuredValue, Text]
+      valueReference: [Enumeration, PropertyValue, QuantitativeValue, QualitativeValue, StructuredValue]
+    inherits: [Thing]
+
+  Product:
+    fields:
+      additionalProperty: PropertyValue
+      aggregateRating: AggregateRating
+      audience: Audience
+      award: Text
+      brand: [Brand, Organization]
+      category: [PhysicalActivityCategory, Text, Thing, URL]
+      color: Text
+      depth: [Distance, QuantativeValue]
+      gtin12: Text
+      gtin13: Text
+      gtin14: Text
+      gtin8: Text
+      height: [Distance, QuantativeValue]
+      isAccessoryOrSparePartFor: Product
+      isConsumableFor: Product
+      isRelatedTo: [Product, Service]
+      isSimilarTo: [Product, Service]
+      itemCondition: OfferItemCondition
+      logo: [ImageObject, URL]
+      manufacturer: Organization
+      material: [Product, Text, URL]
+      model: [ProductModel, Text]
+      mpn: Text
+      offers: [Demand, Offer]
+      productID: Text
+      productionDate: Date
+      purchaseDate: Date
+      releaseDate: Date
+      review: Review
+      sku: Text
+      slogan: Text
+      weight: QuantitativeValue
+      width: [Distance, QuantativeValue] 
+    inherits: Thing
+
+  Review:
+    fields:
+      itemReviewed: Thing
+      reviewAspect: Text
+      reviewBody: Text
+      reviewRating: Rating
+    inherits: [CreativeWork, Thing]
+
+  SoftwareApplication:
+    fields:
+      applicationCategory: [Text, URL]
+      applicationSubCategory: [Text, URL]
+      applicationSuite: Text
+      availableOnDevice: Text
+      countriesNotSupported: Text
+      countriesSupported: Text
+      downloadUrl: URL
+      featureList: [Text, URL]
+      fileSize: Text
+      installUrl: URL
+      memoryRequirements: [Text, URL] 
+      operatingSystem: Text
+      permissions: Text
+      processorRequirements: Text
+      releaseNotes: [Text, URL]
+      screenshot: [ImageObject, URL]
+      softwareAddOn: SoftwareApplication
+      softwareHelp: CreativeWork
+      softwareRequirements: [Text, URL]
+      softwareVersion: Text
+      storageRequirements: [Text, URL]
+      supportingData: DataFeed
+    inherits: [CreativeWork, Thing]
+
+  CreativeWorkSeries:
+    fields:
+      endDate: [Date, DateTime]
+      issn: Text
+      startDate: [Date, DateTime]
+    inherits: [CreativeWork, Thing]
+
+  TVSeries:
+    fields:
+      actor: Person
+      containsSeason: CreativeWorkSeason
+      countryOfOrigin: Country
+      director: Person
+      episode: Episode
+      musicBy: [MusicGroup]
+      numberOfEpisodes: Integer
+      numberOfSeasons: Integer
+      productionCompany: Organization
+      trailer: VideoObject
+    inherits: [CreativeWorkSeries, CreativeWork, Thing]
+
+  Action:
+    fields:
+      actionStatus: ActionStatusType
+      agent: [Organization, Person]
+      endTime: [DateTime, Time]
+      error: Thing
+      instrument: Thing
+      location: [Place, PostalAddress, Text, VirtualLocation]
+      object: Thing
+      participant: [Organization, Person]
+      result: Thing
+      startTime: [DateTime, Time]
+      target: [EntryPoint, URL]
+    inherits: Thing
+
+  ConsumeAction:
+    fields:
+      actionAccessibilityRequirement: ActionAccessSpecification
+      expectsAcceptanceOf: Offer
+    inherits: [Action, Thing]
+
+  ReadAction:
+    inherits: [ConsumeAction, Action, Thing]
+
+  EntryPoint:
+    fields:
+      actionApplication: SoftwareApplication
+      actionPlatform: [Text, URL]
+      contentType: Text
+      encodingType: Text
+      httpMethod: Text
+      urlTemplate: Text
+    inherits: Thing
+
+
+
+
+
+
