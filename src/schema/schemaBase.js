@@ -130,7 +130,7 @@ class SchemaBase
     static getSpecs()
     {
         if (SchemaBase.allSpecs == null) {
-            let fn = path.join(path.dirname(path.dirname(__filename)), 'data', 'spec.yaml');
+            let fn = path.join(path.dirname(path.dirname(__filename)), 'schema', 'data', 'spec.yaml');
             let yamlFile = new YamlFile(fn);
             SchemaBase.allSpecs = yamlFile.parse();
 
