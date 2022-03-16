@@ -219,6 +219,7 @@ class ComplexImage
         }
 
         // Save the meta sources.
+        /*
         if (metaSrcs.length > 0) {
             for (let item of metaSrcs) {
                 let linkGen = new HtmlGenerator('link', {href: item});
@@ -227,6 +228,7 @@ class ComplexImage
                 this.schema += linkGen.render();
             }
         }
+        */
 
         // Return the rendered <source> (and possible <noscript>).
         if (this.lazyload && !this.rss) {
