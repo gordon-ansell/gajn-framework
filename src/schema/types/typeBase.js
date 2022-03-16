@@ -166,7 +166,7 @@ class TypeBase
     static getSpecs()
     {
         if (TypeBase.allSpecs == null) {
-            let fn = path.join(path.dirname(path.dirname(__filename)), 'data', 'types.yaml');
+            let fn = path.join(path.dirname(path.dirname(__filename)), 'schema', 'data', 'types.yaml');
             let yamlFile = new YamlFile(fn);
             TypeBase.allSpecs = yamlFile.parse();
 
