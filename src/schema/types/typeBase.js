@@ -10,7 +10,9 @@
 
 const path = require('path');
 const url = require('url');
-const { syslog, GAError, YamlFile } = require("js-framework");
+const YamlFile = require("../yamlFile");
+const GAError = require("../utils/gaError");
+const syslog = require("../logger/syslog");
 
 class SchemaError extends GAError {};
 
