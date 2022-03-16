@@ -9,7 +9,7 @@
 'use strict';
 
 const GAError = require("../utils/gaError");
-const syslog = require("../logger");
+const syslog = require("../logger/syslog");
 
 class SchemaError extends GAError {};
 

@@ -15,7 +15,7 @@ const GAError = require("../utils/gaError");
 const string = require('../utils/string');
 const array = require("../utils/array");
 const MultiDate = require("../utils/multiDate");
-const syslog = require("../logger");
+const syslog = require("../logger/syslog");
 const TypeBase = require('./types/typeBase');
 
 class SchemaError extends GAError {};
