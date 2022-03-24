@@ -78,7 +78,6 @@ class SchemaGraph
     get(name)
     {
         if (!(name in this.items)) {
-            syslog.inspect(this.items, "warning");
             throw new SchemaError(`Schema graph does not have an item called '${name}'`)
         }
         return this.items[name];
