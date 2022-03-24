@@ -308,7 +308,7 @@ class SchemaBase
      */
     hasProp(name)
     {
-        return (name in this._props);
+        return (Object.keys(this._props).includes(name));
     }
 
     /**
