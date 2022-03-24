@@ -78,8 +78,8 @@ class SchemaGraph
     get(name)
     {
         if (!(name in this.items)) {
-            syslog.warning(`Schema graph does not have an item called '${name}'`)
-            //throw new SchemaError(`Schema graph does not have an item called '${name}'`)
+            //syslog.warning(`Schema graph does not have an item called '${name}'`)
+            throw new SchemaError(`Schema graph does not have an item called '${name}'`)
         }
         return this.items[name];
     }
