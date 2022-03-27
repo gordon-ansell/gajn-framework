@@ -58,7 +58,7 @@ function addBothSlashes(str)
 function removeTrailingSlash(str)
 {
     if (str.endsWith('/')) {
-        return str.substr(0, str.length - 1);
+        return str.substring(0, str.length - 1);
     }
     return str;
 }
@@ -73,7 +73,7 @@ function removeTrailingSlash(str)
 function removeLeadingSlash(str)
 {
     if (str.startsWith('/')) {
-        return str.substr(1, str.length - 1);
+        return str.substring(1, str.length - 1);
     }
     return str;
 }
