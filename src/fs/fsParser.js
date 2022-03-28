@@ -45,6 +45,7 @@ class FsParser
             allowPaths: undefined,
             ignorePaths: undefined,
             ignoreDirs: undefined,
+            onlyFiles: undefined,
             allowFiles: undefined,
             ignoreFiles: undefined,
             ignoreFilesFirst: undefined,
@@ -74,7 +75,7 @@ class FsParser
             }
         }
 
-        for (let item of ['allowFiles', 'ignoreFiles', 'ignoreFilesFirst', 'ignoreDirs']) {
+        for (let item of ['onlyFiles', 'allowFiles', 'ignoreFiles', 'ignoreFilesFirst', 'ignoreDirs']) {
             if (opts[item]) {
                 opts[item] = arr.makeArray(opts[item]);
                 let ap = sanitizeFileRegex(opts[item]);
@@ -145,6 +146,17 @@ class FsParser
         let ext = path.extname(filePath);
 
         this._logMsg('FsParser:_doWeProcessFile', `Processing file: ${rel}`);
+
+        // If only files is set, literally just get those.
+        if (this.#regex.onlyFiles) {
+            let result = this.#regex.onlyFiles.exec(base);            
+            if (null !== result) {
+                this._logMsg('FsParser:_doWeProcessFile', `   => only file first via: ${result[0]}`);
+                return true;
+            } else {
+                return false;
+            }
+        }
     
         // Ignore files first.
         if (this.#regex.ignoreFilesFirst) {
