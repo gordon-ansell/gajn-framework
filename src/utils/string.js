@@ -30,6 +30,9 @@ function tabsToSpaces(str, spaceNum = 2)
  */
 function countWords(str)
 {
+    if (!str) {
+        return 0;
+    }
     let s = str.replace(/(^\s*)|(\s*$)/gi, "");      // Exclude  start and end white-space.
     s = s.replace(/[ ]{2,}/gi, " ");                 // 2 or more spaces to 1.
     s = s.replace(/\n /, "\n");                      // Exclude newline with a start spacing.
