@@ -480,7 +480,15 @@ class ImageHtml
             */
 
             if (count > 1) {
-                ret = '<picture class="respimg">' + ret + '</picture>';
+                if (!caption) {
+                    if (this.opts.lazyload) {
+                        ret = '<picture data-class="respimg">' + ret + '</picture>';
+                    } else {
+                        ret = '<picture class="respimg">' + ret + '</picture>';
+                    }
+                } else {
+                    ret = '<picture>' + ret + '</picture>';
+                }
             }
 
         } else {
@@ -928,7 +936,7 @@ class ImageHtml
         // Picture.
         let pictureGen = new HtmlGenerator('picture');
         if (!figureGen) {
-            pictureGen.setAttrib('class', 'respimg');
+            pictureGen.setAttrib('data-class', 'respimg');
         }
         ret = pictureGen.render(sources.join("\n") + "\n" + ret);
 
