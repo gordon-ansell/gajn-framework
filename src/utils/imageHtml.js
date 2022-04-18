@@ -483,7 +483,7 @@ class ImageHtml
                 if (!caption) {
                     ret = '<picture class="respimg">' + ret + '</picture>';
                 } else {
-                    ret = '<picture>' + ret + '</picture>';
+                    ret = '<picture class="respimg">' + ret + '</picture>';
                 }
             }
 
