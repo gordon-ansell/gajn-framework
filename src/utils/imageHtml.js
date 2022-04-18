@@ -928,6 +928,7 @@ class ImageHtml
         // Picture.
         let pictureGen = new HtmlGenerator('picture');
         if (!figureGen) {
+            syslog.warning(`setting for ${base}`);
             pictureGen.setAttrib('class', 'respimg');
         }
         ret = pictureGen.render(sources.join("\n") + "\n" + ret);
