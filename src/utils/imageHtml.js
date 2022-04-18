@@ -480,7 +480,11 @@ class ImageHtml
             */
 
             if (count > 1) {
-                ret = '<picture>' + ret + '</picture>';
+                if (!caption) {
+                    ret = '<picture class="respimg">' + ret + '</picture>';
+                } else {
+                    ret = '<picture>' + ret + '</picture>';
+                }
             }
 
         } else {
