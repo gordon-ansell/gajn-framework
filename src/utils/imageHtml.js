@@ -480,11 +480,7 @@ class ImageHtml
             */
 
             if (count > 1) {
-                if (!caption) {
-                    ret = '<picture class="respimg">' + ret + '</picture>';
-                } else {
-                    ret = '<picture class="respimg">' + ret + '</picture>';
-                }
+                ret = '<picture>' + ret + '</picture>';
             }
 
         } else {
@@ -534,7 +530,7 @@ class ImageHtml
 
         // If we have a caption, this will need a figure.
         if (imgSpec.caption) {
-            debug(`Has caption (therfore figure): ${imgSpec.caption}`);
+            debug(`Has caption (therefore figure): ${imgSpec.caption}`);
             figureGen = new HtmlFigure();
             figureGen.setCaption(imgSpec.caption);
             delete imgSpec.caption;
@@ -931,6 +927,9 @@ class ImageHtml
 
         // Picture.
         let pictureGen = new HtmlGenerator('picture');
+        if (!figureGen) {
+            pictureGen.addAttrib('class', 'respimg');
+        }
         ret = pictureGen.render(sources.join("\n") + "\n" + ret);
 
         // Figure?
